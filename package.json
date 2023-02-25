@@ -10,7 +10,8 @@
     "lucide-react": "0.115.0",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zustand": "4.3.3"
   },
   "devDependencies": {
     "@next/font": "13.1.6",

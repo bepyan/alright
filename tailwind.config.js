@@ -9,6 +9,21 @@ module.exports = {
           sm: '640px',
         },
       },
+      spacing: {
+        container: '20px',
+      },
+      theme: {
+        colors: {
+          al: {
+            blue: '#0C79FE',
+            gray: '#EAECEF',
+            'dark-gray': '#F5F6F8',
+            border: '#E9EAEC',
+            disabled: '#AFB1B5',
+            slate: '#697483',
+          },
+        },
+      },
     },
   },
 };

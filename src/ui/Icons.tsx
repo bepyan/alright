@@ -1,11 +1,13 @@
 import type { LucideIcon, LucideProps } from 'lucide-react';
 import * as Lucide from 'lucide-react';
+import React from 'react';
 // https://lucide.dev/
 
 export type Icon = LucideIcon;
 
 export const Icons = {
-  logo: (props: LucideProps) => (
+  ...Lucide,
+  Logo: (props: LucideProps) => (
     <svg
       viewBox='0 0 24 24'
       fill='currentColor'
@@ -15,11 +17,10 @@ export const Icons = {
       strokeLinejoin='round'
       {...props}
     >
-      <circle cx='12' cy='12' r='10'></circle>
+      <circle cx='12' cy='12' r='10' />
     </svg>
   ),
-  ...Lucide,
-  caretLeft: (props: React.SVGProps<SVGSVGElement>) => {
+  CaretLeft: (props: LucideProps) => {
     return (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -28,11 +29,11 @@ export const Icons = {
         viewBox='0 0 24 24'
         {...props}
       >
-        <path fill='currentColor' d='m14 17l-6-5l6-5v10z'></path>
+        <path fill='currentColor' d='m14 17l-6-5l6-5v10z' />
       </svg>
     );
   },
-  caretRight: (props: React.SVGProps<SVGSVGElement>) => {
+  CaretRight: (props: LucideProps) => {
     return (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -41,8 +42,10 @@ export const Icons = {
         viewBox='0 0 24 24'
         {...props}
       >
-        <path fill='currentColor' d='m10 7l6 5l-6 5V7z'></path>
+        <path fill='currentColor' d='m10 7l6 5l-6 5V7z' />
       </svg>
     );
   },
 };
+
+export type IconType = keyof typeof Icons;
