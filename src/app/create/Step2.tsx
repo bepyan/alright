@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { Icons } from '~/ui/Icons';
-import { Input } from '~/ui/Input';
+import Input from '~/ui/Input';
 import StepNav from '~/ui/StepNav';
 
 const useCarParkDetail = create<{

@@ -1,4 +1,4 @@
-import { Input } from '~/ui/Input';
+import Input from '~/ui/Input';
 import StepNav from '~/ui/StepNav';
 
 export default function Step1() {
