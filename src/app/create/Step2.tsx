@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 
+import Button from '~/ui/Button';
 import { Icons } from '~/ui/Icons';
+import IconTitle from '~/ui/IconTitle';
 import { InputFrame } from '~/ui/Input';
 import StepNav from '~/ui/StepNav';
 
@@ -42,20 +44,14 @@ export default function Step2() {
       <div className='h-52 w-full bg-blue-50' />
 
       <div className='p-container'>
-        <div className='flex items-center gap-1 text-al-blue'>
-          <Icons.Check className='h-5 w-5' />
-          <span className='text-sm font-bold'>추가한 주차장</span>
-        </div>
+        <IconTitle icon='Check' text='추가한 주차장' className='text-al-blue' />
         <div className='mt-container rounded-xl border border-al-blue'>
           <SearchItem onClick={showCarParkDetail} />
         </div>
       </div>
 
       <div className='p-container'>
-        <div className='flex items-center gap-1 text-al-slate'>
-          <Icons.CarPark className='h-5 w-5' />
-          <span className='text-sm font-bold'>근처 주차장</span>
-        </div>
+        <IconTitle icon='Check' text='근처 주차장' />
         <div className='mt-container rounded-xl border border-al-border'>
           <SearchItem onClick={showCarParkDetail} />
         </div>
@@ -83,7 +79,7 @@ function CarParkDetail() {
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
 
   return (
-    <div className='container fixed inset-0 z-50 bg-white'>
+    <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white'>
       <div className='container fixed mt-1.5 ml-2.5'>
         <div className='flex h-9 w-9 items-center justify-center rounded-full bg-white'>
           <Icons.ChevronLeftIcon
@@ -92,7 +88,37 @@ function CarParkDetail() {
           />
         </div>
       </div>
+
       <div className='h-48 bg-blue-50' />
+
+      <div className='p-container'>
+        <h2 className='text-xl font-bold'>오리이 주차장</h2>
+        <p className='mt-1 text-sm text-al-slate'>서울 송파구 마천동 215-0</p>
+      </div>
+
+      <div className='h-2 bg-al-gray-100' />
+
+      <div className='p-container'>
+        <IconTitle icon='Money' text='요금정보' />
+      </div>
+
+      <div className='mx-container border-y border-al-border py-container'>
+        <IconTitle icon='Schedule' text='운영정보' />
+      </div>
+
+      <div className='p-container'>
+        <IconTitle icon='Description' text='기타정보' />
+      </div>
+
+      <div className='flex gap-1 px-container'>
+        <Button className='flex-1'>추가하기</Button>
+        {/* <Button className='flex-1' variant='outline'>
+          수정
+        </Button>
+        <Button className='flex-1' variant='destructive'>
+          삭제
+        </Button> */}
+      </div>
     </div>
   );
 }
