@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import { Icons } from '~/ui/Icons';
 import { Input } from '~/ui/Input';
+import StepNav from '~/ui/StepNav';
 
 const useCarParkDetail = create<{
   show: boolean;
@@ -20,7 +21,7 @@ export default function Step2() {
   return (
     <>
       <div className='space-y-3 p-container pt-3'>
-        <div>step: {2}</div>
+        <StepNav currentStep={2} />
         <h2 className='text-xl font-bold'>계약한 주차장을 모두 추가해주세요.</h2>
         <Input placeholder='계약한 주차장 검색' />
       </div>
