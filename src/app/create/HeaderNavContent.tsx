@@ -27,8 +27,12 @@ export default function HeaderNavContent() {
 
   return (
     <>
-      <Icons.ChevronLeft className='-ml-1 h-6 w-6' onClick={prevStep} />
-      {step < MAX_STEP && <div onClick={nextStep}>다음</div>}
+      <Icons.ChevronLeft className='-ml-1 h-6 w-6 active:opacity-click' onClick={prevStep} />
+      {step < MAX_STEP && (
+        <div className='font-bold text-al-blue active:opacity-click' onClick={nextStep}>
+          다음
+        </div>
+      )}
     </>
   );
 }

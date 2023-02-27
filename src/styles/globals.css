@@ -9,3 +9,7 @@ body {
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
+
+body {
+  -webkit-tap-highlight-color: transparent;
+}

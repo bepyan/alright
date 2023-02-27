@@ -12,6 +12,7 @@ module.exports = {
         green: '#00DAB3',
         gray: '#EAECEF',
         'gray-100': '#F5F6F8',
+        red: '#F95E5E',
         border: '#E9EAEC',
         disabled: '#AFB1B5',
         slate: '#697483',
@@ -23,6 +24,9 @@ module.exports = {
         screens: {
           sm: '640px',
         },
+      },
+      opacity: {
+        click: '0.8',
       },
       spacing: {
         container: '20px',
