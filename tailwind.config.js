@@ -28,6 +28,10 @@ module.exports = {
       opacity: {
         click: '0.8',
       },
+      borderWidth: {
+        1.5: '1.5px',
+        7: '7px',
+      },
       spacing: {
         container: '20px',
       },

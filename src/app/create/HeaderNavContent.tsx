@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
+import { cn } from '~/lib/utils';
 import { Icons } from '~/ui/Icons';
 
 import { useCreate } from './state';
@@ -9,6 +10,7 @@ export default function HeaderNavContent() {
   const router = useRouter();
 
   const step = useCreate((s) => s.step);
+  const canMoveToNext = useCreate((s) => s.computed.canMoveToNext);
   const MAX_STEP = 3;
   const moveStep = useCreate((s) => s.moveStep);
 
@@ -22,6 +24,10 @@ export default function HeaderNavContent() {
   };
 
   const nextStep = () => {
+    if (!canMoveToNext) {
+      return;
+    }
+
     moveStep(+1);
   };
 
@@ -29,7 +35,13 @@ export default function HeaderNavContent() {
     <>
       <Icons.ChevronLeft className='-ml-1 h-6 w-6 active:opacity-click' onClick={prevStep} />
       {step < MAX_STEP && (
-        <div className='font-bold text-al-blue active:opacity-click' onClick={nextStep}>
+        <div
+          className={cn(
+            'font-bold',
+            canMoveToNext ? 'text-al-blue active:opacity-click' : 'text-al-disabled',
+          )}
+          onClick={nextStep}
+        >
           다음
         </div>
       )}
