@@ -26,3 +26,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...pr
 Input.displayName = 'Input';
 
 export default Input;
+
+export function InputFrame({
+  className,
+  placeholder,
+  ...props
+}: React.HTMLAttributes<HTMLInputElement>) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        'flex h-12 w-full select-none items-center gap-3 rounded-md bg-al-gray-100 py-2 px-3',
+        className,
+      )}
+    >
+      <Icons.SearchIcon className='h-4 w-4 text-al-disabled' />
+      <div className='bg-transparent text-al-disabled'>{placeholder}</div>
+    </div>
+  );
+}

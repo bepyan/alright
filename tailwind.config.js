@@ -26,7 +26,7 @@ module.exports = {
         },
       },
       opacity: {
-        click: '0.8',
+        click: '0.7',
       },
       borderWidth: {
         1.5: '1.5px',

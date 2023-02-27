@@ -7,7 +7,7 @@ export interface StepNavProps {
 
 export default function StepNav({ currentStep, maxStep = 3 }: StepNavProps) {
   return (
-    <div className='flex items-center'>
+    <div className='flex select-none items-center'>
       {[...Array(maxStep)]
         .map((_, i) => i + 1)
         .map((step) => (

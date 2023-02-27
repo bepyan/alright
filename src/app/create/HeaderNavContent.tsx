@@ -37,7 +37,7 @@ export default function HeaderNavContent() {
       {step < MAX_STEP && (
         <div
           className={cn(
-            'font-bold',
+            'select-none font-bold',
             canMoveToNext ? 'text-al-blue active:opacity-click' : 'text-al-disabled',
           )}
           onClick={nextStep}
