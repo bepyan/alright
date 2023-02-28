@@ -14,7 +14,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...pr
         className,
       )}
     >
-      <Icons.SearchIcon className='h-4 w-4 text-al-disabled' />
+      <Icons.Search className='h-4 w-4 text-al-disabled' />
       <input
         className='bg-transparent placeholder:text-al-disabled focus:outline-none disabled:cursor-not-allowed'
         ref={ref}
@@ -40,7 +40,7 @@ export function InputFrame({
         className,
       )}
     >
-      <Icons.SearchIcon className='h-4 w-4 text-al-disabled' />
+      <Icons.Search className='h-4 w-4 text-al-disabled' />
       <div className='bg-transparent text-al-disabled'>{placeholder}</div>
     </div>
   );

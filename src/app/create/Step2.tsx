@@ -71,7 +71,7 @@ function SearchItem({ onClick }: { onClick: () => void }) {
         <p className='font-bold'>오라이 주차장</p>
         <p className='mt-1 text-sm text-al-slate'>서울 송파구 마청동 215-0</p>
       </div>
-      <Icons.ChevronRightIcon className='h-5 w-5 text-al-disabled' />
+      <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
     </div>
   );
 }
@@ -149,7 +149,7 @@ function CarParkSearch() {
             <p className='text-base font-bold'>(주) 오라이 좋아 2</p>
             <span className='text-sm text-al-slate'>서울 송파구 마천동 215-0</span>
           </div>
-          <Icons.ChevronRightIcon className='h-5 w-5 text-al-disabled' />
+          <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
         </div>
       </div>
     </div>
