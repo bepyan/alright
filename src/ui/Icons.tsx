@@ -30,11 +30,7 @@ export const Icons = {
       {...props}
     >
       <circle cx='8' cy='8' r='8' />
-      <path
-        d='M11.5356 5.79327L7.29294 10.0359L4.46451 7.20748'
-        stroke='white'
-        stroke-width='1.5'
-      />
+      <path d='M11.5356 5.79327L7.29294 10.0359L4.46451 7.20748' stroke='white' strokeWidth='1.5' />
     </svg>
   ),
   CarPark: (props: LucideProps) => (

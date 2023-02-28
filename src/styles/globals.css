@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+* {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
 
