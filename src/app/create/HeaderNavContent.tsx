@@ -1,8 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import { cn } from '~/lib/utils';
-import { Icons } from '~/ui/Icons';
+import BackButton from '~/ui/BackButton';
+import Button from '~/ui/Button';
 
 import { useCreate } from './state';
 
@@ -33,17 +33,11 @@ export default function HeaderNavContent() {
 
   return (
     <>
-      <Icons.ChevronLeft className='-ml-1 h-6 w-6 active:opacity-click' onClick={prevStep} />
+      <BackButton onClick={prevStep} />
       {step < MAX_STEP && (
-        <div
-          className={cn(
-            'select-none font-bold',
-            canMoveToNext ? 'text-al-blue active:opacity-click' : 'text-al-disabled',
-          )}
-          onClick={nextStep}
-        >
+        <Button variant='primeGhost' size='min' disabled={!canMoveToNext} onClick={nextStep}>
           다음
-        </div>
+        </Button>
       )}
     </>
   );

@@ -36,7 +36,7 @@ export function InputFrame({
     <div
       {...props}
       className={cn(
-        'flex h-12 w-full select-none items-center gap-3 rounded-md bg-al-gray-100 py-2 px-3',
+        'flex h-12 w-full cursor-pointer select-none items-center gap-3 rounded-md bg-al-gray-100 py-2 px-3',
         className,
       )}
     >

@@ -16,6 +16,7 @@ module.exports = {
         border: '#E9EAEC',
         disabled: '#AFB1B5',
         slate: '#697483',
+        black: '#1C1B1F',
       },
     },
     extend: {

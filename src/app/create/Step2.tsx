@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import { Icons } from '~/ui/Icons';
 import IconTitle from '~/ui/IconTitle';
@@ -80,10 +81,10 @@ function CarParkDetail() {
 
   return (
     <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white'>
-      <div className='container fixed mt-1.5 ml-2.5'>
-        <div className='flex h-9 w-9 items-center justify-center rounded-full bg-white'>
-          <Icons.ChevronLeftIcon
-            className='h-6 w-6 active:opacity-click'
+      <div className='container fixed mt-1.5 ml-3.5'>
+        <div className=''>
+          <BackButton
+            className='flex h-9 w-9 items-center justify-center rounded-full bg-white'
             onClick={hideCarParkDetail}
           />
         </div>
@@ -135,10 +136,7 @@ function CarParkSearch() {
   return (
     <div className='container fixed inset-0 z-40 bg-white'>
       <div className='flex h-12 items-center gap-3 border-b border-al-border px-container'>
-        <Icons.ChevronLeftIcon
-          className='-ml-1 h-6 w-6 active:opacity-click'
-          onClick={hideCarParkSearch}
-        />
+        <BackButton onClick={hideCarParkSearch} />
         <input placeholder='계약한 주차장 검색' className='flex-1 focus:outline-none' autoFocus />
       </div>
 

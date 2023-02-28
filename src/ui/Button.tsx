@@ -4,7 +4,7 @@ import * as React from 'react';
 import { cn } from '~/lib/utils';
 
 export const buttonVariants = cva(
-  'active:opacity-90 transition-opacity inline-flex items-center justify-center rounded-lg text-lg font-bold select-none focus:outline-none disabled:opacity-50 disabled:pointer-events-none',
+  'active:opacity-90 transition-opacity inline-flex items-center justify-center rounded-lg text-lg font-bold select-none focus:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer',
   {
     variants: {
       variant: {
@@ -12,10 +12,12 @@ export const buttonVariants = cva(
         subtle: 'bg-transparent text-al-blue border border-al-blue',
         destructive: 'bg-al-red text-white',
         outline: 'bg-transparent text-black border border-al-border',
-        ghost: 'bg-transparent text-al-blue hover:bg-slate-100',
+        primeGhost: 'bg-transparent text-al-blue',
+        ghost: 'bg-transparent text-al-black',
       },
       size: {
         default: 'h-14 py-2 px-4',
+        min: 'active:opacity-click',
       },
     },
     defaultVariants: {
