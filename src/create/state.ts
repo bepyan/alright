@@ -31,7 +31,7 @@ export const useCreate = create<CreateProps>((set, get) => ({
     },
   },
   moveStep: (ac) => set((state) => ({ ...state, step: state.step + ac })),
-  resetState: () => set(() => ({ step: 1, selectedCarParkList: [] })),
+  resetState: () => set(() => ({ step: 1, company: undefined, selectedCarParkList: [] })),
   selectCompany: (company) => set((state) => ({ ...state, company })),
   selectCarPark: (place) =>
     set((state) => ({
