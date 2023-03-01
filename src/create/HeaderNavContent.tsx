@@ -12,7 +12,7 @@ export default function HeaderNavContent() {
   const step = useCreate((s) => s.step);
   const canMoveToNext = useCreate((s) => s.computed.canMoveToNext);
 
-  const selectCompany = useCreate((s) => s.selectCompany);
+  const resetState = useCreate((s) => s.resetState);
   const moveStep = useCreate((s) => s.moveStep);
 
   const prevStep = () => {
@@ -20,10 +20,10 @@ export default function HeaderNavContent() {
       router.back();
       return;
     } else if (step === 2) {
-      selectCompany(undefined);
+      resetState();
+    } else {
+      moveStep(-1);
     }
-
-    moveStep(-1);
   };
 
   const nextStep = () => {

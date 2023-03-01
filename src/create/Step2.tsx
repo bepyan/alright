@@ -94,23 +94,7 @@ export default function Step2() {
         <InputFrame placeholder='계약한 주차장 검색' onClick={showCarParkSearch} />
       </div>
 
-      <Map center={companyPosition} className='h-52 w-full' onCreate={setMap}>
-        <MapMarker
-          position={companyPosition}
-          image={{
-            src: `data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='20' cy='38' rx='4' ry='2' fill='black'/%3E%3Cpath d='M34 16.9747C34 27.019 20 37.5 20 37.5C20 37.5 6 27.019 6 16.9747C6 9.25668 12.268 3 20 3C27.732 3 34 9.25668 34 16.9747Z' fill='%23F95E5E'/%3E%3Ccircle cx='20' cy='17' r='5' fill='white'/%3E%3C/svg%3E%0A`,
-            size: {
-              width: 40,
-              height: 40,
-            },
-          }}
-        />
-        <CustomOverlayMap position={companyPosition}>
-          <div className='mt-4 text-xs font-bold text-shadow-border w-20 text-center whitespace-normal'>
-            {company.place_name}
-          </div>
-        </CustomOverlayMap>
-
+      <Map center={companyPosition} className='h-52 w-full' level={2} onCreate={setMap}>
         {nearCarParkList.map((marker) => {
           const isSelected = selectedCarParkList.some((v) => v.id === marker.id);
 
@@ -139,6 +123,22 @@ export default function Step2() {
             </div>
           </CustomOverlayMap>
         ))}
+
+        <MapMarker
+          position={companyPosition}
+          image={{
+            src: `data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='20' cy='38' rx='4' ry='2' fill='black'/%3E%3Cpath d='M34 16.9747C34 27.019 20 37.5 20 37.5C20 37.5 6 27.019 6 16.9747C6 9.25668 12.268 3 20 3C27.732 3 34 9.25668 34 16.9747Z' fill='%23F95E5E'/%3E%3Ccircle cx='20' cy='17' r='5' fill='white'/%3E%3C/svg%3E%0A`,
+            size: {
+              width: 40,
+              height: 40,
+            },
+          }}
+        />
+        <CustomOverlayMap position={companyPosition}>
+          <div className='mt-4 text-xs font-bold text-shadow-border w-20 text-center whitespace-normal'>
+            {company.place_name}
+          </div>
+        </CustomOverlayMap>
       </Map>
 
       {Boolean(selectedCarParkList.length) && (
