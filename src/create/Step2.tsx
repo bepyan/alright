@@ -21,6 +21,7 @@ export default function Step2() {
 
   const showDetail = useCarParkDetail((s) => s.computed.show);
   const showSearch = useCarParkSearch((s) => s.show);
+  const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
   const showCarParkSearch = useCarParkSearch((s) => s.showCarParkSearch);
 
   const [map, setMap] = useState<kakao.maps.Map>();
@@ -33,8 +34,6 @@ export default function Step2() {
     ps.categorySearch(
       'PK6',
       (data, status, _pagination) => {
-        console.log(data);
-
         if (status !== kakao.maps.services.Status.OK) {
           return;
         }
@@ -42,7 +41,6 @@ export default function Step2() {
         setNearCarParkList(data);
       },
       {
-        useMapBounds: true,
         x: companyPosition.lng,
         y: companyPosition.lat,
         sort: kakao.maps.services.SortBy.DISTANCE,
@@ -69,6 +67,7 @@ export default function Step2() {
                 type={isSelected ? 'parkSubSelected' : 'parkSub'}
                 position={transferPosition(marker)}
                 text={marker.place_name}
+                onClick={() => showCarParkDetail(marker)}
               />
             );
           })}

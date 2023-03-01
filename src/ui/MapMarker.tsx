@@ -31,15 +31,23 @@ export interface MapMarkerProps {
     lat: number;
     lng: number;
   };
+  onClick?: () => void;
 }
 
-export default function MapMarker({ type, text, position }: MapMarkerProps) {
+export default function MapMarker({ type, text, position, onClick }: MapMarkerProps) {
   const { src, size } = markerType[type];
 
   return (
     <CustomOverlayMap position={position}>
-      <Image src={src} alt='marker' className='mx-auto' width={size} height={size} />
-      <div className='relative w-20 text-xs font-bold text-shadow-border'>
+      <Image
+        src={src}
+        alt='marker'
+        className='mx-auto'
+        width={size}
+        height={size}
+        onClick={onClick}
+      />
+      <div className='relative w-24 text-xs font-bold text-shadow-border' onClick={onClick}>
         <div className='absolute top-1 w-full whitespace-normal break-keep text-center'>{text}</div>
       </div>
     </CustomOverlayMap>
