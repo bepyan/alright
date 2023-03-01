@@ -1,9 +1,10 @@
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map } from 'react-kakao-maps-sdk';
 
 import { transferPosition } from '~/lib/utils';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import IconTitle from '~/ui/IconTitle';
+import MapMarker from '~/ui/MapMarker';
 import TextArea from '~/ui/TextArea';
 
 import { useCreate } from './state';
@@ -40,32 +41,8 @@ export default function CarParkDetail() {
       </div>
 
       <Map center={placePosition} className='h-48 w-full'>
-        <MapMarker
-          position={placePosition}
-          image={{
-            src: "data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='20' cy='38' rx='4' ry='2' fill='black'/%3E%3Cpath d='M34 16.9747C34 27.019 20 37.5 20 37.5C20 37.5 6 27.019 6 16.9747C6 9.25668 12.268 3 20 3C27.732 3 34 9.25668 34 16.9747Z' fill='%232A72FF'/%3E%3Cpath d='M16.5 24H18.9V19.7351H20.5054C23.0838 19.7351 25.127 18.5189 25.127 15.7784C25.127 12.9243 23.0838 12 20.4405 12H16.5V24ZM18.9 17.8378V13.9135H20.2622C21.9162 13.9135 22.7919 14.3676 22.7919 15.7784C22.7919 17.1405 21.9973 17.8378 20.3432 17.8378H18.9Z' fill='white'/%3E%3C/svg%3E%0A",
-            size: {
-              width: 40,
-              height: 40,
-            },
-          }}
-        />
-        <CustomOverlayMap position={placePosition}>
-          <div className='mt-4 text-xs font-bold text-shadow-border'>{place.place_name}</div>
-        </CustomOverlayMap>
-        <MapMarker
-          position={companyPosition}
-          image={{
-            src: "data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='12' cy='22' rx='4' ry='2' fill='black'/%3E%3Cpath d='M21 8.91139C21 15.3165 12 22 12 22C12 22 3 15.3165 3 8.91139C3 3.98977 7.02944 0 12 0C16.9706 0 21 3.98977 21 8.91139Z' fill='%23F95E5E'/%3E%3C/svg%3E%0A",
-            size: {
-              width: 24,
-              height: 24,
-            },
-          }}
-        />
-        <CustomOverlayMap position={companyPosition}>
-          <div className='mt-4 text-xs font-bold text-shadow-border'>{company.place_name}</div>
-        </CustomOverlayMap>
+        <MapMarker type='parkMain' position={placePosition} text={place.place_name} />
+        <MapMarker type='companySub' position={companyPosition} text={company.place_name} />
       </Map>
 
       <div className='p-container'>
