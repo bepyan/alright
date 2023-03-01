@@ -5,14 +5,38 @@ import StepNav from '~/ui/StepNav';
 export default function Step3() {
   return (
     <>
-      <div className='p-container pt-3'>
+      <section className='p-container pt-3'>
         <StepNav currentStep={3} />
         <h2 className='mt-3 text-xl font-bold'>주차 정보 링크가 생성되었어요!</h2>
         <p className='mt-1.5 text-al-slate'>링크를 복사해서 업체 소개 페이지에 공유해보세요.</p>
         <Pictures.CarPark className='mx-auto mt-20' />
         <Button className='mt-20 w-full'>무료로 링크 복사하기</Button>
-      </div>
-      <div className='mt-16 text-center' />
+      </section>
+
+      <section className='bg-al-gray-100 px-container pt-16 pb-20'>
+        <h2 className='text-xl font-bold text-center'>업그레이드된 기능 이용해보세요!</h2>
+        <div className='mt-5 bg-white rounded-lg text-center'>
+          <div className='text-al-blue p-container'>
+            <p className='text-lg font-bold'>Pro</p>
+            <div className='text-3xl mt-2'>
+              <b>5천원</b>/월
+            </div>
+          </div>
+          <div className='border-t border-al-border p-container font-bold text-center'>
+            <div>
+              광고 제거
+              <br />
+              실시간 주차 현황 제공
+              <br />
+              자동 주차 할인 서비스 제공
+            </div>
+            <Button variant='subtle' className='w-full mt-5'>
+              시작하기
+            </Button>
+          </div>
+          <div className='p-container'></div>
+        </div>
+      </section>
     </>
   );
 }
