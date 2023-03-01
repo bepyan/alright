@@ -1,56 +1,17 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
-import { create } from 'zustand';
-import useSearch from '~/lib/useSearch';
-import { transferPosition } from '~/lib/utils';
-import { Place, PlaceSearchRes } from '~/types/place';
 
-import BackButton from '~/ui/BackButton';
-import Button from '~/ui/Button';
+import { transferPosition } from '~/lib/utils';
+import { Place } from '~/types/place';
 import { Icons } from '~/ui/Icons';
 import IconTitle from '~/ui/IconTitle';
 import { InputFrame } from '~/ui/Input';
 import StepNav from '~/ui/StepNav';
 
 import { useCreate } from './state';
-
-const useCarParkDetail = create<{
-  targetPlace?: Place;
-  computed: { show: boolean };
-  showCarParkDetail: (targetPlace: Place) => void;
-  hideCarParkDetail: () => void;
-}>((set, get) => ({
-  computed: {
-    get show() {
-      return Boolean(get().targetPlace);
-    },
-  },
-  showCarParkDetail: (targetPlace) => {
-    document.body.style.overflow = 'hidden';
-    set((state) => ({ ...state, targetPlace }));
-  },
-  hideCarParkDetail: () => {
-    document.body.style.overflow = '';
-    set((state) => ({ ...state, targetPlace: undefined }));
-  },
-}));
-
-const useCarParkSearch = create<{
-  show: boolean;
-  showCarParkSearch: () => void;
-  hideCarParkSearch: () => void;
-}>((set) => ({
-  show: false,
-  showCarParkSearch: () => {
-    document.body.style.overflow = 'hidden';
-    set((state) => ({ ...state, show: true }));
-  },
-  hideCarParkSearch: () => {
-    document.body.style.overflow = '';
-    set((state) => ({ ...state, show: false }));
-  },
-}));
+import CarParkDetail from './Step2.CarParkDetail';
+import CarParkSearch from './Step2.CarParkSearch';
+import { useCarParkDetail, useCarParkSearch } from './Step2.state';
 
 export default function Step2() {
   const company = useCreate((s) => s.company)!;
@@ -118,8 +79,8 @@ export default function Step2() {
         })}
         {nearCarParkList.map((marker) => (
           <CustomOverlayMap key={`text-${marker.id}`} position={transferPosition(marker)}>
-            <div className='relative text-xs font-bold text-shadow-border w-20'>
-              <div className='absolute top-1 w-full text-center whitespace-normal break-keep'>
+            <div className='relative w-20 text-xs font-bold text-shadow-border'>
+              <div className='absolute top-1 w-full whitespace-normal break-keep text-center'>
                 {marker.place_name}
               </div>
             </div>
@@ -137,7 +98,7 @@ export default function Step2() {
           }}
         />
         <CustomOverlayMap position={companyPosition}>
-          <div className='mt-4 text-xs font-bold text-shadow-border w-20 text-center whitespace-normal'>
+          <div className='mt-4 w-20 whitespace-normal text-center text-xs font-bold text-shadow-border'>
             {company.place_name}
           </div>
         </CustomOverlayMap>
@@ -177,156 +138,12 @@ function CarParkItem({ item }: { item: Place }) {
 
   return (
     <div
-      className='flex items-center justify-between p-container pr-3 border-al-border'
+      className='flex items-center justify-between border-al-border p-container pr-3'
       onClick={onClick}
     >
       <div>
         <p className='font-bold'>{item.place_name}</p>
         <p className='mt-1 text-sm text-al-slate'>{item.address_name}</p>
-      </div>
-      <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
-    </div>
-  );
-}
-
-function CarParkDetail() {
-  const place = useCarParkDetail((s) => s.targetPlace)!;
-  const placePosition = transferPosition(place);
-  const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
-
-  const selectedCarParkList = useCreate((s) => s.selectedCarParkList);
-  const isSelected = selectedCarParkList.some((v) => v.id === place.id);
-  const selectCarPark = useCreate((s) => () => {
-    s.selectCarPark(place);
-    hideCarParkDetail();
-  });
-  const removeCarPark = useCreate((s) => () => {
-    s.removeCarPark(place);
-    hideCarParkDetail();
-  });
-
-  return (
-    <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white'>
-      <div className='container fixed mt-1.5 ml-3.5 z-50'>
-        <div className=''>
-          <BackButton
-            className='flex h-9 w-9 items-center justify-center rounded-full bg-white'
-            onClick={hideCarParkDetail}
-          />
-        </div>
-      </div>
-
-      <Map center={placePosition} className='h-48 w-full'>
-        <MapMarker
-          position={placePosition}
-          image={{
-            src: "data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='20' cy='38' rx='4' ry='2' fill='black'/%3E%3Cpath d='M34 16.9747C34 27.019 20 37.5 20 37.5C20 37.5 6 27.019 6 16.9747C6 9.25668 12.268 3 20 3C27.732 3 34 9.25668 34 16.9747Z' fill='%232A72FF'/%3E%3Cpath d='M16.5 24H18.9V19.7351H20.5054C23.0838 19.7351 25.127 18.5189 25.127 15.7784C25.127 12.9243 23.0838 12 20.4405 12H16.5V24ZM18.9 17.8378V13.9135H20.2622C21.9162 13.9135 22.7919 14.3676 22.7919 15.7784C22.7919 17.1405 21.9973 17.8378 20.3432 17.8378H18.9Z' fill='white'/%3E%3C/svg%3E%0A",
-            size: {
-              width: 40,
-              height: 40,
-            },
-          }}
-        />
-        <CustomOverlayMap position={placePosition}>
-          <div className='mt-4 text-xs font-bold text-shadow-border'>{place.place_name}</div>
-        </CustomOverlayMap>
-      </Map>
-
-      <div className='p-container'>
-        <h2 className='text-xl font-bold'>{place.place_name}</h2>
-        <p className='mt-1 text-sm text-al-slate'>{place.address_name}</p>
-      </div>
-
-      <div className='h-2 bg-al-gray-100' />
-
-      <div className='p-container'>
-        <IconTitle icon='Money' text='요금정보' />
-      </div>
-
-      <div className='mx-container border-y border-al-border py-container'>
-        <IconTitle icon='Schedule' text='운영정보' />
-      </div>
-
-      <div className='p-container'>
-        <IconTitle icon='Description' text='기타정보' />
-      </div>
-
-      <div className='flex gap-1 px-container'>
-        {isSelected ? (
-          <>
-            <Button className='flex-1' variant='outline'>
-              수정
-            </Button>
-            <Button className='flex-1' variant='destructive' onClick={removeCarPark}>
-              삭제
-            </Button>
-          </>
-        ) : (
-          <Button className='flex-1' onClick={selectCarPark}>
-            추가하기
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function CarParkSearch() {
-  const [placeList, setPlaceList] = useState<Place[]>();
-  const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
-
-  const { searchHandler } = useSearch((searchValue) => {
-    if (!searchValue) return;
-
-    axios('/api/search/keyword', {
-      params: {
-        query: searchValue,
-      },
-    })
-      .then(({ data }: { data: PlaceSearchRes }) => {
-        setPlaceList(data.documents);
-      })
-      .catch((e) => console.error(e));
-  });
-
-  return (
-    <div className='container fixed inset-0 z-40 bg-white overflow-scroll'>
-      <div className='sticky top-0 flex h-12 items-center gap-3 border-b border-al-border px-container bg-white'>
-        <BackButton onClick={hideCarParkSearch} />
-        <input
-          placeholder='계약한 주차장 검색'
-          className='flex-1 focus:outline-none'
-          autoFocus
-          onChange={searchHandler}
-        />
-      </div>
-
-      <div>
-        {placeList?.map((item) => (
-          <SearchItem key={item.id} item={item} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SearchItem({ item }: { item: Place }) {
-  const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
-  const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
-
-  const handleClickSearchItem = () => {
-    hideCarParkSearch();
-    showCarParkDetail(item);
-  };
-
-  return (
-    <div
-      className='mx-container flex items-center justify-between border-b border-al-border py-container'
-      onClick={handleClickSearchItem}
-    >
-      <div>
-        <p className='text-base font-bold'>{item.place_name}</p>
-        <span className='text-sm text-al-slate'>{item.address_name}</span>
       </div>
       <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
     </div>
