@@ -1,13 +1,15 @@
 import { create } from 'zustand';
 
+import { Place } from '~/types/place';
+
 interface CreateProps {
   step: number;
-  company?: { name: string };
+  company?: Place;
   computed: {
     canMoveToNext: boolean;
   };
   moveStep: (ac: number) => void;
-  selectCompany: (tmp: string) => void;
+  selectCompany: (company?: Place) => void;
 }
 
 export const useCreate = create<CreateProps>((set, get) => ({
@@ -22,5 +24,5 @@ export const useCreate = create<CreateProps>((set, get) => ({
     },
   },
   moveStep: (ac) => set((state) => ({ ...state, step: state.step + ac })),
-  selectCompany: (tmp) => set((state) => ({ ...state, company: { name: tmp } })),
+  selectCompany: (company) => set((state) => ({ ...state, company })),
 }));

@@ -1,4 +1,4 @@
 # alright
 
-- Next.js 13 (with app directories)
+- Next.js 13
 - TailwindCSS
