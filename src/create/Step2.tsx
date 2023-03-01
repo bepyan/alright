@@ -111,19 +111,25 @@ export default function Step2() {
           </div>
         </CustomOverlayMap>
 
-        {nearCarParkList.map((marker) => (
-          <MapMarker
-            key={`icon-${marker.id}`}
-            position={transferPosition(marker)}
-            image={{
-              src: "data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='11.25' fill='%2363C7F1' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M9 17.36H11.072V13.678H12.458C14.684 13.678 16.448 12.628 16.448 10.262C16.448 7.798 14.684 7 12.402 7H9V17.36ZM11.072 12.04V8.652H12.248C13.676 8.652 14.432 9.044 14.432 10.262C14.432 11.438 13.746 12.04 12.318 12.04H11.072Z' fill='white'/%3E%3C/svg%3E%0A",
-              size: {
-                width: 24,
-                height: 24,
-              },
-            }}
-          />
-        ))}
+        {nearCarParkList.map((marker) => {
+          const isSelected = selectedCarParkList.some((v) => v.id === marker.id);
+
+          return (
+            <MapMarker
+              key={`icon-${marker.id}`}
+              position={transferPosition(marker)}
+              image={{
+                src: isSelected
+                  ? "data:image/svg+xml,%3Csvg width='24' height='32' viewBox='0 0 24 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='12' cy='30' rx='4' ry='2' fill='black'/%3E%3Cpath d='M24 12.1519C24 20.8861 12 30 12 30C12 30 0 20.8861 0 12.1519C0 5.44059 5.37258 0 12 0C18.6274 0 24 5.44059 24 12.1519Z' fill='%230C79FE'/%3E%3Cpath d='M16.4784 9.73608L10.8215 15.3929L7.0503 11.6217' stroke='white' stroke-width='2'/%3E%3C/svg%3E%0A"
+                  : "data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='11.25' fill='%2363C7F1' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M9 17.36H11.072V13.678H12.458C14.684 13.678 16.448 12.628 16.448 10.262C16.448 7.798 14.684 7 12.402 7H9V17.36ZM11.072 12.04V8.652H12.248C13.676 8.652 14.432 9.044 14.432 10.262C14.432 11.438 13.746 12.04 12.318 12.04H11.072Z' fill='white'/%3E%3C/svg%3E%0A",
+                size: {
+                  width: 24,
+                  height: 24,
+                },
+              }}
+            />
+          );
+        })}
         {nearCarParkList.map((marker) => (
           <CustomOverlayMap key={`text-${marker.id}`} position={transferPosition(marker)}>
             <div className='relative text-xs font-bold text-shadow-border w-20'>
@@ -149,9 +155,11 @@ export default function Step2() {
       <div className='p-container'>
         <IconTitle icon='CarPark' text='근처 주차장' />
         <div className='mt-container rounded-xl border border-al-border space:border-t'>
-          {nearCarParkList.map((item) => (
-            <CarParkItem key={`place-${item.id}`} item={item} />
-          ))}
+          {nearCarParkList
+            .filter((item) => !selectedCarParkList.some((v) => v.id === item.id))
+            .map((item) => (
+              <CarParkItem key={`place-${item.id}`} item={item} />
+            ))}
         </div>
       </div>
 
