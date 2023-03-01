@@ -1,5 +1,8 @@
 module.exports = {
   root: true,
+  global: {
+    kakao: true,
+  },
   extends: [
     'alloy',
     'alloy/react',

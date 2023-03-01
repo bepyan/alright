@@ -55,5 +55,10 @@ module.exports = {
         { values: theme('textShadow') },
       );
     }),
+    function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-first', '& > :first-child');
+      addVariant('space', '& > :not([hidden]) ~ :not([hidden])');
+    },
   ],
 };
