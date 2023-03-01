@@ -23,16 +23,16 @@ export default function Step1() {
     })
       .then(({ data }: { data: PlaceSearchRes }) => {
         console.log(data);
-        setPlaceList(data.items);
+        setPlaceList(data.documents);
       })
       .catch((e) => console.error(e));
   });
 
-  const selectedValue = useCreate((s) => s.company?.roadAddress);
+  const selectedValue = useCreate((s) => s.company?.id);
   const selectCompany = useCreate((s) => s.selectCompany);
 
   const valueChangeHandler = (value: string) => {
-    const place = placeList.find((v) => v.roadAddress === value);
+    const place = placeList.find((v) => v.id === value);
     selectCompany(place);
   };
 
@@ -57,11 +57,11 @@ export default function Step1() {
 function SearchItem({ place }: { place: Place }) {
   return (
     <div className='mx-container flex items-center justify-between border-b border-al-border py-container'>
-      <Label htmlFor={place.roadAddress} className='w-full'>
-        <div className='text-base font-bold' dangerouslySetInnerHTML={{ __html: place.title }} />
-        <span className='text-sm text-al-slate'>{place.address}</span>
+      <Label htmlFor={place.id} className='w-full'>
+        <div className='text-base font-bold'>{place.place_name}</div>
+        <span className='text-sm text-al-slate'>{place.address_name}</span>
       </Label>
-      <RadioGroupItem value={place.roadAddress} id={place.roadAddress} />
+      <RadioGroupItem value={place.id} id={place.id} />
     </div>
   );
 }

@@ -3,16 +3,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    // https://developers.naver.com/docs/serviceapi/search/local/local.md
+    // https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-keyword
     try {
       const { data } = await axios({
-        url: 'https://openapi.naver.com/v1/search/local.json',
+        url: 'https://dapi.kakao.com/v2/local/search/keyword.json',
         timeout: 3000,
         headers: {
-          'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_CLIENT_ID,
-          'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET,
+          Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
         },
-        params: { display: 10, ...req.query },
+        // https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-keyword-request
+        params: { ...req.query },
       });
 
       res.status(200).json(data);

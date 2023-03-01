@@ -1,25 +1,80 @@
+// developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-keyword-response
 export interface PlaceSearchRes {
-  lastBuildDate: string; // 'Wed, 01 Mar 2023 10:27:27 +0900',
-  total: number;
-  start: number;
-  display: number;
-  items: Place[];
+  meta: {
+    same_name: RegionInfo;
+    /**
+     * total_count 중 노출 가능 문서 수 (최대: 45)
+     */
+    pageable_count: number;
+    total_count: number;
+    is_end: boolean;
+  };
+  documents: Place[];
 }
 
 export interface Place {
-  title: string; // '<b>강동</b>구청';
-  link: string;
-  category: string; // '공공,사회기관>구청';
-  description: string;
-  telephone: string;
+  id: string;
+  place_name: string;
   /**
-   * '서울특별시 강동구 성내동 540'
+   * 중심좌표까지의 거리 (단, x,y 파라미터를 준 경우에만 존재) 단위 meter
+   * ex. '418'
    */
-  address: string;
+  distance: string;
   /**
-   * 서울특별시 강동구 성내로 25 강동구청';
+   * 'http://place.map.kakao.com/26338954'
    */
-  roadAddress: string;
-  mapx: string; // 322753
-  mapy: string; // 547913
+  place_url: string;
+  /**
+   * 전체 지번 주소
+   * ex. '서울 강남구 삼성동 159'
+   */
+  address_name: string;
+  /**
+   * 전체 도로명 주소
+   * ex. '서울 강남구 영동대로 513'
+   */
+  road_address_name: string;
+  /**
+   * '02-6002-1880'
+   */
+  phone: string;
+  /**
+   * '가정,생활 > 문구,사무용품 > 디자인문구 > 카카오프렌즈'
+   */
+  category_name: string;
+  /**
+   * 중요 카테고리만 그룹핑한 카테고리 그룹 코드
+   */
+  category_group_code: string;
+  /**
+   * 중요 카테고리만 그룹핑한 카테고리 그룹명
+   */
+  category_group_name: string;
+  /**
+   * X 좌표값, 경위도인 경우 longitude (경도)
+   * ex.'127.05902969025047'
+   */
+  x: string;
+  /**
+   * Y 좌표값, 경위도인 경우 latitude(위도)
+   * ex. '37.51207412593136'
+   */
+  y: string;
+}
+
+export interface RegionInfo {
+  /**
+   * 질의어에서 인식된 지역의 리스트
+   * ex. '중앙로 맛집' 에서 중앙로에 해당하는 지역 리스트
+   */
+  region: string[];
+  /**
+   * 질의어에서 지역 정보를 제외한 키워드
+   * ex. '중앙로 맛집' 에서 '맛집'
+   */
+  keyword: string;
+  /**
+   * 인식된 지역 리스트 중, 현재 검색에 사용된 지역 정보
+   */
+  selected_region: string;
 }
