@@ -10,7 +10,7 @@ import StepNav from '~/ui/StepNav';
 
 import { useCreate } from './state';
 
-const dummyPlace = {
+const _dummyPlace = {
   address_name: '서울 용산구 한강로2가 98-3',
   category_group_code: 'FD6',
   category_group_name: '음식점',
@@ -26,7 +26,7 @@ const dummyPlace = {
 };
 
 export default function Step1() {
-  const [placeList, setPlaceList] = useState<Place[]>([dummyPlace]);
+  const [placeList, setPlaceList] = useState<Place[]>();
 
   const { searchHandler } = useSearch((searchValue) => {
     if (!searchValue) return;
@@ -47,7 +47,7 @@ export default function Step1() {
   const selectCompany = useCreate((s) => s.selectCompany);
 
   const valueChangeHandler = (value: string) => {
-    const place = placeList.find((v) => v.id === value);
+    const place = placeList?.find((v) => v.id === value);
     selectCompany(place);
   };
 
@@ -60,9 +60,12 @@ export default function Step1() {
       </div>
       <div className='border-t border-al-border'>
         <RadioGroup value={selectedValue} onValueChange={valueChangeHandler}>
-          {placeList.map((place, i) => (
-            <SearchItem key={i} place={place} />
-          ))}
+          {placeList &&
+            (placeList.length ? (
+              placeList.map((place, i) => <SearchItem key={i} place={place} />)
+            ) : (
+              <div className='pt-12 text-center text-al-disabled'>검색 결과가 없습니다.</div>
+            ))}
         </RadioGroup>
       </div>
     </>
