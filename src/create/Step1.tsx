@@ -31,7 +31,7 @@ export default function Step1() {
   const { searchHandler } = useSearch((searchValue) => {
     if (!searchValue) return;
 
-    axios('/api/search', {
+    axios('/api/search/keyword', {
       params: {
         query: searchValue,
       },
