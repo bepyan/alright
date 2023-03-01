@@ -1,8 +1,10 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import { create } from 'zustand';
+import useSearch from '~/lib/useSearch';
 import { transferPosition } from '~/lib/utils';
-import { Place } from '~/types/place';
+import { Place, PlaceSearchRes } from '~/types/place';
 
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
@@ -270,33 +272,63 @@ function CarParkDetail() {
 }
 
 function CarParkSearch() {
+  const [placeList, setPlaceList] = useState<Place[]>();
+  const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
+
+  const { searchHandler } = useSearch((searchValue) => {
+    if (!searchValue) return;
+
+    axios('/api/search/keyword', {
+      params: {
+        query: searchValue,
+      },
+    })
+      .then(({ data }: { data: PlaceSearchRes }) => {
+        setPlaceList(data.documents);
+      })
+      .catch((e) => console.error(e));
+  });
+
+  return (
+    <div className='container fixed inset-0 z-40 bg-white overflow-scroll'>
+      <div className='sticky top-0 flex h-12 items-center gap-3 border-b border-al-border px-container bg-white'>
+        <BackButton onClick={hideCarParkSearch} />
+        <input
+          placeholder='계약한 주차장 검색'
+          className='flex-1 focus:outline-none'
+          autoFocus
+          onChange={searchHandler}
+        />
+      </div>
+
+      <div>
+        {placeList?.map((item) => (
+          <SearchItem key={item.id} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SearchItem({ item }: { item: Place }) {
   const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
 
   const handleClickSearchItem = () => {
     hideCarParkSearch();
-    // showCarParkDetail();
+    showCarParkDetail(item);
   };
 
   return (
-    <div className='container fixed inset-0 z-40 bg-white'>
-      <div className='sticky top-0 flex h-12 items-center gap-3 border-b border-al-border px-container'>
-        <BackButton onClick={hideCarParkSearch} />
-        <input placeholder='계약한 주차장 검색' className='flex-1 focus:outline-none' autoFocus />
-      </div>
-
+    <div
+      className='mx-container flex items-center justify-between border-b border-al-border py-container'
+      onClick={handleClickSearchItem}
+    >
       <div>
-        <div
-          className='mx-container flex items-center justify-between border-b border-al-border py-container'
-          onClick={handleClickSearchItem}
-        >
-          <div>
-            <p className='text-base font-bold'>(주) 오라이 좋아 2</p>
-            <span className='text-sm text-al-slate'>서울 송파구 마천동 215-0</span>
-          </div>
-          <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
-        </div>
+        <p className='text-base font-bold'>{item.place_name}</p>
+        <span className='text-sm text-al-slate'>{item.address_name}</span>
       </div>
+      <Icons.ChevronRight className='h-5 w-5 text-al-disabled' />
     </div>
   );
 }
