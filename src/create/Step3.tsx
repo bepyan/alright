@@ -14,15 +14,15 @@ export default function Step3() {
       </section>
 
       <section className='bg-al-gray-100 px-container pt-16 pb-20'>
-        <h2 className='text-xl font-bold text-center'>업그레이드된 기능 이용해보세요!</h2>
-        <div className='mt-5 bg-white rounded-lg text-center'>
-          <div className='text-al-blue p-container'>
+        <h2 className='text-center text-xl font-bold'>업그레이드된 기능 이용해보세요!</h2>
+        <div className='mt-5 rounded-lg bg-white text-center'>
+          <div className='p-container text-al-blue'>
             <p className='text-lg font-bold'>Pro</p>
-            <div className='text-3xl mt-2'>
+            <div className='mt-2 text-3xl'>
               <b>5천원</b>/월
             </div>
           </div>
-          <div className='border-t border-al-border p-container font-bold text-center'>
+          <div className='border-t border-al-border p-container text-center font-bold'>
             <div>
               광고 제거
               <br />
@@ -30,11 +30,11 @@ export default function Step3() {
               <br />
               자동 주차 할인 서비스 제공
             </div>
-            <Button variant='subtle' className='w-full mt-5'>
+            <Button variant='subtle' className='mt-5 w-full'>
               시작하기
             </Button>
           </div>
-          <div className='p-container'></div>
+          <div className='p-container' />
         </div>
       </section>
     </>

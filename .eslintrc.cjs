@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  global: {
+  globals: {
     kakao: true,
   },
   extends: [
