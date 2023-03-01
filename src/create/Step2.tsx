@@ -13,8 +13,14 @@ const useCarParkDetail = create<{
   hideCarParkDetail: () => void;
 }>((set) => ({
   show: false,
-  showCarParkDetail: () => set((state) => ({ ...state, show: true })),
-  hideCarParkDetail: () => set((state) => ({ ...state, show: false })),
+  showCarParkDetail: () => {
+    document.body.style.overflow = 'hidden';
+    set((state) => ({ ...state, show: true }));
+  },
+  hideCarParkDetail: () => {
+    document.body.style.overflow = '';
+    set((state) => ({ ...state, show: false }));
+  },
 }));
 
 const useCarParkSearch = create<{
@@ -23,8 +29,14 @@ const useCarParkSearch = create<{
   hideCarParkSearch: () => void;
 }>((set) => ({
   show: false,
-  showCarParkSearch: () => set((state) => ({ ...state, show: true })),
-  hideCarParkSearch: () => set((state) => ({ ...state, show: false })),
+  showCarParkSearch: () => {
+    document.body.style.overflow = 'hidden';
+    set((state) => ({ ...state, show: true }));
+  },
+  hideCarParkSearch: () => {
+    document.body.style.overflow = '';
+    set((state) => ({ ...state, show: false }));
+  },
 }));
 
 export default function Step2() {
@@ -135,7 +147,7 @@ function CarParkSearch() {
 
   return (
     <div className='container fixed inset-0 z-40 bg-white'>
-      <div className='flex h-12 items-center gap-3 border-b border-al-border px-container'>
+      <div className='sticky top-0 flex h-12 items-center gap-3 border-b border-al-border px-container'>
         <BackButton onClick={hideCarParkSearch} />
         <input placeholder='계약한 주차장 검색' className='flex-1 focus:outline-none' autoFocus />
       </div>
