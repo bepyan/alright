@@ -1,8 +1,17 @@
+import { toast } from 'react-hot-toast';
+
+import { copyClipboard } from '~/lib/utils';
 import Button from '~/ui/Button';
 import Pictures from '~/ui/Pictures';
 import StepNav from '~/ui/StepNav';
 
 export default function Step3() {
+  const copyHandler = () => {
+    copyClipboard()
+      .then(() => toast('링크가 복사되었습니다!'))
+      .catch(() => toast.error('링크 복사가 실패되었습니다.'));
+  };
+
   return (
     <>
       <section className='p-container pt-3'>
@@ -10,7 +19,9 @@ export default function Step3() {
         <h2 className='mt-3 text-xl font-bold'>주차 정보 링크가 생성되었어요!</h2>
         <p className='mt-1.5 text-al-slate'>링크를 복사해서 업체 소개 페이지에 공유해보세요.</p>
         <Pictures.CarPark className='mx-auto mt-20' />
-        <Button className='mt-20 w-full'>무료로 링크 복사하기</Button>
+        <Button className='mt-20 w-full' onClick={copyHandler}>
+          무료로 링크 복사하기
+        </Button>
       </section>
 
       <section className='bg-al-gray-100 px-container pt-16 pb-20'>

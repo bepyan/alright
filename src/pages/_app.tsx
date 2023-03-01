@@ -2,6 +2,7 @@ import '../styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <title>오리이</title>
       </Head>
       <Component {...pageProps} />
+      <Toaster
+        toastOptions={{
+          position: 'top-center',
+          duration: 3000,
+          style: {
+            fontSize: '14px',
+            background: 'rgba(0, 0, 0, 0.8)',
+            borderRadius: '40px',
+            color: '#FFFFFF',
+          },
+        }}
+      />
     </>
   );
 }
