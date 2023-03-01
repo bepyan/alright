@@ -4,6 +4,7 @@ import { transferPosition } from '~/lib/utils';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import IconTitle from '~/ui/IconTitle';
+import TextArea from '~/ui/TextArea';
 
 import { useCreate } from './state';
 import { useCarParkDetail } from './Step2.state';
@@ -12,6 +13,9 @@ export default function CarParkDetail() {
   const place = useCarParkDetail((s) => s.targetPlace)!;
   const placePosition = transferPosition(place);
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
+
+  const company = useCreate((s) => s.company)!;
+  const companyPosition = transferPosition(company);
 
   const selectedCarParkList = useCreate((s) => s.selectedCarParkList);
   const isSelected = selectedCarParkList.some((v) => v.id === place.id);
@@ -25,7 +29,7 @@ export default function CarParkDetail() {
   });
 
   return (
-    <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white'>
+    <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white pb-12'>
       <div className='container fixed z-50 mt-1.5 ml-3.5'>
         <div className=''>
           <BackButton
@@ -49,6 +53,19 @@ export default function CarParkDetail() {
         <CustomOverlayMap position={placePosition}>
           <div className='mt-4 text-xs font-bold text-shadow-border'>{place.place_name}</div>
         </CustomOverlayMap>
+        <MapMarker
+          position={companyPosition}
+          image={{
+            src: "data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='12' cy='22' rx='4' ry='2' fill='black'/%3E%3Cpath d='M21 8.91139C21 15.3165 12 22 12 22C12 22 3 15.3165 3 8.91139C3 3.98977 7.02944 0 12 0C16.9706 0 21 3.98977 21 8.91139Z' fill='%23F95E5E'/%3E%3C/svg%3E%0A",
+            size: {
+              width: 24,
+              height: 24,
+            },
+          }}
+        />
+        <CustomOverlayMap position={companyPosition}>
+          <div className='mt-4 text-xs font-bold text-shadow-border'>{company.place_name}</div>
+        </CustomOverlayMap>
       </Map>
 
       <div className='p-container'>
@@ -68,6 +85,7 @@ export default function CarParkDetail() {
 
       <div className='p-container'>
         <IconTitle icon='Description' text='기타정보' />
+        <TextArea className='mt-4' placeholder='고객님께 주차 꿀팁을 공유해주세요.' />
       </div>
 
       <div className='flex gap-1 px-container'>
