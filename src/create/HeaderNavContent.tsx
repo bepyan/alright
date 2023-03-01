@@ -8,15 +8,19 @@ import { useCreate } from './state';
 export default function HeaderNavContent() {
   const router = useRouter();
 
+  const MAX_STEP = 3;
   const step = useCreate((s) => s.step);
   const canMoveToNext = useCreate((s) => s.computed.canMoveToNext);
-  const MAX_STEP = 3;
+
+  const selectCompany = useCreate((s) => s.selectCompany);
   const moveStep = useCreate((s) => s.moveStep);
 
   const prevStep = () => {
     if (step === 1) {
       router.back();
       return;
+    } else if (step === 2) {
+      selectCompany(undefined);
     }
 
     moveStep(-1);
