@@ -20,12 +20,11 @@ export const RadioGroupItem = React.forwardRef<
       ref={ref}
       className={cn(
         'h-6 w-6 rounded-full border-1.5 border-al-border focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'data-[state=checked]:border-7 data-[state=checked]:border-al-blue',
         className,
       )}
       {...props}
-    >
-      <RadioGroupPrimitive.Indicator className='flex h-6 w-6 items-center justify-center rounded-full border-7 border-al-blue' />
-    </RadioGroupPrimitive.Item>
+    />
   );
 });
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName;
