@@ -2,7 +2,7 @@ import type { ClassValue } from 'clsx';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { Place } from '~/types/place';
+import { Place } from '~/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

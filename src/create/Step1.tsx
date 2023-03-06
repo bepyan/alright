@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import useSearch from '~/lib/useSearch';
-import { Place, PlaceSearchRes } from '~/types/place';
+import { Place, PlaceSearchRes } from '~/types';
 import Input from '~/ui/Input';
 import Label from '~/ui/Label';
 import { RadioGroup, RadioGroupItem } from '~/ui/RadioGroup';

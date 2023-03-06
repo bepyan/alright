@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Map, MarkerClusterer } from 'react-kakao-maps-sdk';
 
 import { transferPosition } from '~/lib/utils';
-import { Place } from '~/types/place';
+import { Place } from '~/types';
 import { Icons } from '~/ui/Icons';
 import IconTitle from '~/ui/IconTitle';
 import { InputFrame } from '~/ui/Input';

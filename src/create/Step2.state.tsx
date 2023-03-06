@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 
-import { Place } from '~/types/place';
+import { CarParkDetail, Place } from '~/types';
 
 export const useCarParkDetail = create<{
-  targetPlace?: Place;
+  targetPlace?: Place & CarParkDetail;
   computed: { show: boolean };
-  showCarParkDetail: (targetPlace: Place) => void;
+  showCarParkDetail: (targetPlace: Place & CarParkDetail) => void;
   hideCarParkDetail: () => void;
+  editCarPark: (carPark: CarParkDetail) => void;
 }>((set, get) => ({
   computed: {
     get show() {
@@ -15,12 +16,23 @@ export const useCarParkDetail = create<{
   },
   showCarParkDetail: (targetPlace) => {
     document.body.style.overflow = 'hidden';
-    set((state) => ({ ...state, targetPlace }));
+    set((state) => ({
+      ...state,
+      targetPlace: {
+        freeTimeDiscount: '1',
+        ...targetPlace,
+      },
+    }));
   },
   hideCarParkDetail: () => {
     document.body.style.overflow = '';
     set((state) => ({ ...state, targetPlace: undefined }));
   },
+  editCarPark: (carPark) =>
+    set((v) => ({
+      ...v,
+      targetPlace: v.targetPlace ? { ...v.targetPlace, ...carPark } : undefined,
+    })),
 }));
 
 export const useCarParkSearch = create<{

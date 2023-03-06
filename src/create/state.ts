@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-import { Place } from '~/types/place';
+import { CarParkDetail, Place } from '~/types';
 
 interface CreateProps {
   step: number;
   company?: Place;
-  selectedCarParkList: Place[];
+  selectedCarParkList: (Place & CarParkDetail)[];
   computed: {
     canMoveToNext: boolean;
   };
