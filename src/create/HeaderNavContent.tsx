@@ -31,6 +31,7 @@ export default function HeaderNavContent() {
       return;
     }
 
+    window.scrollTo({ top: 0 });
     moveStep(+1);
   };
 
