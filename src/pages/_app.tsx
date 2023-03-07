@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 
+import Fonts from '~/components/Fonts';
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -14,7 +16,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <title>오리이</title>
       </Head>
-      <Component {...pageProps} />
+      <Fonts />
+      <div className='font-sans'>
+        <Component {...pageProps} />
+      </div>
       <Toaster
         toastOptions={{
           position: 'top-center',
