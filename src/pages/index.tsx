@@ -10,9 +10,14 @@ export default function Page() {
 
   return (
     <>
-      <HeaderNav className='flex h-14 items-center justify-between'>
-        <Icons.Logo className='h-6 w-6' />
-        <div onClick={() => router.push('/create')}>주차장 만들기</div>
+      <HeaderNav className='h-14'>
+        <div className='flex items-center gap-2'>
+          <Icons.Logo className='h-6 w-6' />
+          <span className='font-bold'>오라이</span>
+        </div>
+        <Button size='sm' rounded='full' onClick={() => router.push('/create')}>
+          무료로 이용하기
+        </Button>
       </HeaderNav>
       <main className=''>
         <SectionOne />
@@ -26,6 +31,8 @@ export default function Page() {
 }
 
 function SectionOne() {
+  const router = useRouter();
+
   return (
     <div className='bg-al-gray-100 pt-20 text-center'>
       <h2 className='text-3xl font-bold'>
@@ -36,7 +43,7 @@ function SectionOne() {
         간편하게 안내하세요
       </h2>
 
-      <Button size='default' className='mt-8'>
+      <Button rounded='full' className='mt-8' onClick={() => router.push('/create')}>
         무료로 이용하기
       </Button>
 
@@ -48,7 +55,7 @@ function SectionOne() {
 function SectionTwo() {
   return (
     <div className='pt-20'>
-      <div className='px-container'>
+      <div className='px-8'>
         <h2 className='text-3xl font-bold'>
           문자와 업체 정보에
           <br />
@@ -68,7 +75,7 @@ function SectionTwo() {
 function SectionTree() {
   return (
     <div className='pt-20' style={{ backgroundColor: '#EDF3FB' }}>
-      <div className='px-container'>
+      <div className='px-8'>
         <div className='inline-flex h-9 items-center justify-start rounded-lg bg-black px-3'>
           <span className='text-sm font-bold text-white'>PRO요금</span>
         </div>
@@ -90,7 +97,7 @@ function SectionTree() {
 function SectionFour() {
   return (
     <div className='pt-20'>
-      <div className='px-container'>
+      <div className='px-8'>
         <div className='inline-flex h-9 items-center justify-start rounded-lg bg-black px-3'>
           <span className='text-sm font-bold text-white'>PRO요금</span>
         </div>
@@ -100,8 +107,8 @@ function SectionFour() {
           주차할인 서비스
         </h2>
         <p className='mt-3'>
-          직접 주차 할인해드리느라 불편하셨죠? 한번 설정해놓으면 오라이 링크 문자를 받은 손님은
-          자동주차할인을 받을 수 있어요.
+          직접 주차 할인해드리느라 불편하셨죠? <br />
+          한번 설정해놓으면 오라이 링크 문자를 받은 손님은 자동주차할인을 받을 수 있어요.
         </p>
       </div>
 
