@@ -17,9 +17,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <title>오리이</title>
       </Head>
       <Fonts />
-      <div className='font-sans'>
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
       <Toaster
         toastOptions={{
           position: 'top-center',

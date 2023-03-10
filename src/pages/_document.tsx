@@ -11,7 +11,7 @@ export default function MyDocument() {
         />
       </Head>
       <body className='w-full bg-zinc-50 font-sans text-slate-900 antialiased'>
-        <div className='container min-h-screen bg-white'>
+        <div className='container min-h-screen bg-white font-sans'>
           <Main />
         </div>
         <NextScript />

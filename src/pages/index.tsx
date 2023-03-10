@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import useWindowDimensions from '~/lib/useWindowDimensions';
 import Button from '~/ui/Button';
@@ -9,6 +11,10 @@ import Pictures from '~/ui/Pictures';
 export default function Page() {
   const router = useRouter();
 
+  const [page, setPage] = useState(1);
+
+  const { height } = useWindowDimensions();
+
   return (
     <>
       <HeaderNav className='h-14'>
@@ -16,25 +22,51 @@ export default function Page() {
           <Icons.Logo className='h-6 w-6' />
           <span className='font-bold'>오라이</span>
         </div>
-        <Button size='sm' className='rounded-full' onClick={() => router.push('/create')}>
-          무료로 이용하기
-        </Button>
+        <AnimatePresence initial={false}>
+          {page > 1 && (
+            <motion.div
+              key='create-button'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Button size='sm' className='rounded-full' onClick={() => router.push('/create')}>
+                무료로 이용하기
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </HeaderNav>
-      <main>
+      <motion.main
+        className='container fixed overflow-hidden'
+        style={{
+          transform: `translateY(${-(height ?? 0) * (page - 1)}px)`,
+          transition: 'transform 0.9s ease 0s',
+        }}
+        onPanEnd={(_, { offset, velocity }) => {
+          const swipe = Math.abs(offset.y) * velocity.y;
+
+          if (swipe <= -30) {
+            page < 4 && setPage(page + 1);
+          } else if (swipe >= 30) {
+            page > 1 && setPage(page - 1);
+          }
+        }}
+      >
         <SectionOne />
         <SectionTwo />
         <SectionTree />
         <SectionFour />
         {/* <Footer /> */}
-      </main>
+      </motion.main>
     </>
   );
 }
 
 function usePictureSize() {
-  const { width } = useWindowDimensions();
-
-  if (!width) return {};
+  const dimension = useWindowDimensions();
+  const width = Math.min(dimension.width ?? 0, 640);
 
   return { width, height: width / 1.171875 };
 }
