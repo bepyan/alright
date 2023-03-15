@@ -43,6 +43,7 @@ module.exports = {
           border: '#E9EAEC',
           disabled: '#AFB1B5',
           slate: '#697483',
+          'slate-dark': '#474D54',
           black: '#1C1B1F',
         },
       },

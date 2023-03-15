@@ -1,6 +1,8 @@
+import { Place } from './kakaoPlace';
+
 export * from './kakaoPlace';
 
-export interface CarParkDetail {
+export interface CarParkDetailInfo {
   freeTimeDiscount?: string;
   defaultFeeTime?: string;
   defaultFeeAmount?: string;
@@ -14,3 +16,5 @@ export interface CarParkDetail {
   sunEndTime?: string;
   otherInfo?: string;
 }
+
+export type CarParkDetail = Place & CarParkDetailInfo;

@@ -18,6 +18,7 @@ export const buttonVariants = cva(
       size: {
         default: 'h-14 py-2 px-4 text-lg',
         sm: 'h-9 px-4 text-sm',
+        xs: 'h-8 px-4 text-xs',
         min: 'active:opacity-click',
       },
     },
