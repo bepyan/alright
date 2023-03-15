@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import useWindowDimensions from '~/lib/useWindowDimensions';
@@ -9,8 +9,6 @@ import { Icons } from '~/ui/Icons';
 import Pictures from '~/ui/Pictures';
 
 export default function Page() {
-  const router = useRouter();
-
   const [page, setPage] = useState(1);
 
   const { height } = useWindowDimensions();
@@ -31,9 +29,11 @@ export default function Page() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Button size='sm' className='rounded-full' onClick={() => router.push('/create')}>
-                무료로 이용하기
-              </Button>
+              <Link href='/create'>
+                <Button size='sm' className='rounded-full'>
+                  무료로 이용하기
+                </Button>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
@@ -72,8 +72,6 @@ function usePictureSize() {
 }
 
 function SectionOne() {
-  const router = useRouter();
-
   return (
     <div className='flex h-screen flex-col bg-al-gray-100'>
       <h2
@@ -91,13 +89,9 @@ function SectionOne() {
         간편하게 안내하세요
       </h2>
 
-      <Button
-        className='mx-auto rounded-full px-6'
-        onClick={() => router.push('/create')}
-        style={{ marginTop: '12%' }}
-      >
-        무료로 이용하기
-      </Button>
+      <Link className='mx-auto' href='/create' style={{ marginTop: '12%' }}>
+        <Button className='rounded-full px-6'>무료로 이용하기</Button>
+      </Link>
 
       <Pictures.Landing1 className='mx-auto mt-auto' />
     </div>
