@@ -5,8 +5,15 @@ import Button from '~/ui/Button';
 import Pictures from '~/ui/Pictures';
 import StepNav from '~/ui/StepNav';
 
+import { useCreate } from './state';
+
 export default function Step3() {
+  const company = useCreate((s) => s.company);
+  const selectedCarParkList = useCreate((s) => s.selectedCarParkList);
+
   const copyHandler = () => {
+    console.log({ company, selectedCarParkList });
+
     copyClipboard()
       .then(() => toast('링크가 복사되었습니다!'))
       .catch(() => toast.error('링크 복사가 실패되었습니다.'));
