@@ -39,6 +39,8 @@ module.exports = {
           green: '#00DAB3',
           gray: '#EAECEF',
           'gray-100': '#F5F6F8',
+          'gray-7': '#777777',
+          'gray-9': '#999999',
           red: '#F95E5E',
           border: '#E9EAEC',
           disabled: '#AFB1B5',

@@ -54,11 +54,11 @@ export default function Page() {
               text='221대 여유'
             />
           </Map>
-          <FloatButton className='bottom-20' onClick={moveMapPosition}>
+          <FloatButton className='bottom-16 mb-2' onClick={moveMapPosition}>
             <Icons.Locate className='h-6 w-6' />
           </FloatButton>
           <FloatButton>
-            <Icons.RefreshCw className='h-6 w-6' />
+            <Icons.Refresh className='h-6 w-6' />
           </FloatButton>
         </div>
         <div className='fixed bottom-0 h-1/2 w-full overflow-scroll'>
@@ -84,31 +84,14 @@ function FloatButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLBut
   );
 }
 
-function PositionMarker() {
-  return (
-    <svg
-      width='83'
-      height='48'
-      viewBox='0 0 83 48'
-      fill='currentColor'
-      stroke='currentColor'
-      xmlns='http://www.w3.org/2000/svg'
-    >
-      <rect x='1' y='1' width='81' height='30' rx='3' />
-      <text>text</text>
-      <rect x='1' y='1' width='81' height='30' rx='3' stroke-width='2' />
-      <rect x='41' y='30' width='2' height='16' />
-      <circle cx='42' cy='45' r='3' />
-    </svg>
-  );
-}
-
 function MapPlaceMarker({
   text,
   position,
+  variant = 'secondary',
   onClick,
 }: {
   text?: string;
+  variant?: 'primary' | 'secondary' | 'disabled';
   position: {
     lat: number;
     lng: number;
@@ -116,14 +99,35 @@ function MapPlaceMarker({
   onClick?: () => void;
 }) {
   return (
-    <CustomOverlayMap position={position}>
-      <div className='mb-4 rounded border-2 border-al-blue bg-al-blue px-2 py-1.5 text-white'>
-        <div className='w-full whitespace-nowrap break-keep text-center text-sm font-bold'>
-          {text}
-        </div>
+    <CustomOverlayMap position={position} clickable>
+      <div
+        className={cn(
+          'w-full rounded border-2 px-2 py-1.5',
+          'whitespace-nowrap break-keep text-center text-sm font-bold',
+          variant === 'primary' && 'border-al-blue bg-al-blue text-white',
+          variant === 'secondary' && 'border-al-slate bg-white text-black',
+          variant === 'disabled' && 'border-al-gray-9 bg-[#DCDCDC] text-al-gray-7',
+        )}
+        onClick={onClick}
+      >
+        {text}
       </div>
-      <div className='h-4 w-1.5 bg-al-blue' />
-      <div className='h-1.5 w-1.5 rounded bg-al-blue' />
+      <div
+        className={cn(
+          'mx-auto h-2 w-0.5',
+          variant === 'primary' && 'bg-al-blue',
+          variant === 'secondary' && 'bg-al-slate',
+          variant === 'disabled' && 'bg-al-gray-9',
+        )}
+      />
+      <div
+        className={cn(
+          'mx-auto h-2 w-2 rounded',
+          variant === 'primary' && 'bg-al-blue',
+          variant === 'secondary' && 'bg-al-slate',
+          variant === 'disabled' && 'bg-al-gray-9',
+        )}
+      />
     </CustomOverlayMap>
   );
 }
