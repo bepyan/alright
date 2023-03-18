@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-import { CarParkDetail, Place } from '~/types';
+import { CarParkDetail, CarParkDetailInfo } from '~/types';
 
 export const useCarParkDetail = create<{
-  targetPlace?: Place & CarParkDetail;
+  targetPlace?: CarParkDetail;
   computed: { show: boolean };
-  showCarParkDetail: (targetPlace: Place & CarParkDetail) => void;
+  showCarParkDetail: (targetPlace: CarParkDetail) => void;
   hideCarParkDetail: () => void;
-  editCarPark: (carPark: CarParkDetail) => void;
+  editCarPark: (carPark: CarParkDetailInfo) => void;
 }>((set, get) => ({
   computed: {
     get show() {
@@ -19,7 +19,9 @@ export const useCarParkDetail = create<{
     set((state) => ({
       ...state,
       targetPlace: {
-        freeTimeDiscount: '1',
+        freeTimeDiscount: '60',
+        defaultFeeTime: '',
+        additionFeeTime: '',
         ...targetPlace,
       },
     }));

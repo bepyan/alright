@@ -1,6 +1,7 @@
 import { Select } from 'antd';
 import { Map } from 'react-kakao-maps-sdk';
 
+import { renderMinute } from '~/lib/date';
 import { transferPosition } from '~/lib/utils';
 import { type CarParkDetail } from '~/types';
 import BackButton from '~/ui/BackButton';
@@ -69,10 +70,14 @@ export default function CarParkDetail() {
             value={carPark.freeTimeDiscount}
             onSelect={(value) => editCarPark({ freeTimeDiscount: value })}
             options={[
-              { value: '1', label: '1시간' },
-              { value: '2', label: '2시간' },
-              { value: '3', label: '3시간' },
-              { value: '4', label: '4시간', disabled: true },
+              {
+                value: '',
+                label: '없음',
+              },
+              ...[15, 30, 45, 60, 90, 120, 150, 180].map((minute) => ({
+                value: String(minute),
+                label: renderMinute(minute),
+              })),
             ]}
           />
         </div>
@@ -84,10 +89,14 @@ export default function CarParkDetail() {
               value={carPark.defaultFeeTime}
               onSelect={(value) => editCarPark({ defaultFeeTime: value })}
               options={[
-                { value: '5', label: '5분' },
-                { value: '10', label: '10분' },
-                { value: '30', label: '30분' },
-                { value: '60', label: '1시간', disabled: true },
+                {
+                  value: '',
+                  label: '없음',
+                },
+                ...[5, 10, 15, 20, 30, 45, 60].map((minute) => ({
+                  value: String(minute),
+                  label: renderMinute(minute),
+                })),
               ]}
             />
             <Select
@@ -110,10 +119,14 @@ export default function CarParkDetail() {
               value={carPark.additionFeeTime}
               onSelect={(value) => editCarPark({ additionFeeTime: value })}
               options={[
-                { value: '5', label: '5분' },
-                { value: '10', label: '10분' },
-                { value: '30', label: '30분' },
-                { value: '60', label: '1시간', disabled: true },
+                {
+                  value: '',
+                  label: '없음',
+                },
+                ...[5, 10, 15, 20, 30, 45, 60].map((minute) => ({
+                  value: String(minute),
+                  label: renderMinute(minute),
+                })),
               ]}
             />
             <Select
