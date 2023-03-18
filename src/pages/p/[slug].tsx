@@ -40,9 +40,14 @@ export default function Page() {
   };
 
   return (
-    <>
-      <div className='container'>
-        <div className='container fixed top-0 h-1/2'>
+    <div className='container fixed inset-0 overflow-hidden'>
+      <div
+        className={cn(
+          'container absolute inset-0 transition-transform',
+          isShowCarParkDetail ? '-translate-x-full' : 'translate-x-0',
+        )}
+      >
+        <div className='relative h-1/2'>
           <Map center={companyPosition} level={2} className='h-full w-full' onCreate={setMap}>
             {currentPosition && <MapMarker position={currentPosition} type='currentPlace' />}
             <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
@@ -54,21 +59,28 @@ export default function Page() {
               text='221대 여유'
             />
           </Map>
-          <FloatButton className='bottom-16 mb-2' onClick={moveMapPosition}>
+          <FloatButton className='bottom-20' onClick={moveMapPosition}>
             <Icons.Locate className='h-6 w-6' />
           </FloatButton>
           <FloatButton>
             <Icons.Refresh className='h-6 w-6' />
           </FloatButton>
         </div>
-        <div className='fixed bottom-0 h-1/2 w-full overflow-scroll'>
+        <div className='h-1/2 w-full overflow-scroll'>
           {carParkList.map((item) => (
             <CarParkListItem key={item.id} item={item} />
           ))}
         </div>
       </div>
-      {isShowCarParkDetail && <ParkDetail />}
-    </>
+      <div
+        className={cn(
+          'container absolute inset-0 transition-transform',
+          isShowCarParkDetail ? 'translate-x-0' : 'translate-x-full',
+        )}
+      >
+        <ParkDetail />
+      </div>
+    </div>
   );
 }
 

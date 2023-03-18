@@ -7,17 +7,19 @@ import Separator from '~/ui/Separator';
 import { useCarParkDetail } from './state';
 
 export default function ParkDetail() {
-  const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
+  const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark);
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
 
   return (
-    <div className='fixed inset-0 z-40 overflow-scroll bg-white'>
+    <div className='h-full overflow-scroll bg-white'>
       <HeaderNav className='h-14'>
         <BackButton onClick={hideCarParkDetail} />
       </HeaderNav>
 
       <div className='flex flex-col bg-al-gray-100 p-container'>
-        <h1 className='mt-5 self-center text-2xl font-bold'>{selectedCarPark.place_name}</h1>
+        <h1 className='mt-5 self-center text-2xl font-bold'>
+          {selectedCarPark?.place_name ?? '...'}
+        </h1>
         <div className='mt-5 flex h-[100px] items-center rounded-lg bg-white'>
           <div className='flex-1 text-center font-bold text-al-blue'>
             <div className='text-2xl'>{117}</div>
@@ -98,6 +100,47 @@ export default function ParkDetail() {
                 <div className='ml-auto'>24시간</div>
               </div>
             </div>
+          </div>
+
+          <div className='py-4'>
+            <div className='mb-4 flex items-center gap-1'>
+              <Icons.File className='text-al-slate-dark' />
+              <div className='text-base font-bold'>기타 정보</div>
+            </div>
+            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
+              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
+              *월정기권 요금안내 (주간35,000원, 야간25,000원)
+            </pre>
+          </div>
+          <div className='py-4'>
+            <div className='mb-4 flex items-center gap-1'>
+              <Icons.File className='text-al-slate-dark' />
+              <div className='text-base font-bold'>기타 정보</div>
+            </div>
+            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
+              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
+              *월정기권 요금안내 (주간35,000원, 야간25,000원)
+            </pre>
+          </div>
+          <div className='py-4'>
+            <div className='mb-4 flex items-center gap-1'>
+              <Icons.File className='text-al-slate-dark' />
+              <div className='text-base font-bold'>기타 정보</div>
+            </div>
+            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
+              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
+              *월정기권 요금안내 (주간35,000원, 야간25,000원)
+            </pre>
+          </div>
+          <div className='py-4'>
+            <div className='mb-4 flex items-center gap-1'>
+              <Icons.File className='text-al-slate-dark' />
+              <div className='text-base font-bold'>기타 정보</div>
+            </div>
+            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
+              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
+              *월정기권 요금안내 (주간35,000원, 야간25,000원)
+            </pre>
           </div>
 
           <div className='py-4'>

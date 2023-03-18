@@ -23,11 +23,10 @@ export const useCarParkDetail = create<CreateProps>((set, get) => ({
     },
   },
   showCarParkDetail: (carPark) => {
-    document.body.style.overflow = 'hidden';
+    // TODO: 클릭시 최상단 스크롤 되도록
     set((state) => ({ ...state, selectedCarPark: carPark }));
   },
   hideCarParkDetail: () => {
-    document.body.style.overflow = '';
     set((state) => ({ ...state, selectedCarPark: undefined }));
   },
 }));
