@@ -14,7 +14,7 @@ export default function CarParkListItem({ item }: CarParkListItemProps) {
   };
 
   return (
-    <div className='flex items-center justify-between p-container' onClick={clickHandler}>
+    <div className='flex items-center justify-between p-container'>
       <div className='space:mt-1'>
         <div className='inline-flex h-6 items-center rounded bg-al-green px-1.5 text-xs font-bold text-white'>
           무료/할인
@@ -27,7 +27,10 @@ export default function CarParkListItem({ item }: CarParkListItemProps) {
           <span className='text-al-slate'>217대 전체</span>
         </div>
       </div>
-      <div className='flex h-8 w-8 items-center justify-center rounded-full bg-al-blue text-white'>
+      <button
+        className='flex h-8 w-8 items-center justify-center rounded-full bg-al-blue text-white'
+        onClick={clickHandler}
+      >
         <svg
           width='12'
           height='12'
@@ -40,7 +43,7 @@ export default function CarParkListItem({ item }: CarParkListItemProps) {
             fill='white'
           />
         </svg>
-      </div>
+      </button>
     </div>
   );
 }

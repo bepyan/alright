@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 
+import { _dummyCarPark, _dummyPlace } from '~/lib/dump';
 import { CarParkDetail, Place } from '~/types';
 
 interface CreateProps {
-  company?: Place;
+  company: Place;
   carParkList: CarParkDetail[];
   selectedCarPark?: CarParkDetail;
   computed: {
@@ -14,8 +15,8 @@ interface CreateProps {
 }
 
 export const useCarParkDetail = create<CreateProps>((set, get) => ({
-  company: undefined,
-  carParkList: [],
+  company: _dummyPlace,
+  carParkList: [...Array(7)].map((_, i) => ({ ..._dummyCarPark, id: _dummyCarPark.id + i })),
   computed: {
     get isShowCarParkDetail() {
       return Boolean(get().selectedCarPark);

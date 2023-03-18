@@ -22,11 +22,15 @@ const markerType = {
     src: `data:image/svg+xml,%3Csvg width='24' height='32' viewBox='0 0 24 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse opacity='0.3' cx='12' cy='30' rx='4' ry='2' fill='black'/%3E%3Cpath d='M24 12.1519C24 20.8861 12 30 12 30C12 30 0 20.8861 0 12.1519C0 5.44059 5.37258 0 12 0C18.6274 0 24 5.44059 24 12.1519Z' fill='%230C79FE'/%3E%3Cpath d='M16.4784 9.73608L10.8215 15.3929L7.0503 11.6217' stroke='white' stroke-width='2'/%3E%3C/svg%3E%0A`,
     size: 24,
   },
+  currentPlace: {
+    src: `data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle opacity='0.3' cx='20' cy='20' r='20' fill='%23F95E5E'/%3E%3Cg filter='url(%23filter0_d_512_4405)'%3E%3Ccircle cx='20' cy='20' r='10' fill='%23F95E5E'/%3E%3Ccircle cx='20' cy='20' r='8.5' stroke='white' stroke-width='3'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_d_512_4405' x='6' y='8' width='28' height='28' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E%3CfeOffset dy='2'/%3E%3CfeGaussianBlur stdDeviation='2'/%3E%3CfeComposite in2='hardAlpha' operator='out'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_512_4405'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_512_4405' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E%0A`,
+    size: 40,
+  },
 };
 
 export interface MapMarkerProps {
   type: keyof typeof markerType;
-  text: string;
+  text?: string;
   position: {
     lat: number;
     lng: number;
@@ -48,7 +52,11 @@ export default function MapMarker({ type, text, position, onClick }: MapMarkerPr
         onClick={onClick}
       />
       <div className='relative w-24 text-xs font-bold text-shadow-border' onClick={onClick}>
-        <div className='absolute top-1 w-full whitespace-normal break-keep text-center'>{text}</div>
+        {text && (
+          <div className='absolute top-1 w-full whitespace-normal break-keep text-center'>
+            {text}
+          </div>
+        )}
       </div>
     </CustomOverlayMap>
   );
