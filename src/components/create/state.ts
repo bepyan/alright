@@ -5,7 +5,7 @@ import { CarParkDetail, Place } from '~/types';
 interface CreateProps {
   step: number;
   company?: Place;
-  selectedCarParkList: (Place & CarParkDetail)[];
+  selectedCarParkList: CarParkDetail[];
   computed: {
     canMoveToNext: boolean;
   };

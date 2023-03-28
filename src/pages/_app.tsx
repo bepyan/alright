@@ -3,8 +3,11 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Fonts from '~/components/Fonts';
+
+const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -17,7 +20,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <title>오리이</title>
       </Head>
       <Fonts />
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
       <Toaster
         toastOptions={{
           position: 'top-center',

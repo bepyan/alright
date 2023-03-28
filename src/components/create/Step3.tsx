@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { copyClipboard } from '~/lib/utils';
@@ -5,15 +6,25 @@ import Button from '~/ui/Button';
 import Pictures from '~/ui/Pictures';
 import StepNav from '~/ui/StepNav';
 
-import { useCreate } from './state';
+import usePostData from './usePostData';
 
 export default function Step3() {
-  const company = useCreate((s) => s.company);
-  const selectedCarParkList = useCreate((s) => s.selectedCarParkList);
+  const mutation = usePostData();
+
+  useEffect(() => {
+    mutation.mutate();
+  }, []);
+
+  if (mutation.isLoading) {
+    return <>로딩중...</>;
+  }
+
+  if (mutation.isError) {
+    return <>error</>;
+  }
 
   const copyHandler = () => {
-    console.log({ company, selectedCarParkList });
-
+    console.log(mutation.data);
     copyClipboard()
       .then(() => toast('링크가 복사되었습니다!'))
       .catch(() => toast.error('링크 복사가 실패되었습니다.'));
