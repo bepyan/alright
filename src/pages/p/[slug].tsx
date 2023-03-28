@@ -28,7 +28,7 @@ export default function Page() {
   const company = useCarParkDetail((s) => s.company);
   const companyPosition = transferPosition(company);
   const carParkList = useCarParkDetail((s) => s.carParkList);
-  const isShowCarParkDetail = useCarParkDetail((s) => s.computed.isShowCarParkDetail);
+  const isShowCarParkDetail = useCarParkDetail((s) => s.isShowCarParkDetail);
 
   const currentPosition = useCurrentGeolocation();
   const [map, setMap] = useState<kakao.maps.Map>();
@@ -51,13 +51,9 @@ export default function Page() {
           <Map center={companyPosition} level={2} className='h-full w-full' onCreate={setMap}>
             {currentPosition && <MapMarker position={currentPosition} type='currentPlace' />}
             <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
-            <MapPlaceMarker
-              position={{
-                lat: 37.5312061331283,
-                lng: 126.971150136434,
-              }}
-              text='221대 여유'
-            />
+            {carParkList.map((item) => (
+              <MapPlaceMarker key={item.id} position={transferPosition(item)} text='P' />
+            ))}
           </Map>
           <FloatButton className='bottom-20' onClick={moveMapPosition}>
             <Icons.Locate className='h-6 w-6' />

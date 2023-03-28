@@ -1,3 +1,5 @@
+import { useCurrentGeolocation } from '~/lib/useGeolocation';
+import { CarParkDetail } from '~/types';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import HeaderNav from '~/ui/HeaderNav';
@@ -6,7 +8,7 @@ import Separator from '~/ui/Separator';
 
 import { useCarParkDetail } from './state';
 
-export default function ParkDetail() {
+export default function ParkDetailLayout() {
   const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark);
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
 
@@ -15,11 +17,47 @@ export default function ParkDetail() {
       <HeaderNav className='h-14'>
         <BackButton onClick={hideCarParkDetail} />
       </HeaderNav>
+      {selectedCarPark && <ParkDetail selectedCarPark={selectedCarPark} />}
+    </div>
+  );
+}
 
+function ParkDetail({ selectedCarPark }: { selectedCarPark: CarParkDetail }) {
+  const company = useCarParkDetail((s) => s.company);
+  const currentPosition = useCurrentGeolocation();
+
+  const navToKakaoMap = () => {
+    location.href = `kakaomap://look?p=${selectedCarPark.y},${selectedCarPark.x}`;
+    // window.open(
+    //   `https://map.kakao.com/link/map/${selectedCarPark.place_name},${selectedCarPark.y},${selectedCarPark.x}`,
+    //   '_ blank',
+    // );
+  };
+
+  const navToPark = () => {
+    window.open(
+      `kakaomap://route?sp=${currentPosition?.lat},${currentPosition?.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`,
+    );
+    // window.open(
+    //   `https://map.kakao.com/link/map/${selectedCarPark.place_name},${selectedCarPark.y},${selectedCarPark.x}`,
+    //   '_ blank',
+    // );
+  };
+
+  const navToCompany = () => {
+    window.open(
+      `kakaomap://route?sp=${selectedCarPark.y},${selectedCarPark.x}&ep=${company.y},${company.x}&by=FOOT`,
+    );
+    // window.open(
+    //   `https://map.kakao.com/?sName=${selectedCarPark.place_name}&eName=${company.place_name}`,
+    //   '_ blank',
+    // );
+  };
+
+  return (
+    <>
       <div className='flex flex-col bg-al-gray-100 p-container'>
-        <h1 className='mt-5 self-center text-2xl font-bold'>
-          {selectedCarPark?.place_name ?? '...'}
-        </h1>
+        <h1 className='mt-5 self-center text-2xl font-bold'>{selectedCarPark.place_name}</h1>
         <div className='mt-5 flex h-[100px] items-center rounded-lg bg-white'>
           <div className='flex-1 text-center font-bold text-al-blue'>
             <div className='text-2xl'>{117}</div>
@@ -31,28 +69,42 @@ export default function ParkDetail() {
             <div className='text-sm'>전체</div>
           </div>
         </div>
-        <Button className='mt-3'>길찾기</Button>
+        <Button className='mt-3' onClick={navToPark}>
+          길찾기
+        </Button>
       </div>
 
       <div className='bg-white py-2'>
-        <div className='flex items-center py-2 px-5'>
-          <Icons.Phone className='text-al-slate' />
-          <div className='ml-1 text-sm'>02-430-7240</div>
-          <Button className='ml-auto rounded-full' size='xs' variant='subtle'>
-            전화하기
-          </Button>
-        </div>
+        {selectedCarPark.phone && (
+          <div className='flex items-center py-2 px-5'>
+            <Icons.Phone className='text-al-slate' />
+            <div className='ml-1 text-sm'>{selectedCarPark.phone}</div>
+            <Button className='ml-auto rounded-full' size='xs' variant='subtle'>
+              전화하기
+            </Button>
+          </div>
+        )}
         <div className='flex items-center py-2 px-5'>
           <Icons.Location className='text-al-slate' />
-          <div className='ml-1 text-sm'>서울 송파구 마천동 215-0</div>
-          <Button className='ml-auto rounded-full' size='xs' variant='subtle'>
+          <div className='ml-1 text-sm'>{selectedCarPark.address_name}</div>
+          <Button
+            className='ml-auto rounded-full'
+            size='xs'
+            variant='subtle'
+            onClick={navToKakaoMap}
+          >
             지도보기
           </Button>
         </div>
         <div className='flex items-center py-2 px-5'>
-          <Icons.Location className='text-al-slate' />
+          <Icons.Route className='text-al-slate' />
           <div className='ml-1 text-sm'>걸어서 업체가는 방법</div>
-          <Button className='ml-auto rounded-full' size='xs' variant='subtle'>
+          <Button
+            className='ml-auto rounded-full'
+            size='xs'
+            variant='subtle'
+            onClick={navToCompany}
+          >
             카카오맵
           </Button>
         </div>
@@ -108,53 +160,11 @@ export default function ParkDetail() {
               <div className='text-base font-bold'>기타 정보</div>
             </div>
             <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
-              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
-              *월정기권 요금안내 (주간35,000원, 야간25,000원)
-            </pre>
-          </div>
-          <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.File className='text-al-slate-dark' />
-              <div className='text-base font-bold'>기타 정보</div>
-            </div>
-            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
-              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
-              *월정기권 요금안내 (주간35,000원, 야간25,000원)
-            </pre>
-          </div>
-          <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.File className='text-al-slate-dark' />
-              <div className='text-base font-bold'>기타 정보</div>
-            </div>
-            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
-              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
-              *월정기권 요금안내 (주간35,000원, 야간25,000원)
-            </pre>
-          </div>
-          <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.File className='text-al-slate-dark' />
-              <div className='text-base font-bold'>기타 정보</div>
-            </div>
-            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
-              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
-              *월정기권 요금안내 (주간35,000원, 야간25,000원)
-            </pre>
-          </div>
-
-          <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.File className='text-al-slate-dark' />
-              <div className='text-base font-bold'>기타 정보</div>
-            </div>
-            <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
-              주차장 운영시간 및 요금정보는 실제와 다를 수 있으며, 현장 확인 후 이용바랍니다.
-              *월정기권 요금안내 (주간35,000원, 야간25,000원)
+              {selectedCarPark.otherInfo ?? '없음'}
             </pre>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

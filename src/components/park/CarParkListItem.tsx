@@ -19,12 +19,12 @@ export default function CarParkListItem({ item }: CarParkListItemProps) {
         <div className='inline-flex h-6 items-center rounded bg-al-green px-1.5 text-xs font-bold text-white'>
           무료/할인
         </div>
-        <div className='font-bold'>마천2동 공영주차장</div>
-        <div className='text-sm text-al-slate'>서울 송파구 마천동 215-0</div>
+        <div className='font-bold'>{item.place_name}</div>
+        <div className='text-sm text-al-slate'>{item.address_name}</div>
         <div className='flex items-center text-sm'>
-          <span className='font-bold text-al-blue'>26대 여유</span>
+          <span className='font-bold text-al-blue'>{26}대 여유</span>
           <span className='mx-1.5 mt-0.5 h-3 w-[1px] bg-[#C7CFD9]' />
-          <span className='text-al-slate'>217대 전체</span>
+          <span className='text-al-slate'>{100}대 전체</span>
         </div>
       </div>
       <button
