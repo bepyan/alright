@@ -41,7 +41,11 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: CarParkDetail }) {
 
   const navToPark = () => {
     if (isMobile) {
-      location.href = `kakaomap://route?sp=${currentPosition?.lat},${currentPosition?.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`;
+      if (currentPosition) {
+        location.href = `kakaomap://route?sp=${currentPosition.lat},${currentPosition.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`;
+      } else {
+        location.href = `kakaomap://place?id=${selectedCarPark.id}`;
+      }
     } else {
       window.open(`https://map.kakao.com/link/to/${selectedCarPark.id}`, '_ blank');
     }
