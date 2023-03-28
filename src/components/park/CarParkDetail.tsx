@@ -1,3 +1,5 @@
+import { isMobile } from 'react-device-detect';
+
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
 import { CarParkDetail } from '~/types';
 import BackButton from '~/ui/BackButton';
@@ -27,31 +29,30 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: CarParkDetail }) {
   const currentPosition = useCurrentGeolocation();
 
   const navToKakaoMap = () => {
-    location.href = `kakaomap://look?p=${selectedCarPark.y},${selectedCarPark.x}`;
-    // window.open(
-    //   `https://map.kakao.com/link/map/${selectedCarPark.place_name},${selectedCarPark.y},${selectedCarPark.x}`,
-    //   '_ blank',
-    // );
+    if (isMobile) {
+      location.href = `kakaomap://look?p=${selectedCarPark.y},${selectedCarPark.x}`;
+    } else {
+      window.open(
+        `https://map.kakao.com/link/map/${selectedCarPark.place_name},${selectedCarPark.y},${selectedCarPark.x}`,
+        '_ blank',
+      );
+    }
   };
 
   const navToPark = () => {
-    window.open(
-      `kakaomap://route?sp=${currentPosition?.lat},${currentPosition?.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`,
-    );
-    // window.open(
-    //   `https://map.kakao.com/link/map/${selectedCarPark.place_name},${selectedCarPark.y},${selectedCarPark.x}`,
-    //   '_ blank',
-    // );
+    if (isMobile) {
+      location.href = `kakaomap://route?sp=${currentPosition?.lat},${currentPosition?.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`;
+    } else {
+      window.open(`https://map.kakao.com/link/to/${selectedCarPark.id}`, '_ blank');
+    }
   };
 
   const navToCompany = () => {
-    window.open(
-      `kakaomap://route?sp=${selectedCarPark.y},${selectedCarPark.x}&ep=${company.y},${company.x}&by=FOOT`,
-    );
-    // window.open(
-    //   `https://map.kakao.com/?sName=${selectedCarPark.place_name}&eName=${company.place_name}`,
-    //   '_ blank',
-    // );
+    if (isMobile) {
+      location.href = `kakaomap://route?sp=${selectedCarPark.y},${selectedCarPark.x}&ep=${company.y},${company.x}&by=FOOT`;
+    } else {
+      window.open(`https://map.kakao.com/link/to/${company.id}`, '_ blank');
+    }
   };
 
   return (

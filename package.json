@@ -17,6 +17,7 @@
     "lucide-react": "0.115.0",
     "next": "latest",
     "react": "18.2.0",
+    "react-device-detect": "2.2.3",
     "react-dom": "18.2.0",
     "react-hot-toast": "2.4.0",
     "react-kakao-maps-sdk": "1.1.6",
