@@ -12,8 +12,8 @@ export default function handler(
       const hashCode = req.query.hashCode as string;
       getParkingLot(hashCode).then(function (foundAlright) {
         res.status(200).json({
-          data: foundAlright,
-          hashCode
+          message: "Search Complete!",
+          data: foundAlright
         })
       })
 
