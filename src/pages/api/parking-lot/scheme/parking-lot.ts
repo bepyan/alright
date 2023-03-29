@@ -1,6 +1,32 @@
-import { Schema, model } from 'mongoose';
+import { Schema, InferSchemaType, model  } from 'mongoose';
 
-const parkingLotScheme = new Schema({
+interface ParkingLotInfo {
+    freeTimeDiscount:  string,
+    defaultFeeTime:  string,
+    defaultFeeAmount:  string,
+    additionFeeTime:  string,
+    additionFeeAmount:  string,
+    weekdaysStartTime:  string,
+    weekdaysEndTime:  string,
+    satStartTime:  string,
+    satEndTime:  string,
+    sunStartTime:  string,
+    sunEndTime:  string,
+    otherInfo:  string,
+    place_name:  string,
+    distance:  string,
+    place_url:  string,
+    address_name:  string,
+    road_address_name:  string,
+    phone:  string,
+    category_name:  string,
+    category_group_code:  string,
+    category_group_name:  string,
+    x:  string,
+    y:  string
+}
+
+const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
     freeTimeDiscount: {
         type : String
     },
@@ -107,7 +133,14 @@ const parkingLotScheme = new Schema({
     }
 });
 
-const alrightscheme = new Schema({
+interface Alright {
+    address : string,
+    createdDate : Date,
+    hashCode : string,
+    parkingLots: Array<ParkingLotInfo>
+}
+
+const alrightScheme = new Schema<Alright>({
     address : {
         type : String, 
         required: true
@@ -120,7 +153,9 @@ const alrightscheme = new Schema({
         type : String, 
         required: true
     },
-    parkingLots: [parkingLotScheme]
+    parkingLots: [ParkingLotInfoScheme]
 });
 
-exports.Alright =  model('Alright', alrightscheme);
+const Alright = model<Alright>('User', alrightScheme);
+
+export { Alright }
