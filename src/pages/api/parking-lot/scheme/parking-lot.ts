@@ -1,4 +1,4 @@
-import { Schema, InferSchemaType, model  } from 'mongoose';
+import { Schema, InferSchemaType, model, models } from 'mongoose';
 
 interface ParkingLotInfo {
     freeTimeDiscount:  string,
@@ -153,9 +153,7 @@ const alrightScheme = new Schema<Alright>({
         type : String, 
         required: true
     },
-    parkingLots: [ParkingLotInfoScheme]
+    parkingLots: [parkingLotInfoScheme]
 });
-
-const Alright = model<Alright>('User', alrightScheme);
-
+var Alright = models.Alright || model<Alright>('Alright', alrightScheme)
 export { Alright }
