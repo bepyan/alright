@@ -18,8 +18,7 @@ export default function Page() {
     <>
       <HeaderNav className='h-14'>
         <div className='flex items-center gap-2'>
-          <Icons.Logo className='h-6 w-6' />
-          <span className='font-bold'>오라이</span>
+          <Icons.LogoFull />
         </div>
         <AnimatePresence initial={false}>
           {page > 1 && (
