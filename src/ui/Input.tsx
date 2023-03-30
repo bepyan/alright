@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...pr
     >
       <Icons.Search className='h-4 w-4 text-al-disabled' />
       <input
-        className='bg-transparent flex-1 placeholder:text-al-disabled focus:outline-none disabled:cursor-not-allowed'
+        className='flex-1 bg-transparent placeholder:text-al-disabled focus:outline-none disabled:cursor-not-allowed'
         ref={ref}
         {...props}
       />
