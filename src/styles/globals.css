@@ -28,3 +28,7 @@ body {
     transform: rotate(1turn);
   }
 }
+
+.ant-btn-primary {
+  background-color: #0c79fe;
+}

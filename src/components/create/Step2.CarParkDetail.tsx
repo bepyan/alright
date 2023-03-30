@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Input, Select } from 'antd';
 import { Map } from 'react-kakao-maps-sdk';
 
 import { renderMinute } from '~/lib/date';
@@ -16,6 +16,9 @@ import { useCarParkDetail } from './Step2.state';
 
 export default function CarParkDetail() {
   const carPark = useCarParkDetail((s) => s.targetPlace)!;
+  const weekdaysTime = useCarParkDetail((s) => s.computed.weekdaysTime);
+  const satTime = useCarParkDetail((s) => s.computed.satTime);
+  const sunTime = useCarParkDetail((s) => s.computed.sunTime);
   const carParkPosition = transferPosition(carPark);
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
   const editCarPark = useCarParkDetail((s) => s.editCarPark);
@@ -30,6 +33,11 @@ export default function CarParkDetail() {
 
   const selectCarPark = useCreate((s) => () => {
     s.selectCarPark(carPark);
+    hideCarParkDetail();
+  });
+
+  const updateCarPark = useCreate((s) => () => {
+    s.updateCarPark(carPark);
     hideCarParkDetail();
   });
 
@@ -74,70 +82,50 @@ export default function CarParkDetail() {
                 value: '',
                 label: '없음',
               },
-              ...[15, 30, 45, 60, 90, 120, 150, 180].map((minute) => ({
-                value: String(minute),
-                label: renderMinute(minute),
-              })),
+              ...[...new Array(24 * 2)]
+                .map((_, i) => (i + 1) * 30)
+                .map((minute) => ({
+                  value: String(minute),
+                  label: renderMinute(minute),
+                })),
             ]}
           />
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-sm'>기본 요금(시간)</span>
           <div className='flex items-center gap-2'>
-            <Select
-              style={{ width: 80 }}
+            <Input
+              className='w-20'
+              inputMode='numeric'
               value={carPark.defaultFeeTime}
-              onSelect={(value) => editCarPark({ defaultFeeTime: value })}
-              options={[
-                {
-                  value: '',
-                  label: '없음',
-                },
-                ...[5, 10, 15, 20, 30, 45, 60].map((minute) => ({
-                  value: String(minute),
-                  label: renderMinute(minute),
-                })),
-              ]}
+              onChange={(e) => editCarPark({ defaultFeeTime: e.target.value })}
+              suffix='분'
             />
-            <Select
-              style={{ width: 80 }}
+            <Input
+              className='w-20'
+              inputMode='numeric'
               value={carPark.defaultFeeAmount}
-              onSelect={(value) => editCarPark({ defaultFeeAmount: value })}
-              options={[
-                { value: '50', label: '50원' },
-                { value: '100', label: '100원' },
-                { value: '200', label: '200원' },
-              ]}
+              onChange={(e) => editCarPark({ defaultFeeAmount: e.target.value })}
+              suffix='원'
             />
           </div>
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-sm'>추가 요금(시간)</span>
           <div className='flex items-center gap-2'>
-            <Select
-              style={{ width: 80 }}
+            <Input
+              className='w-20'
+              inputMode='numeric'
               value={carPark.additionFeeTime}
-              onSelect={(value) => editCarPark({ additionFeeTime: value })}
-              options={[
-                {
-                  value: '',
-                  label: '없음',
-                },
-                ...[5, 10, 15, 20, 30, 45, 60].map((minute) => ({
-                  value: String(minute),
-                  label: renderMinute(minute),
-                })),
-              ]}
+              onChange={(e) => editCarPark({ additionFeeTime: e.target.value })}
+              suffix='분'
             />
-            <Select
-              style={{ width: 80 }}
+            <Input
+              className='w-20'
+              inputMode='numeric'
               value={carPark.additionFeeAmount}
-              onSelect={(value) => editCarPark({ additionFeeAmount: value })}
-              options={[
-                { value: '50', label: '50원' },
-                { value: '100', label: '100원' },
-                { value: '200', label: '200원' },
-              ]}
+              onChange={(e) => editCarPark({ additionFeeAmount: e.target.value })}
+              suffix='원'
             />
           </div>
         </div>
@@ -148,6 +136,7 @@ export default function CarParkDetail() {
         <div className='flex items-center justify-between'>
           <span className='text-sm'>평일</span>
           <RangePicker
+            defaultValue={weekdaysTime}
             onChange={(v) =>
               editCarPark({
                 weekdaysStartTime: v?.[0]?.format('HH:mm'),
@@ -159,10 +148,11 @@ export default function CarParkDetail() {
         <div className='flex items-center justify-between'>
           <span className='text-sm'>토요일</span>
           <RangePicker
+            defaultValue={satTime}
             onChange={(v) =>
               editCarPark({
-                weekdaysStartTime: v?.[0]?.format('HH:mm'),
-                weekdaysEndTime: v?.[1]?.format('HH:mm'),
+                satStartTime: v?.[0]?.format('HH:mm'),
+                satEndTime: v?.[1]?.format('HH:mm'),
               })
             }
           />
@@ -170,10 +160,11 @@ export default function CarParkDetail() {
         <div className='flex items-center justify-between'>
           <span className='text-sm'>일요일</span>
           <RangePicker
+            defaultValue={sunTime}
             onChange={(v) =>
               editCarPark({
-                weekdaysStartTime: v?.[0]?.format('HH:mm'),
-                weekdaysEndTime: v?.[1]?.format('HH:mm'),
+                sunStartTime: v?.[0]?.format('HH:mm'),
+                sunEndTime: v?.[1]?.format('HH:mm'),
               })
             }
           />
@@ -185,6 +176,7 @@ export default function CarParkDetail() {
         <TextArea
           className='mt-4'
           placeholder='고객님께 주차 꿀팁을 공유해주세요.'
+          value={carPark.otherInfo}
           onChange={(e) => editCarPark({ otherInfo: e.target.value })}
         />
       </div>
@@ -192,7 +184,12 @@ export default function CarParkDetail() {
       <div className='flex gap-1 px-container'>
         {isSelected ? (
           <>
-            <Button className='flex-1' variant='outline' disabled={!isEdited}>
+            <Button
+              className='flex-1'
+              variant='outline'
+              disabled={!isEdited}
+              onClick={updateCarPark}
+            >
               수정
             </Button>
             <Button className='flex-1' variant='destructive' onClick={removeCarPark}>
