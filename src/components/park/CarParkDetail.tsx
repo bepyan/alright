@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect';
 
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
-import { CarParkDetail } from '~/types';
+import { ParkingLotInfo } from '~/models/alright';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import HeaderNav from '~/ui/HeaderNav';
@@ -24,7 +24,7 @@ export default function ParkDetailLayout() {
   );
 }
 
-function ParkDetail({ selectedCarPark }: { selectedCarPark: CarParkDetail }) {
+function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
   const company = useCarParkDetail((s) => s.company);
   const currentPosition = useCurrentGeolocation();
 

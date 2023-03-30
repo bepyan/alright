@@ -1,19 +1,20 @@
 import { create } from 'zustand';
 
-import { CarParkDetail, Place } from '~/types';
+import { ParkingLotInfo } from '~/models/alright';
+import { KPlace } from '~/types';
 
 interface CreateProps {
   step: number;
-  company?: Place;
-  selectedCarParkList: CarParkDetail[];
+  company?: KPlace;
+  selectedCarParkList: ParkingLotInfo[];
   computed: {
     canMoveToNext: boolean;
   };
   moveStep: (ac: number) => void;
   resetState: () => void;
-  selectCompany: (company?: Place) => void;
-  selectCarPark: (place: Place) => void;
-  removeCarPark: (place: Place) => void;
+  selectCompany: (company?: KPlace) => void;
+  selectCarPark: (place: KPlace) => void;
+  removeCarPark: (place: KPlace) => void;
 }
 
 export const useCreate = create<CreateProps>((set, get) => ({

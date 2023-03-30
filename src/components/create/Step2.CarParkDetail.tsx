@@ -3,7 +3,6 @@ import { Map } from 'react-kakao-maps-sdk';
 
 import { renderMinute } from '~/lib/date';
 import { transferPosition } from '~/lib/utils';
-import { type CarParkDetail } from '~/types';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import IconTitle from '~/ui/IconTitle';

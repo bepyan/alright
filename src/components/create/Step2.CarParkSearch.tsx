@@ -2,14 +2,14 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import useSearch from '~/lib/useSearch';
-import { Place, PlaceSearchRes } from '~/types';
+import { KPlace, KPlaceSearchRes } from '~/types';
 import BackButton from '~/ui/BackButton';
 import { Icons } from '~/ui/Icons';
 
 import { useCarParkDetail, useCarParkSearch } from './Step2.state';
 
 export default function CarParkSearch() {
-  const [placeList, setPlaceList] = useState<Place[]>();
+  const [placeList, setPlaceList] = useState<KPlace[]>();
   const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
 
   const { searchHandler } = useSearch((searchValue) => {
@@ -20,7 +20,7 @@ export default function CarParkSearch() {
         query: searchValue,
       },
     })
-      .then(({ data }: { data: PlaceSearchRes }) => {
+      .then(({ data }: { data: KPlaceSearchRes }) => {
         setPlaceList(data.documents);
       })
       .catch((e) => console.error(e));
@@ -47,7 +47,7 @@ export default function CarParkSearch() {
   );
 }
 
-function SearchItem({ item }: { item: Place }) {
+function SearchItem({ item }: { item: KPlace }) {
   const hideCarParkSearch = useCarParkSearch((s) => s.hideCarParkSearch);
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
 

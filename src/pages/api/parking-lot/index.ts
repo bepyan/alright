@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { connect } from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Alright } from './scheme/parking-lot';
+import { Alright } from '~/models/alright';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   switch (req.method) {

@@ -1,6 +1,7 @@
-import { CarParkDetail, Place } from '~/types';
+import { ParkingLotInfo } from '~/models/alright';
+import { KPlace } from '~/types';
 
-export const _dummyPlace: Place = {
+export const _dummyPlace: KPlace = {
   address_name: '서울 용산구 한강로2가 98-3',
   category_group_code: 'FD6',
   category_group_name: '음식점',
@@ -15,13 +16,13 @@ export const _dummyPlace: Place = {
   y: '37.5312061331283',
 };
 
-export const _dummyCarPark: CarParkDetail = {
+export const _dummyCarPark: ParkingLotInfo = {
   ..._dummyPlace,
 };
 
 export const _dummyData: {
-  company: Place;
-  selectedCarParkList: CarParkDetail[];
+  company: KPlace;
+  selectedCarParkList: ParkingLotInfo[];
 } = {
   company: {
     address_name: '서울 송파구 마천동 594',

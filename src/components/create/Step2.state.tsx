@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-import { CarParkDetail, CarParkDetailInfo } from '~/types';
+import { ParkingLotDetailInfo, ParkingLotInfo } from '~/models/alright';
 
 export const useCarParkDetail = create<{
-  targetPlace?: CarParkDetail;
+  targetPlace?: ParkingLotInfo;
   computed: { show: boolean };
-  showCarParkDetail: (targetPlace: CarParkDetail) => void;
+  showCarParkDetail: (targetPlace: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
-  editCarPark: (carPark: CarParkDetailInfo) => void;
+  editCarPark: (carPark: ParkingLotDetailInfo) => void;
 }>((set, get) => ({
   computed: {
     get show() {

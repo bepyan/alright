@@ -1,30 +1,32 @@
 import { model, models, Schema } from 'mongoose';
 
-interface ParkingLotInfo {
-  freeTimeDiscount: string;
-  defaultFeeTime: string;
-  defaultFeeAmount: string;
-  additionFeeTime: string;
-  additionFeeAmount: string;
-  weekdaysStartTime: string;
-  weekdaysEndTime: string;
-  satStartTime: string;
-  satEndTime: string;
-  sunStartTime: string;
-  sunEndTime: string;
-  otherInfo: string;
-  place_name: string;
-  distance: string;
-  place_url: string;
-  address_name: string;
-  road_address_name: string;
-  phone: string;
-  category_name: string;
-  category_group_code: string;
-  category_group_name: string;
-  x: string;
-  y: string;
+import { KPlace } from '~/types';
+
+export interface ParkingLotDetailInfo {
+  freeTimeDiscount?: string;
+  /**
+   * 단위 분
+   */
+  defaultFeeTime?: string;
+  /**
+   * 단위 원
+   */
+  defaultFeeAmount?: string;
+  additionFeeTime?: string;
+  additionFeeAmount?: string;
+  /**
+   * 단위 시:분
+   */
+  weekdaysStartTime?: string;
+  weekdaysEndTime?: string;
+  satStartTime?: string;
+  satEndTime?: string;
+  sunStartTime?: string;
+  sunEndTime?: string;
+  otherInfo?: string;
 }
+
+export type ParkingLotInfo = KPlace & ParkingLotDetailInfo;
 
 const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   freeTimeDiscount: {
@@ -133,7 +135,7 @@ const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   },
 });
 
-interface Alright {
+export interface Alright {
   address: string;
   createdDate: Date;
   hashCode: string;

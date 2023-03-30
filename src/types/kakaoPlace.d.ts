@@ -1,5 +1,23 @@
 // developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-keyword-response
-export interface PlaceSearchRes {
+
+export interface RegionInfo {
+  /**
+   * 질의어에서 인식된 지역의 리스트
+   * ex. '중앙로 맛집' 에서 중앙로에 해당하는 지역 리스트
+   */
+  region: string[];
+  /**
+   * 질의어에서 지역 정보를 제외한 키워드
+   * ex. '중앙로 맛집' 에서 '맛집'
+   */
+  keyword: string;
+  /**
+   * 인식된 지역 리스트 중, 현재 검색에 사용된 지역 정보
+   */
+  selected_region: string;
+}
+
+export interface KPlaceSearchRes {
   meta: {
     same_name: RegionInfo;
     /**
@@ -9,10 +27,10 @@ export interface PlaceSearchRes {
     total_count: number;
     is_end: boolean;
   };
-  documents: Place[];
+  documents: KPlace[];
 }
 
-export interface Place {
+export interface KPlace {
   id: string;
   place_name: string;
   /**
@@ -60,21 +78,4 @@ export interface Place {
    * ex. '37.51207412593136'
    */
   y: string;
-}
-
-export interface RegionInfo {
-  /**
-   * 질의어에서 인식된 지역의 리스트
-   * ex. '중앙로 맛집' 에서 중앙로에 해당하는 지역 리스트
-   */
-  region: string[];
-  /**
-   * 질의어에서 지역 정보를 제외한 키워드
-   * ex. '중앙로 맛집' 에서 '맛집'
-   */
-  keyword: string;
-  /**
-   * 인식된 지역 리스트 중, 현재 검색에 사용된 지역 정보
-   */
-  selected_region: string;
 }
