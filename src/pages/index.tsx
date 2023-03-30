@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -42,7 +43,7 @@ export default function Page() {
         className='container fixed overflow-hidden'
         style={{
           transform: `translateY(${-(height ?? 0) * (page - 1)}px)`,
-          transition: 'transform 0.9s ease 0s',
+          transition: 'transform 0.5s ease 0s',
         }}
         onPanEnd={(_, { offset, velocity }) => {
           const swipe = Math.abs(offset.y) * velocity.y;
@@ -113,7 +114,9 @@ function SectionTwo() {
           고객이 문의할 필요없게 업체 주차장 링크를 문자, 네이버지도, 인스타 등에 올려주세요.
         </p>
       </div>
-      <Pictures.Landing2 className='mx-auto mt-auto' />
+      <div className='mx-auto mt-auto'>
+        <Image src='/landing2.png' alt='랜딩2' width={375} height={630} />
+      </div>
     </div>
   );
 }
@@ -140,7 +143,9 @@ function SectionTree() {
         </p>
       </div>
 
-      <Pictures.Landing3 className='mt-auto' {...size} />
+      <div className='mt-auto'>
+        <Image src='/landing3.png' alt='랜딩3' {...size} />
+      </div>
     </div>
   );
 }
@@ -165,7 +170,9 @@ function SectionFour() {
         </p>
       </div>
 
-      <Pictures.Landing4 className='mt-auto' {...size} />
+      <div className='mt-auto'>
+        <Image src='/landing4.png' alt='랜딩4' {...size} />
+      </div>
     </div>
   );
 }
