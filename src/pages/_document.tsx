@@ -1,9 +1,10 @@
-import { Html, Main, NextScript } from 'next/document';
+import { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
 export default function MyDocument() {
   return (
     <Html lang='ko' className='bg-white'>
+      <Head />
       <body className='w-full overflow-hidden bg-zinc-50 font-sans text-slate-900 antialiased'>
         <div className='container min-h-screen bg-white font-sans'>
           <Main />
