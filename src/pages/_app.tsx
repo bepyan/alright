@@ -1,9 +1,9 @@
 import '../styles/globals.css';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Fonts from '~/components/Fonts';
 
@@ -15,7 +15,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta
           name='viewport'
-          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0'
         />
         <title>오리이</title>
       </Head>

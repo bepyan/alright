@@ -13,7 +13,7 @@ export default function Page() {
       <HeaderNav className='h-12'>
         <HeaderNavContent />
       </HeaderNav>
-      <main className='container pt-12'>
+      <main className='container h-screen overflow-y-auto pt-12'>
         {step === 1 && <Step1 />}
         {step === 2 && <Step2 />}
         {step === 3 && <Step3 />}

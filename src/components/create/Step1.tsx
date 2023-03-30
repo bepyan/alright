@@ -12,17 +12,19 @@ import { useCreate } from './state';
 
 export default function Step1() {
   const [placeList, setPlaceList] = useState<KPlace[]>();
+  const [loading, setLoading] = useState(false);
 
   const { searchHandler } = useSearch((searchValue) => {
     if (!searchValue) return;
 
+    setLoading(true);
     axios('/api/search/keyword', {
       params: {
         query: searchValue,
       },
     })
       .then(({ data }: { data: KPlaceSearchRes }) => {
-        console.log(data);
+        setLoading(false);
         setPlaceList(data.documents);
       })
       .catch((e) => console.error(e));
@@ -45,12 +47,16 @@ export default function Step1() {
       </div>
       <div className='border-t border-al-border'>
         <RadioGroup value={selectedValue} onValueChange={valueChangeHandler}>
-          {placeList &&
+          {loading ? (
+            <div className='spinner mx-auto mt-8' />
+          ) : (
+            placeList &&
             (placeList.length ? (
               placeList.map((place, i) => <SearchItem key={i} place={place} />)
             ) : (
               <div className='pt-12 text-center text-al-disabled'>검색 결과가 없습니다.</div>
-            ))}
+            ))
+          )}
         </RadioGroup>
       </div>
     </>

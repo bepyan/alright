@@ -15,6 +15,7 @@ interface CreateProps {
   selectCompany: (company?: KPlace) => void;
   selectCarPark: (place: KPlace) => void;
   removeCarPark: (place: KPlace) => void;
+  updateCarPark: (place: KPlace) => void;
 }
 
 export const useCreate = create<CreateProps>((set, get) => ({
@@ -38,6 +39,11 @@ export const useCreate = create<CreateProps>((set, get) => ({
     set((state) => ({
       ...state,
       selectedCarParkList: [...state.selectedCarParkList, place],
+    })),
+  updateCarPark: (place) =>
+    set((state) => ({
+      ...state,
+      selectedCarParkList: state.selectedCarParkList.map((v) => (v.id === place.id ? place : v)),
     })),
   removeCarPark: (place) =>
     set((state) => ({

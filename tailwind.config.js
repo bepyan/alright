@@ -15,6 +15,12 @@ module.exports = {
           sm: '640px',
         },
       },
+      minHeight: {
+        screen: '100svh',
+      },
+      height: {
+        screen: '100svh',
+      },
       opacity: {
         click: '0.7',
       },
