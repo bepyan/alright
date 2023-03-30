@@ -44,5 +44,6 @@ module.exports = {
     // https://nextjs.org/docs/basic-features/eslint
     'react-hooks/exhaustive-deps': 'off',
     'no-html-link-for-pages': 'off',
+    'no-case-declarations': 'off',
   },
 };
