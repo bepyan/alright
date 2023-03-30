@@ -10,7 +10,7 @@ export default function MyDocument() {
           rel='stylesheet'
         />
       </Head>
-      <body className='w-full bg-zinc-50 font-sans text-slate-900 antialiased'>
+      <body className='w-full overflow-hidden bg-zinc-50 font-sans text-slate-900 antialiased'>
         <div className='container min-h-screen bg-white font-sans'>
           <Main />
         </div>
