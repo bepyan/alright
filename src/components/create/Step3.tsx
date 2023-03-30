@@ -12,15 +12,19 @@ export default function Step3() {
   const mutation = usePostData();
 
   useEffect(() => {
-    mutation.mutate();
+    // mutation.mutate();
   }, []);
 
   if (mutation.isLoading) {
-    return <>로딩중...</>;
+    return (
+      <div className='h-full'>
+        <div className='spinner mx-auto' />
+      </div>
+    );
   }
 
   if (mutation.isError) {
-    return <>error</>;
+    return <div className='mx-auto'>ERROR</div>;
   }
 
   const copyHandler = () => {
