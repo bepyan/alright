@@ -14,7 +14,7 @@ export default function StepNav({ currentStep, maxStep = 3 }: StepNavProps) {
           <div key={step} className='flex items-center'>
             <div
               className={cn(
-                'flex h-6 w-6 items-center justify-center rounded-full font-bold',
+                'flex h-6 w-6 items-center justify-center rounded-full pb-0.5 font-bold',
                 step < currentStep && 'border-2 border-al-blue text-al-blue',
                 step === currentStep && 'bg-al-blue text-white',
                 step > currentStep && 'bg-al-gray text-al-disabled',
