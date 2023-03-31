@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Map, MarkerClusterer } from 'react-kakao-maps-sdk';
 
 import { transferPosition } from '~/lib/utils';
-import { Place } from '~/types';
+import { KPlace } from '~/types';
 import { Icons } from '~/ui/Icons';
 import IconTitle from '~/ui/IconTitle';
 import { InputFrame } from '~/ui/Input';
@@ -25,7 +25,7 @@ export default function Step2() {
   const showCarParkSearch = useCarParkSearch((s) => s.showCarParkSearch);
 
   const [map, setMap] = useState<kakao.maps.Map>();
-  const [nearCarParkList, setNearCarParkList] = useState<Place[]>([]);
+  const [nearCarParkList, setNearCarParkList] = useState<KPlace[]>([]);
 
   useEffect(() => {
     if (!map) return;
@@ -103,7 +103,7 @@ export default function Step2() {
   );
 }
 
-function CarParkItem({ item }: { item: Place }) {
+function CarParkItem({ item }: { item: KPlace }) {
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
   const onClick = () => showCarParkDetail(item);
 

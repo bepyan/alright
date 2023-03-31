@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import useSearch from '~/lib/useSearch';
-import { Place, PlaceSearchRes } from '~/types';
+import { KPlace, KPlaceSearchRes } from '~/types';
 import Input from '~/ui/Input';
 import Label from '~/ui/Label';
 import { RadioGroup, RadioGroupItem } from '~/ui/RadioGroup';
@@ -11,7 +11,7 @@ import StepNav from '~/ui/StepNav';
 import { useCreate } from './state';
 
 export default function Step1() {
-  const [placeList, setPlaceList] = useState<Place[]>();
+  const [placeList, setPlaceList] = useState<KPlace[]>();
   const [loading, setLoading] = useState(false);
 
   const { searchHandler } = useSearch((searchValue) => {
@@ -23,7 +23,7 @@ export default function Step1() {
         query: searchValue,
       },
     })
-      .then(({ data }: { data: PlaceSearchRes }) => {
+      .then(({ data }: { data: KPlaceSearchRes }) => {
         setLoading(false);
         setPlaceList(data.documents);
       })
@@ -63,7 +63,7 @@ export default function Step1() {
   );
 }
 
-function SearchItem({ place }: { place: Place }) {
+function SearchItem({ place }: { place: KPlace }) {
   return (
     <div className='mx-container flex items-center justify-between border-b border-al-border py-container'>
       <Label htmlFor={place.id} className='w-full'>

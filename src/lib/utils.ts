@@ -2,13 +2,13 @@ import type { ClassValue } from 'clsx';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { Place } from '~/types';
+import { KPlace } from '~/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function transferPosition(company: Pick<Place, 'x'> & Pick<Place, 'y'>) {
+export function transferPosition(company: Pick<KPlace, 'x'> & Pick<KPlace, 'y'>) {
   return { lng: Number(company.x), lat: Number(company.y) };
 }
 

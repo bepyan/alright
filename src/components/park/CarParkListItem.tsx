@@ -1,9 +1,9 @@
-import { CarParkDetail } from '~/types';
+import { ParkingLotInfo } from '~/models/alright';
 
 import { useCarParkDetail } from './state';
 
 export interface CarParkListItemProps {
-  item: CarParkDetail;
+  item: ParkingLotInfo;
 }
 
 export default function CarParkListItem({ item }: CarParkListItemProps) {

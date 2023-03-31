@@ -1,14 +1,15 @@
 import { create } from 'zustand';
 
 import { _dummyData } from '~/lib/dump';
-import { CarParkDetail, Place } from '~/types';
+import { ParkingLotInfo } from '~/models/alright';
+import { KPlace } from '~/types';
 
 interface CreateProps {
-  company: Place;
-  carParkList: CarParkDetail[];
-  selectedCarPark?: CarParkDetail;
+  company: KPlace;
+  carParkList: ParkingLotInfo[];
+  selectedCarPark?: ParkingLotInfo;
   isShowCarParkDetail: boolean;
-  showCarParkDetail: (carPark: Place) => void;
+  showCarParkDetail: (carPark: KPlace) => void;
   hideCarParkDetail: () => void;
 }
 
