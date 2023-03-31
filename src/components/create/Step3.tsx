@@ -12,7 +12,7 @@ export default function Step3() {
   const mutation = usePostData();
 
   useEffect(() => {
-    // mutation.mutate();
+    mutation.mutate();
   }, []);
 
   if (mutation.isLoading) {
@@ -23,13 +23,12 @@ export default function Step3() {
     );
   }
 
-  if (mutation.isError) {
+  if (mutation.isError || !mutation.data) {
     return <div className='mx-auto'>ERROR</div>;
   }
 
   const copyHandler = () => {
-    console.log(mutation.data);
-    copyClipboard()
+    copyClipboard(`${location.host}/p/${mutation.data.hashCode}`)
       .then(() => toast('링크가 복사되었습니다!'))
       .catch(() => toast.error('링크 복사가 실패되었습니다.'));
   };
