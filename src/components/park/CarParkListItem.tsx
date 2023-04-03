@@ -1,20 +1,37 @@
+import React from 'react';
+
+import { cn } from '~/lib/utils';
 import { ParkingLotInfo } from '~/models/alright';
 
 import { useCarParkDetail } from './state';
 
 export interface CarParkListItemProps {
   item: ParkingLotInfo;
+  focused?: boolean;
+  onClick: (target: ParkingLotInfo) => void;
 }
 
-export default function CarParkListItem({ item }: CarParkListItemProps) {
+export default function CarParkListItem({ item, focused, onClick }: CarParkListItemProps) {
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
 
-  const clickHandler = () => {
+  const clickHandler = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
     showCarParkDetail(item);
   };
 
+  const wrapClickHandler = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+    onClick(item);
+  };
+
   return (
-    <div className='flex items-center justify-between p-container'>
+    <div
+      className={cn(
+        'flex items-center justify-between p-container transition-colors',
+        focused && 'bg-blue-50',
+      )}
+      onClick={wrapClickHandler}
+    >
       <div className='space:mt-1'>
         <div className='inline-flex h-6 items-center rounded bg-al-green px-1.5 text-xs font-bold text-white'>
           무료/할인

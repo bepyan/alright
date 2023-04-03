@@ -7,7 +7,7 @@ import CarParkListItem from '~/components/park/CarParkListItem';
 import { useCarParkDetail } from '~/components/park/state';
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
 import { cn, convertToString, transferPosition, wrapJSON } from '~/lib/utils';
-import { Alright } from '~/models/alright';
+import { Alright, ParkingLotInfo } from '~/models/alright';
 import { getParkingLot } from '~/services/parking-lot';
 import { Icons } from '~/ui/Icons';
 import MapMarker from '~/ui/MapMarker';
@@ -42,8 +42,11 @@ export default function Page({ alright }: { alright: Alright }) {
   const company = useCarParkDetail((s) => s.company);
   const companyPosition = transferPosition(company);
   const carParkList = useCarParkDetail((s) => s.carParkList);
+  const focusedCarPark = useCarParkDetail((s) => s.focusedCarPark);
   const isShowCarParkDetail = useCarParkDetail((s) => s.isShowCarParkDetail);
   const loadCarParkDetail = useCarParkDetail((s) => s.loadCarParkDetail);
+  const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
+  const setFocusedCarPark = useCarParkDetail((s) => s.setFocusedCarPark);
 
   const currentPosition = useCurrentGeolocation();
   const [map, setMap] = useState<kakao.maps.Map>();
@@ -60,7 +63,25 @@ export default function Page({ alright }: { alright: Alright }) {
     map?.panTo(new kakao.maps.LatLng(companyPosition.lat, companyPosition.lng));
   };
 
+  const mapMoveToCarPark = (target: ParkingLotInfo) => {
+    setFocusedCarPark(target);
+
+    const pos = transferPosition(target);
+    map?.setLevel(2);
+    map?.panTo(new kakao.maps.LatLng(pos.lat, pos.lng));
+  };
+
+  const mapMarkerClickHandler = (target: ParkingLotInfo) => {
+    if (target._id !== focusedCarPark?._id) {
+      mapMoveToCarPark(target);
+      return;
+    }
+
+    showCarParkDetail(target);
+  };
+
   useEffect(() => {
+    console.log(alright);
     loadCarParkDetail(alright);
   }, []);
 
@@ -76,8 +97,14 @@ export default function Page({ alright }: { alright: Alright }) {
           <Map center={companyPosition} level={2} className='h-full w-full' onCreate={setMap}>
             {currentPosition && <MapMarker position={currentPosition} type='currentPlace' />}
             <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
-            {carParkList.map((item, i) => (
-              <MapPlaceMarker key={i} position={transferPosition(item)} text='P' />
+            {carParkList.map((item) => (
+              <MapPlaceMarker
+                key={item._id}
+                variant={item._id === focusedCarPark?._id ? 'primary' : 'secondary'}
+                position={transferPosition(item)}
+                text='P'
+                onClick={() => mapMarkerClickHandler(item)}
+              />
             ))}
           </Map>
           <FloatButton className='mb-24' onClick={mapMoveToCurrentPosition}>
@@ -92,7 +119,12 @@ export default function Page({ alright }: { alright: Alright }) {
         </div>
         <div className='h-1/2 w-full overflow-scroll'>
           {carParkList.map((item) => (
-            <CarParkListItem key={item.id} item={item} />
+            <CarParkListItem
+              key={item._id}
+              item={item}
+              focused={item._id === focusedCarPark?._id}
+              onClick={mapMoveToCarPark}
+            />
           ))}
         </div>
       </div>

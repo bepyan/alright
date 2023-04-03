@@ -26,7 +26,7 @@ export interface ParkingLotDetailInfo {
   otherInfo?: string;
 }
 
-export type ParkingLotInfo = KPlace & ParkingLotDetailInfo;
+export type ParkingLotInfo = Omit<KPlace, 'id'> & ParkingLotDetailInfo & { _id: string };
 
 const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   freeTimeDiscount: {

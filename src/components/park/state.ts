@@ -8,9 +8,11 @@ interface CreateProps {
   company: KPlace;
   carParkList: ParkingLotInfo[];
   selectedCarPark?: ParkingLotInfo;
+  focusedCarPark?: ParkingLotInfo;
   isShowCarParkDetail: boolean;
-  showCarParkDetail: (carPark: KPlace) => void;
+  showCarParkDetail: (carPark: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
+  setFocusedCarPark: (carPark?: ParkingLotInfo) => void;
   loadCarParkDetail: (alright: Alright) => void;
 }
 
@@ -27,6 +29,9 @@ export const useCarParkDetail = create<CreateProps>((set) => ({
     setTimeout(() => {
       set((state) => ({ ...state, selectedCarPark: undefined }));
     }, 300);
+  },
+  setFocusedCarPark: (carPark) => {
+    set((state) => ({ ...state, focusedCarPark: carPark }));
   },
   loadCarParkDetail: (alright) => {
     set({
