@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { _dummyData } from '~/lib/dump';
-import { ParkingLotInfo } from '~/models/alright';
+import { Alright, ParkingLotInfo } from '~/models/alright';
 import { KPlace } from '~/types';
 
 interface CreateProps {
@@ -11,6 +11,7 @@ interface CreateProps {
   isShowCarParkDetail: boolean;
   showCarParkDetail: (carPark: KPlace) => void;
   hideCarParkDetail: () => void;
+  loadCarParkDetail: (alright: Alright) => void;
 }
 
 export const useCarParkDetail = create<CreateProps>((set) => ({
@@ -26,5 +27,12 @@ export const useCarParkDetail = create<CreateProps>((set) => ({
     setTimeout(() => {
       set((state) => ({ ...state, selectedCarPark: undefined }));
     }, 300);
+  },
+  loadCarParkDetail: (alright) => {
+    set({
+      company: alright.company,
+      carParkList: alright.parkingLots,
+      isShowCarParkDetail: false,
+    });
   },
 }));

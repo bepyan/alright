@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 
 import ParkDetail from '~/components/park/CarParkDetail';
@@ -39,12 +39,11 @@ export const getServerSideProps = async ({ res, params }: GetServerSidePropsCont
 };
 
 export default function Page({ alright }: { alright: Alright }) {
-  console.log(alright);
-
   const company = useCarParkDetail((s) => s.company);
   const companyPosition = transferPosition(company);
   const carParkList = useCarParkDetail((s) => s.carParkList);
   const isShowCarParkDetail = useCarParkDetail((s) => s.isShowCarParkDetail);
+  const loadCarParkDetail = useCarParkDetail((s) => s.loadCarParkDetail);
 
   const currentPosition = useCurrentGeolocation();
   const [map, setMap] = useState<kakao.maps.Map>();
@@ -54,6 +53,10 @@ export default function Page({ alright }: { alright: Alright }) {
 
     map?.panTo(new kakao.maps.LatLng(currentPosition.lat, currentPosition.lng));
   };
+
+  useEffect(() => {
+    loadCarParkDetail(alright);
+  }, []);
 
   return (
     <div className='container fixed inset-0 overflow-hidden'>
@@ -67,8 +70,8 @@ export default function Page({ alright }: { alright: Alright }) {
           <Map center={companyPosition} level={2} className='h-full w-full' onCreate={setMap}>
             {currentPosition && <MapMarker position={currentPosition} type='currentPlace' />}
             <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
-            {carParkList.map((item) => (
-              <MapPlaceMarker key={item.id} position={transferPosition(item)} text='P' />
+            {carParkList.map((item, i) => (
+              <MapPlaceMarker key={i} position={transferPosition(item)} text='P' />
             ))}
           </Map>
           <FloatButton className='bottom-20' onClick={moveMapPosition}>
