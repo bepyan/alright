@@ -33,9 +33,11 @@ export default function CarParkListItem({ item, focused, onClick }: CarParkListI
       onClick={wrapClickHandler}
     >
       <div className='space:mt-1'>
-        <div className='inline-flex h-6 items-center rounded bg-al-green px-1.5 text-xs font-bold text-white'>
-          무료/할인
-        </div>
+        {item.freeTimeDiscount && (
+          <div className='inline-flex h-6 items-center rounded bg-al-green px-1.5 text-xs font-bold text-white'>
+            무료/할인
+          </div>
+        )}
         <div className='font-bold'>{item.place_name}</div>
         <div className='text-sm text-al-slate'>{item.address_name}</div>
         <div className='flex items-center text-sm'>

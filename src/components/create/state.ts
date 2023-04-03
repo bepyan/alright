@@ -13,9 +13,9 @@ interface CreateProps {
   moveStep: (ac: number) => void;
   resetState: () => void;
   selectCompany: (company?: KPlace) => void;
-  selectCarPark: (place: KPlace) => void;
-  removeCarPark: (place: KPlace) => void;
-  updateCarPark: (place: KPlace) => void;
+  selectCarPark: (place: ParkingLotInfo) => void;
+  removeCarPark: (place: ParkingLotInfo) => void;
+  updateCarPark: (place: ParkingLotInfo) => void;
 }
 
 export const useCreate = create<CreateProps>((set, get) => ({

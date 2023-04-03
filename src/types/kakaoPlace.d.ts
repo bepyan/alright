@@ -31,7 +31,7 @@ export interface KPlaceSearchRes {
 }
 
 export interface KPlace {
-  id?: string;
+  id: string;
   place_name: string;
   /**
    * 중심좌표까지의 거리 (단, x,y 파라미터를 준 경우에만 존재) 단위 meter

@@ -3,6 +3,7 @@ import { model, models, Schema } from 'mongoose';
 import { KPlace } from '~/types';
 
 export interface ParkingLotDetailInfo {
+  _id?: string;
   freeTimeDiscount?: string;
   /**
    * 단위 분
@@ -26,7 +27,7 @@ export interface ParkingLotDetailInfo {
   otherInfo?: string;
 }
 
-export type ParkingLotInfo = KPlace & ParkingLotDetailInfo & { _id: string };
+export type ParkingLotInfo = KPlace & ParkingLotDetailInfo;
 
 const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   /**
