@@ -136,17 +136,13 @@ const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
 });
 
 export interface Alright {
-  address: string;
   createdDate: Date;
   hashCode: string;
+  company: ParkingLotInfo;
   parkingLots: Array<ParkingLotInfo>;
 }
 
 const alrightScheme = new Schema<Alright>({
-  address: {
-    type: String,
-    required: true,
-  },
   createdDate: {
     type: Date,
     required: true,
@@ -155,6 +151,7 @@ const alrightScheme = new Schema<Alright>({
     type: String,
     required: true,
   },
+  company: parkingLotInfoScheme,
   parkingLots: [parkingLotInfoScheme],
 });
 

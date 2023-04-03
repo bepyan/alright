@@ -1,8 +1,6 @@
-import crypto from 'crypto';
-import { connect } from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Alright } from '~/models/alright';
+import { createParkingLot, getParkingLot } from '~/services/parking-lot';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   switch (req.method) {
@@ -26,42 +24,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
       });
       break;
   }
-}
-
-async function getParkingLot(hashCode: string) {
-  const uri =
-    'mongodb+srv://gjwodud119:young8291@cluster0.w9a9rkz.mongodb.net/?retryWrites=true&w=majority';
-  await connect(uri);
-  let foundAlright;
-  await Alright.findOne({
-    hashCode: hashCode,
-  })
-    .exec()
-    .then((alright) => {
-      foundAlright = alright;
-    });
-
-  return foundAlright;
-}
-
-async function createParkingLot(body: any) {
-  const uri =
-    'mongodb+srv://gjwodud119:young8291@cluster0.w9a9rkz.mongodb.net/?retryWrites=true&w=majority';
-  await connect(uri);
-
-  const companyAddress = body.company.address_name;
-  const currentDate = new Date();
-  const hashCode = crypto
-    .createHash('md5')
-    .update(companyAddress + currentDate.toString())
-    .digest('hex')
-    .substring(0, 8);
-  await Alright.create({
-    address: companyAddress,
-    createdDate: currentDate,
-    hashCode,
-    parkingLots: body.selectedCarParkList,
-  });
-
-  return hashCode;
 }
