@@ -48,10 +48,16 @@ export default function Page({ alright }: { alright: Alright }) {
   const currentPosition = useCurrentGeolocation();
   const [map, setMap] = useState<kakao.maps.Map>();
 
-  const moveMapPosition = () => {
+  const mapMoveToCurrentPosition = () => {
     if (!currentPosition) return;
 
+    map?.setLevel(2);
     map?.panTo(new kakao.maps.LatLng(currentPosition.lat, currentPosition.lng));
+  };
+
+  const mapMoveToCompany = () => {
+    map?.setLevel(2);
+    map?.panTo(new kakao.maps.LatLng(companyPosition.lat, companyPosition.lng));
   };
 
   useEffect(() => {
@@ -74,11 +80,14 @@ export default function Page({ alright }: { alright: Alright }) {
               <MapPlaceMarker key={i} position={transferPosition(item)} text='P' />
             ))}
           </Map>
-          <FloatButton className='bottom-20' onClick={moveMapPosition}>
+          <FloatButton className='mb-24' onClick={mapMoveToCurrentPosition}>
             <Icons.Locate className='h-6 w-6' />
           </FloatButton>
-          <FloatButton>
+          <FloatButton className='mb-12'>
             <Icons.Refresh className='h-6 w-6' />
+          </FloatButton>
+          <FloatButton className='h-10 px-3 text-xs font-bold' onClick={mapMoveToCompany}>
+            업체 위치 바로가기
           </FloatButton>
         </div>
         <div className='h-1/2 w-full overflow-scroll'>
@@ -104,7 +113,7 @@ function FloatButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLBut
     <button
       {...props}
       className={cn(
-        'absolute right-container bottom-container z-10 rounded-full border border-[#E2E2E2] bg-white p-2.5 shadow',
+        'absolute right-container bottom-container z-10 rounded-full border border-[#E2E2E2] bg-white p-2 shadow',
         className,
       )}
     />
