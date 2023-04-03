@@ -19,3 +19,15 @@ export const copyClipboard = async (url = window.document.location.href) => {
     console.error(e);
   }
 };
+
+export function convertToString(input: string | string[]): string {
+  if (Array.isArray(input)) {
+    return input.join('');
+  } else {
+    return input;
+  }
+}
+
+export function wrapJSON<T>(object: T) {
+  return JSON.parse(JSON.stringify(object)) as T;
+}

@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticPropsContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import React, { useState } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 
@@ -6,25 +6,41 @@ import ParkDetail from '~/components/park/CarParkDetail';
 import CarParkListItem from '~/components/park/CarParkListItem';
 import { useCarParkDetail } from '~/components/park/state';
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
-import { cn, transferPosition } from '~/lib/utils';
+import { cn, convertToString, transferPosition, wrapJSON } from '~/lib/utils';
+import { Alright } from '~/models/alright';
+import { getParkingLot } from '~/services/parking-lot';
 import { Icons } from '~/ui/Icons';
 import MapMarker from '~/ui/MapMarker';
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [{ params: { slug: 'test' } }],
-    fallback: false,
-  };
+export const getServerSideProps = async ({ res, params }: GetServerSidePropsContext) => {
+  const slug = params?.slug;
+
+  if (!slug) {
+    res.statusCode = 404;
+    return { notFound: true };
+  }
+
+  try {
+    const data = await getParkingLot(convertToString(slug));
+
+    if (!data) {
+      res.statusCode = 404;
+      return { notFound: true };
+    }
+
+    const alright = wrapJSON<Alright>(data);
+
+    return { props: { alright } };
+  } catch (e) {
+    console.log(e);
+    res.statusCode = 500;
+    return { notFound: true };
+  }
 };
 
-export const getStaticProps = ({ params }: GetStaticPropsContext) => {
-  console.log(params);
-  return {
-    props: {},
-  };
-};
+export default function Page({ alright }: { alright: Alright }) {
+  console.log(alright);
 
-export default function Page() {
   const company = useCarParkDetail((s) => s.company);
   const companyPosition = transferPosition(company);
   const carParkList = useCarParkDetail((s) => s.carParkList);
