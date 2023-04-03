@@ -26,9 +26,15 @@ export interface ParkingLotDetailInfo {
   otherInfo?: string;
 }
 
-export type ParkingLotInfo = Omit<KPlace, 'id'> & ParkingLotDetailInfo & { _id: string };
+export type ParkingLotInfo = KPlace & ParkingLotDetailInfo & { _id: string };
 
 const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
+  /**
+   * kakao 맵 장소 ID
+   */
+  id: {
+    type: String,
+  },
   freeTimeDiscount: {
     type: String,
   },
