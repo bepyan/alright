@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import useWindowDimensions from '~/lib/useWindowDimensions';
+import { cn } from '~/lib/utils';
 import Button from '~/ui/Button';
 import HeaderNav from '~/ui/HeaderNav';
 import { Icons } from '~/ui/Icons';
@@ -16,7 +17,7 @@ export default function Page() {
 
   return (
     <>
-      <HeaderNav className='h-14'>
+      <HeaderNav className={cn('h-14', page > 1 && 'bg-gradient-to-b from-white to-transparent')}>
         <div className='flex items-center gap-2'>
           <Icons.LogoFull />
         </div>
