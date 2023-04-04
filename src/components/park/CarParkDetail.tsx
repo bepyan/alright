@@ -28,6 +28,17 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
   const company = useCarParkDetail((s) => s.company);
   const currentPosition = useCurrentGeolocation();
 
+  // const { data, isLoading, isError, error } = useQuery({
+  //   queryKey: ['carParkDetail', selectedCarPark?.id],
+  //   queryFn: () =>
+  //     selectedCarPark &&
+  //     axios({
+  //       url: '/api/parking-lot/public',
+  //       method: 'GET',
+  //       params: { address: selectedCarPark.address_name },
+  //     }).then((res) => res.data),
+  // });
+
   const navToKakaoMap = () => {
     if (isMobile) {
       location.href = `kakaomap://look?p=${selectedCarPark.y},${selectedCarPark.x}`;
@@ -122,30 +133,32 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
               <Icons.Money className='text-al-slate-dark' />
               <div className='text-base font-bold'>요금 정보</div>
             </div>
-            {selectedCarPark.defaultFeeAmount && (
-              <div className=' flex flex-col gap-2'>
-                <div className='flex items-center text-sm'>
-                  <div className=''>기본 요금(시간)</div>
-                  <div className='ml-auto flex items-center gap-1.5'>
-                    <span>{selectedCarPark.defaultFeeAmount}원</span>
-                    <Separator />
-                    <span>{selectedCarPark.defaultFeeTime}분</span>
+            <div className='flex flex-col gap-2'>
+              {selectedCarPark.defaultFeeAmount && (
+                <div className=' flex flex-col gap-2'>
+                  <div className='flex items-center text-sm'>
+                    <div className=''>기본 요금(시간)</div>
+                    <div className='ml-auto flex items-center gap-1.5'>
+                      <span>{selectedCarPark.defaultFeeAmount}원</span>
+                      <Separator />
+                      <span>{selectedCarPark.defaultFeeTime}분</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            {selectedCarPark.additionFeeAmount && (
-              <div className=' flex flex-col gap-2'>
-                <div className='flex items-center text-sm'>
-                  <div className=''>추가 요금(시간)</div>
-                  <div className='ml-auto flex items-center gap-1.5'>
-                    <span>{selectedCarPark.additionFeeAmount}원</span>
-                    <Separator />
-                    <span>{selectedCarPark.additionFeeTime}분</span>
+              )}
+              {selectedCarPark.additionFeeAmount && (
+                <div className=' flex flex-col gap-2'>
+                  <div className='flex items-center text-sm'>
+                    <div className=''>추가 요금(시간)</div>
+                    <div className='ml-auto flex items-center gap-1.5'>
+                      <span>{selectedCarPark.additionFeeAmount}원</span>
+                      <Separator />
+                      <span>{selectedCarPark.additionFeeTime}분</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           <div className='py-4'>
@@ -153,25 +166,30 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
               <Icons.Clock className='text-al-slate-dark' />
               <div className='text-base font-bold'>운영 정보</div>
             </div>
-            <div className=' flex flex-col gap-2'>
+            <div className='flex flex-col gap-2'>
               <div className='flex items-center text-sm'>
                 <div className=''>평일</div>
                 <div className='ml-auto'>
-                  {selectedCarPark.weekdaysStartTime} ~ {selectedCarPark.weekdaysEndTime}
+                  {selectedCarPark.weekdaysStartTime ?? '00:00'} ~{' '}
+                  {selectedCarPark.weekdaysEndTime ?? '00:00'}
                 </div>
               </div>
-              <div className='flex items-center text-sm'>
-                <div className=''>토요일</div>
-                <div className='ml-auto'>
-                  {selectedCarPark.satStartTime} ~ {selectedCarPark.satEndTime}
+              {selectedCarPark.satStartTime && selectedCarPark.satEndTime && (
+                <div className='flex items-center text-sm'>
+                  <div className=''>토요일</div>
+                  <div className='ml-auto'>
+                    {selectedCarPark.satStartTime} ~ {selectedCarPark.satEndTime}
+                  </div>
                 </div>
-              </div>
-              <div className='flex items-center text-sm'>
-                <div className=''>일요일</div>
-                <div className='ml-auto'>
-                  {selectedCarPark.sunStartTime} ~ {selectedCarPark.sunEndTime}
+              )}
+              {selectedCarPark.sunStartTime && selectedCarPark.sunEndTime && (
+                <div className='flex items-center text-sm'>
+                  <div className=''>일요일</div>
+                  <div className='ml-auto'>
+                    {selectedCarPark.sunStartTime} ~ {selectedCarPark.sunEndTime}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
