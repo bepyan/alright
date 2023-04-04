@@ -99,7 +99,7 @@ export default function Page({ alright }: { alright: Alright }) {
             <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
             {carParkList.map((item) => (
               <MapPlaceMarker
-                key={item._id}
+                key={'marker_' + item.id}
                 variant={item._id === focusedCarPark?._id ? 'primary' : 'secondary'}
                 position={transferPosition(item)}
                 text='P'
@@ -120,7 +120,7 @@ export default function Page({ alright }: { alright: Alright }) {
         <div className='h-1/2 w-full overflow-scroll'>
           {carParkList.map((item) => (
             <CarParkListItem
-              key={item._id}
+              key={'list_' + item.id}
               item={item}
               focused={item._id === focusedCarPark?._id}
               onClick={mapMoveToCarPark}
