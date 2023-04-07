@@ -57,3 +57,41 @@ export interface PublicPlaceSearchRes {
     row: PublicPlace[];
   };
 }
+
+export interface SeoulParkingPlace {
+  add_rates: number;
+  tel: string;
+  parking_type: string;
+  bus_add_rates: number;
+  addr: string;
+  holiday_pay_yn: string;
+  bus_rates: number;
+  weekday_begin_time: string;
+  time_rate: number;
+  capacity: number;
+  night_free_open_nm: string;
+  add_time_rate: number;
+  sync_time: Date;
+  pay_yn: string;
+  parking_code: number;
+  rates: number;
+  weekend_begin_time: string;
+  weekday_end_time: string;
+  parking_type_nm: string;
+  saturday_pay_yn: string;
+  operation_rule: string;
+  bus_add_time_rate: number;
+  pay_nm: string;
+  parking_name: string;
+  weekend_end_time: string;
+  day_maximum: number;
+  saturday_pay_nm: string;
+  holiday_pay_nm: string;
+  holiday_end_time: string;
+  fulltime_monthly: string;
+  grp_parknm: string;
+  night_free_open: string;
+  operation_rule_nm: string;
+  bus_time_rate: number;
+  holiday_begin_time: string;
+}
