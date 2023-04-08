@@ -46,7 +46,8 @@ export default function MapMarker({ type, text, position, onClick }: MapMarkerPr
       <Image
         src={src}
         alt='marker'
-        className='mx-auto'
+        className='mx-auto select-none'
+        draggable={false}
         width={size}
         height={size}
         onClick={onClick}

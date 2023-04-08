@@ -4,6 +4,7 @@ import { KPlace } from '~/types';
 
 export interface ParkingLotDetailInfo {
   _id?: string;
+  parkingCode?: number;
   freeTimeDiscount?: string;
   /**
    * 단위 분

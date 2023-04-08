@@ -40,16 +40,18 @@ export default function Page() {
         <Input placeholder='서울 공영주차장 이름, 주소 검색' onChange={searchHandler} />
         <div className='mt-2'>
           {isLoading && <div className='spinner mx-auto mt-8' />}
-          {!isLoading && searchList && (
-            <>
-              {searchList.map((item, i) => (
+          {!isLoading &&
+            searchList &&
+            (!searchList.length ? (
+              <div className='text-sm'>검색 결과 없음</div>
+            ) : (
+              searchList.map((item, i) => (
                 <div key={i} className='p-4'>
                   <div className='font-bold'>{item.parking_name}</div>
                   <div className='text-sm'>{item.addr}</div>
                 </div>
-              ))}
-            </>
-          )}
+              ))
+            ))}
         </div>
       </main>
     </>
