@@ -38,6 +38,9 @@ const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   id: {
     type: String,
   },
+  parkingCode: {
+    type: String,
+  },
   freeTimeDiscount: {
     type: String,
   },
