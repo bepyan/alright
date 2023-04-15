@@ -27,6 +27,7 @@ export default function ParkDetailLayout() {
 function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
   const company = useCarParkDetail((s) => s.company);
   const currentPosition = useCurrentGeolocation();
+  const isSelectedPublishCarPark = useCarParkDetail((s) => s.computed.isSelectedPublishCarPark);
 
   // const { data, isLoading, isError, error } = useQuery({
   //   queryKey: ['carParkDetail', selectedCarPark?.id],
@@ -74,17 +75,19 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
     <>
       <div className='flex flex-col bg-al-gray-100 p-container'>
         <h1 className='mt-5 self-center text-2xl font-bold'>{selectedCarPark.place_name}</h1>
-        <div className='mt-5 flex h-[100px] items-center rounded-lg bg-white'>
-          <div className='flex-1 text-center font-bold text-al-blue'>
-            <div className='text-2xl'>{117}</div>
-            <div className='text-sm'>주차 여유</div>
+        {isSelectedPublishCarPark && (
+          <div className='mt-5 flex h-[100px] items-center rounded-lg bg-white'>
+            <div className='flex-1 text-center font-bold text-al-blue'>
+              <div className='text-2xl'>{117}</div>
+              <div className='text-sm'>주차 여유</div>
+            </div>
+            <Separator height={40} />
+            <div className='flex-1 text-center font-bold text-al-slate'>
+              <div className='text-2xl'>{217}</div>
+              <div className='text-sm'>전체</div>
+            </div>
           </div>
-          <Separator height={40} />
-          <div className='flex-1 text-center font-bold text-al-slate'>
-            <div className='text-2xl'>{217}</div>
-            <div className='text-sm'>전체</div>
-          </div>
-        </div>
+        )}
         <Button className='mt-3' onClick={navToPark}>
           길찾기
         </Button>
@@ -129,8 +132,8 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
       <div className='mt-2 bg-white px-5 pt-1 pb-6'>
         <div className='space:border-t space:border-al-border'>
           <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.Money className='text-al-slate-dark' />
+            <div className='mb-4 flex items-center gap-1.5'>
+              <Icons.Money className='mt-0.5 text-al-slate-dark' />
               <div className='text-base font-bold'>요금 정보</div>
             </div>
             <div className='flex flex-col gap-2'>
@@ -161,41 +164,11 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
             </div>
           </div>
 
-          <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.Clock className='text-al-slate-dark' />
-              <div className='text-base font-bold'>운영 정보</div>
-            </div>
-            <div className='flex flex-col gap-2'>
-              <div className='flex items-center text-sm'>
-                <div className=''>평일</div>
-                <div className='ml-auto'>
-                  {selectedCarPark.weekdaysStartTime ?? '00:00'} ~{' '}
-                  {selectedCarPark.weekdaysEndTime ?? '00:00'}
-                </div>
-              </div>
-              {selectedCarPark.weekendStartTime && selectedCarPark.weekendEndTime && (
-                <div className='flex items-center text-sm'>
-                  <div className=''>토요일</div>
-                  <div className='ml-auto'>
-                    {selectedCarPark.weekendStartTime} ~ {selectedCarPark.weekendEndTime}
-                  </div>
-                </div>
-              )}
-              {selectedCarPark.holidayStartTime && selectedCarPark.holidayEndTime && (
-                <div className='flex items-center text-sm'>
-                  <div className=''>일요일</div>
-                  <div className='ml-auto'>
-                    {selectedCarPark.holidayStartTime} ~ {selectedCarPark.holidayEndTime}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <TimeInfo />
 
           <div className='py-4'>
-            <div className='mb-4 flex items-center gap-1'>
-              <Icons.File className='text-al-slate-dark' />
+            <div className='mb-4 flex items-center gap-1.5'>
+              <Icons.File className='mt-0.5 text-al-slate-dark' />
               <div className='text-base font-bold'>기타 정보</div>
             </div>
             <pre className='whitespace-pre-wrap font-sans text-sm leading-[22px]'>
@@ -205,5 +178,40 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
         </div>
       </div>
     </>
+  );
+}
+
+function TimeInfo() {
+  const weekdayTimeRange = useCarParkDetail((s) => s.computed.weekdayTimeRange);
+  const weekendTimeRange = useCarParkDetail((s) => s.computed.weekendTimeRange);
+  const holidayTimeRange = useCarParkDetail((s) => s.computed.holidayTimeRange);
+
+  return (
+    <div className='py-4'>
+      <div className='mb-4 flex items-center gap-1.5'>
+        <Icons.Clock className='mt-0.5 text-al-slate-dark' />
+        <div className='text-base font-bold'>운영 정보</div>
+      </div>
+      <div className='flex flex-col gap-2'>
+        {weekdayTimeRange && (
+          <div className='flex items-center text-sm'>
+            <div className=''>평일</div>
+            <div className='ml-auto'>{weekdayTimeRange}</div>
+          </div>
+        )}
+        {weekendTimeRange && (
+          <div className='flex items-center text-sm'>
+            <div className=''>주말</div>
+            <div className='ml-auto'>{weekendTimeRange}</div>
+          </div>
+        )}
+        {holidayTimeRange && (
+          <div className='flex items-center text-sm'>
+            <div className=''>공휴일</div>
+            <div className='ml-auto'>{holidayTimeRange}</div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

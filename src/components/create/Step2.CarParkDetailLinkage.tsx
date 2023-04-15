@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
+import { formatTime } from '~/lib/format';
 import { SeoulParkingPlace } from '~/types';
 import Button from '~/ui/Button';
 import IconTitle from '~/ui/IconTitle';
@@ -112,12 +113,12 @@ function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: Seo
       defaultFeeAmount: String(selectedSeoulParkingPlace.rates),
       additionFeeTime: String(selectedSeoulParkingPlace.add_time_rate),
       additionFeeAmount: String(selectedSeoulParkingPlace.add_rates),
-      weekdaysStartTime: selectedSeoulParkingPlace.weekday_begin_time,
-      weekdaysEndTime: selectedSeoulParkingPlace.weekday_end_time,
-      weekendStartTime: selectedSeoulParkingPlace.weekend_begin_time,
-      weekendEndTime: selectedSeoulParkingPlace.weekend_end_time,
-      holidayStartTime: selectedSeoulParkingPlace.holiday_begin_time,
-      holidayEndTime: selectedSeoulParkingPlace.holiday_end_time,
+      weekdaysStartTime: formatTime(selectedSeoulParkingPlace.weekday_begin_time),
+      weekdaysEndTime: formatTime(selectedSeoulParkingPlace.weekday_end_time),
+      weekendStartTime: formatTime(selectedSeoulParkingPlace.weekend_begin_time),
+      weekendEndTime: formatTime(selectedSeoulParkingPlace.weekend_end_time),
+      holidayStartTime: formatTime(selectedSeoulParkingPlace.holiday_begin_time),
+      holidayEndTime: formatTime(selectedSeoulParkingPlace.holiday_end_time),
     });
   });
   const relinkSeoulParkingPlace = useCarParkDetail((s) => s.relinkSeoulParkingPlace);
