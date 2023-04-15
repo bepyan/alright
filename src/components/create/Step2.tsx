@@ -23,6 +23,7 @@ export default function Step2() {
   const showSearch = useCarParkSearch((s) => s.show);
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
   const showCarParkSearch = useCarParkSearch((s) => s.showCarParkSearch);
+  const editPassLinked = useCarParkDetail((s) => s.editPassLinked);
 
   const [map, setMap] = useState<kakao.maps.Map>();
   const [nearCarParkList, setNearCarParkList] = useState<KPlace[]>([]);
@@ -58,16 +59,26 @@ export default function Step2() {
 
       <Map center={companyPosition} className='h-52 w-full' level={2} onCreate={setMap}>
         <MarkerClusterer averageCenter={true} minLevel={4}>
-          {nearCarParkList.map((marker) => {
-            const isSelected = selectedCarParkList.some((v) => v.id === marker.id);
+          {nearCarParkList.map((item) => {
+            const selected = selectedCarParkList.find((v) => v.id === item.id);
+            const isSelected = !!selected;
+
+            const onClick = () => {
+              if (isSelected) {
+                editPassLinked(!selected.parkingCode);
+                showCarParkDetail(selected);
+              } else {
+                showCarParkDetail(item);
+              }
+            };
 
             return (
               <MapMarker
-                key={marker.id}
+                key={item.id}
                 type={isSelected ? 'parkSubSelected' : 'parkSub'}
-                position={transferPosition(marker)}
-                text={marker.place_name}
-                onClick={() => showCarParkDetail(marker)}
+                position={transferPosition(item)}
+                text={item.place_name}
+                onClick={onClick}
               />
             );
           })}
@@ -83,7 +94,10 @@ export default function Step2() {
               <CarParkItem
                 key={`selected-place-${item.id}`}
                 item={item}
-                onClick={() => showCarParkDetail(item)}
+                onClick={() => {
+                  editPassLinked(!item.parkingCode);
+                  showCarParkDetail(item);
+                }}
               />
             ))}
           </div>
