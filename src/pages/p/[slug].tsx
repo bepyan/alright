@@ -32,7 +32,7 @@ export const getServerSideProps = async ({ res, params }: GetServerSidePropsCont
 
     return { props: { alright } };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     res.statusCode = 500;
     return { notFound: true };
   }

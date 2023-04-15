@@ -1,6 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
+import { PlaceRealtimeInfo } from '~/types';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import HeaderNav from '~/ui/HeaderNav';
@@ -41,13 +44,13 @@ function ParkDetail() {
     </>
   );
 }
+
 function HeaderInfo() {
   const currentPosition = useCurrentGeolocation();
   const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
+  const isSelectedPublishCarPark = useCarParkDetail((s) => s.computed.isSelectedPublishCarPark);
 
   const navToPark = () => {
-    console.log(currentPosition);
-
     if (isMobile) {
       if (currentPosition) {
         location.href = `kakaomap://route?sp=${currentPosition.lat},${currentPosition.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`;
@@ -62,28 +65,38 @@ function HeaderInfo() {
   return (
     <div className='flex flex-col bg-al-gray-100 p-container'>
       <h1 className='mt-5 self-center text-2xl font-bold'>{selectedCarPark.place_name}</h1>
-      <RealtimeParkInfo />
+      {isSelectedPublishCarPark ? <RealtimeParkInfo /> : <div className='h-10' />}
       <Button onClick={navToPark}>길찾기</Button>
     </div>
   );
 }
 
 function RealtimeParkInfo() {
-  const isSelectedPublishCarPark = useCarParkDetail((s) => s.computed.isSelectedPublishCarPark);
+  const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
 
-  if (!isSelectedPublishCarPark) {
-    return <div className='h-10' />;
-  }
+  const { data, error } = useQuery({
+    queryKey: ['carParkDetail', selectedCarPark.id],
+    queryFn: () =>
+      axios<PlaceRealtimeInfo[]>({
+        url: `/api/parking-lot/realtime`,
+        params: {
+          codeList: selectedCarPark.parkingCode,
+        },
+      }).then((res) => res.data[0]),
+  });
+
+  console.log(error);
+  console.log(data);
 
   return (
     <div className='mt-5 mb-3 flex h-[100px] items-center rounded-lg bg-white'>
       <div className='flex-1 text-center font-bold text-al-blue'>
-        <div className='text-2xl'>{117}</div>
+        <div className='text-2xl'>{data?.isEnabled ? data?.currentCount - data.totalCount : 0}</div>
         <div className='text-sm'>주차 여유</div>
       </div>
       <Separator height={40} />
       <div className='flex-1 text-center font-bold text-al-slate'>
-        <div className='text-2xl'>{217}</div>
+        <div className='text-2xl'>{data?.totalCount}</div>
         <div className='text-sm'>전체</div>
       </div>
     </div>

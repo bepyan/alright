@@ -58,6 +58,40 @@ export interface PublicPlaceSearchRes {
   };
 }
 
+export interface PublicRealtimePlace extends PublicPlace {
+  /**
+   * 주차현황 정보 제공여부 ex. 1
+   */
+  QUE_STATUS: string;
+  /**
+   * 주차현황 정보 제공여부명 ex. 현재~20분이내 연계데이터 존재(현재 주차대수 표현)
+   */
+  QUE_STATUS_NM: string;
+  /**
+   * 총 주차면 ex.93.0
+   */
+  CAPACITY: number;
+  /**
+   * 현재 주차 차량수 ex.61.0
+   */
+  CUR_PARKING: number;
+  /**
+   * 현재 주차 차량수 업데이트시간 ex.2023-04-15 01:09:35
+   */
+  CUR_PARKING_TIME: string;
+}
+
+export interface PublicPlaceRealtimeSearchRes {
+  GetParkingInfo: {
+    list_total_count: string; //	총 데이터 건수 (정상조회 시 출력됨)
+    RESULT: {
+      CODE: string; // 요청결과 코드 (하단 메세지설명 참고)
+      MESSAGE: string; // 요청결과 메시지 (하단 메세지설명 참고)
+    };
+    row: PublicRealtimePlace[];
+  };
+}
+
 export interface SeoulParkingPlace {
   /**
    * ADDR: '주소'
@@ -187,4 +221,31 @@ export interface SeoulParkingPlace {
    * WEEKEND_END_TIME: '주말 운영 종료시각(HHMM)'
    */
   weekend_end_time: string;
+}
+
+export interface PlaceRealtimeInfo {
+  /**
+   * QUE_STATUS: string;
+   */
+  isEnabled: boolean;
+  /**
+   * PARKING_CODE: 주차장코드
+   */
+  parkingCode: string;
+  /**
+   * CAPACITY: 총 주차면
+   */
+  totalCount: number;
+  /**
+   * CUR_PARKING: 현재 주차 차량수 ex.61.0
+   */
+  currentCount: number;
+  /**
+   * CUR_PARKING_TIME: 현재 주차 차량수 업데이트시간 ex.2023-04-15 01:09:35
+   */
+  updatedTime: string;
+  /**
+   * QUE_STATUS_NM: 주차현황 정보 제공여부명 ex.현재~20분이내 연계데이터 존재(현재 주차대수 표현)
+   */
+  description: string;
 }
