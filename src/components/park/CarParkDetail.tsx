@@ -174,19 +174,19 @@ function ParkDetail({ selectedCarPark }: { selectedCarPark: ParkingLotInfo }) {
                   {selectedCarPark.weekdaysEndTime ?? '00:00'}
                 </div>
               </div>
-              {selectedCarPark.satStartTime && selectedCarPark.satEndTime && (
+              {selectedCarPark.weekendStartTime && selectedCarPark.weekendEndTime && (
                 <div className='flex items-center text-sm'>
                   <div className=''>토요일</div>
                   <div className='ml-auto'>
-                    {selectedCarPark.satStartTime} ~ {selectedCarPark.satEndTime}
+                    {selectedCarPark.weekendStartTime} ~ {selectedCarPark.weekendEndTime}
                   </div>
                 </div>
               )}
-              {selectedCarPark.sunStartTime && selectedCarPark.sunEndTime && (
+              {selectedCarPark.holidayStartTime && selectedCarPark.holidayEndTime && (
                 <div className='flex items-center text-sm'>
                   <div className=''>일요일</div>
                   <div className='ml-auto'>
-                    {selectedCarPark.sunStartTime} ~ {selectedCarPark.sunEndTime}
+                    {selectedCarPark.holidayStartTime} ~ {selectedCarPark.holidayEndTime}
                   </div>
                 </div>
               )}

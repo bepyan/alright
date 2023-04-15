@@ -10,8 +10,8 @@ export const useCarParkDetail = create<{
   computed: {
     show: boolean;
     weekdaysTime?: [Dayjs, Dayjs];
-    satTime?: [Dayjs, Dayjs];
-    sunTime?: [Dayjs, Dayjs];
+    weekendTime?: [Dayjs, Dayjs];
+    holidayTime?: [Dayjs, Dayjs];
   };
   showCarParkDetail: (targetPlace: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
@@ -29,16 +29,16 @@ export const useCarParkDetail = create<{
       const et = targetPlace?.weekdaysEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
-    get satTime() {
+    get weekendTime() {
       const { targetPlace } = get();
-      const st = targetPlace?.satStartTime;
-      const et = targetPlace?.satEndTime;
+      const st = targetPlace?.weekendStartTime;
+      const et = targetPlace?.weekendEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
-    get sunTime() {
+    get holidayTime() {
       const { targetPlace } = get();
-      const st = targetPlace?.sunStartTime;
-      const et = targetPlace?.sunEndTime;
+      const st = targetPlace?.holidayStartTime;
+      const et = targetPlace?.holidayEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
   },

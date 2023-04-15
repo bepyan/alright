@@ -22,10 +22,10 @@ export interface ParkingLotDetailInfo {
    */
   weekdaysStartTime?: string;
   weekdaysEndTime?: string;
-  satStartTime?: string;
-  satEndTime?: string;
-  sunStartTime?: string;
-  sunEndTime?: string;
+  weekendStartTime?: string;
+  weekendEndTime?: string;
+  holidayStartTime?: string;
+  holidayEndTime?: string;
   otherInfo?: string;
 }
 
@@ -59,16 +59,16 @@ const parkingLotInfoScheme = new Schema<ParkingLotInfo>({
   weekdaysEndTime: {
     type: String,
   },
-  satStartTime: {
+  weekendStartTime: {
     type: String,
   },
-  satEndTime: {
+  weekendEndTime: {
     type: String,
   },
-  sunStartTime: {
+  holidayStartTime: {
     type: String,
   },
-  sunEndTime: {
+  holidayEndTime: {
     type: String,
   },
   otherInfo: {

@@ -112,6 +112,12 @@ function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: Seo
       defaultFeeAmount: String(selectedSeoulParkingPlace.rates),
       additionFeeTime: String(selectedSeoulParkingPlace.add_time_rate),
       additionFeeAmount: String(selectedSeoulParkingPlace.add_rates),
+      weekdaysStartTime: selectedSeoulParkingPlace.weekday_begin_time,
+      weekdaysEndTime: selectedSeoulParkingPlace.weekday_end_time,
+      weekendStartTime: selectedSeoulParkingPlace.weekend_begin_time,
+      weekendEndTime: selectedSeoulParkingPlace.weekend_end_time,
+      holidayStartTime: selectedSeoulParkingPlace.holiday_begin_time,
+      holidayEndTime: selectedSeoulParkingPlace.holiday_end_time,
     });
   });
   const relinkSeoulParkingPlace = useCarParkDetail((s) => s.relinkSeoulParkingPlace);

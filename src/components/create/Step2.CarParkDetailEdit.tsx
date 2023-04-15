@@ -94,8 +94,8 @@ function MoneyField() {
 
 function TimeField() {
   const weekdaysTime = useCarParkDetail((s) => s.computed.weekdaysTime);
-  const satTime = useCarParkDetail((s) => s.computed.satTime);
-  const sunTime = useCarParkDetail((s) => s.computed.sunTime);
+  const weekendTime = useCarParkDetail((s) => s.computed.weekendTime);
+  const holidayTime = useCarParkDetail((s) => s.computed.holidayTime);
 
   const editTargetPlace = useCarParkDetail((s) => s.editTargetPlace);
 
@@ -115,25 +115,25 @@ function TimeField() {
         />
       </div>
       <div className='flex items-center justify-between'>
-        <span className='text-sm'>토요일</span>
+        <span className='text-sm'>주말</span>
         <RangePicker
-          defaultValue={satTime}
+          defaultValue={weekendTime}
           onChange={(v) =>
             editTargetPlace({
-              satStartTime: v?.[0]?.format('HH:mm'),
-              satEndTime: v?.[1]?.format('HH:mm'),
+              weekendStartTime: v?.[0]?.format('HH:mm'),
+              weekendEndTime: v?.[1]?.format('HH:mm'),
             })
           }
         />
       </div>
       <div className='flex items-center justify-between'>
-        <span className='text-sm'>일요일</span>
+        <span className='text-sm'>공휴일</span>
         <RangePicker
-          defaultValue={sunTime}
+          defaultValue={holidayTime}
           onChange={(v) =>
             editTargetPlace({
-              sunStartTime: v?.[0]?.format('HH:mm'),
-              sunEndTime: v?.[1]?.format('HH:mm'),
+              holidayStartTime: v?.[0]?.format('HH:mm'),
+              holidayEndTime: v?.[1]?.format('HH:mm'),
             })
           }
         />
