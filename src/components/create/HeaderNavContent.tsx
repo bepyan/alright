@@ -22,7 +22,7 @@ export default function HeaderNavContent() {
     } else if (step === 2) {
       moveStepToOne();
     } else if (step === 3) {
-      router.replace('/');
+      moveStepToOne();
     }
   };
 
