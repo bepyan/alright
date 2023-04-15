@@ -3,11 +3,9 @@ import { create } from 'zustand';
 
 import { formatDayRangeValue } from '~/lib/format';
 import { ParkingLotDetailInfo, ParkingLotInfo } from '~/models/alright';
-import { SeoulParkingPlace } from '~/types';
 
 export const useCarParkDetail = create<{
   targetPlace?: ParkingLotInfo;
-  seoulParkingPlace?: SeoulParkingPlace;
   isPassLinked?: boolean;
   computed: {
     show: boolean;
@@ -17,9 +15,8 @@ export const useCarParkDetail = create<{
   };
   showCarParkDetail: (targetPlace: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
-  editCarPark: (carPark: ParkingLotDetailInfo) => void;
+  editTargetPlace: (carPark: ParkingLotDetailInfo) => void;
   editPassLinked: (isPassLinked: boolean) => void;
-  editSeoulParkingPlace: (seoulParkingPlace?: SeoulParkingPlace) => void;
   relinkSeoulParkingPlace: () => void;
 }>((set, get) => ({
   computed: {
@@ -27,21 +24,21 @@ export const useCarParkDetail = create<{
       return Boolean(get().targetPlace);
     },
     get weekdaysTime() {
-      const { targetPlace, seoulParkingPlace } = get();
-      const st = targetPlace?.weekdaysStartTime ?? seoulParkingPlace?.weekday_begin_time;
-      const et = targetPlace?.weekdaysEndTime ?? seoulParkingPlace?.weekday_end_time;
+      const { targetPlace } = get();
+      const st = targetPlace?.weekdaysStartTime;
+      const et = targetPlace?.weekdaysEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
     get satTime() {
-      const { targetPlace, seoulParkingPlace } = get();
-      const st = targetPlace?.satStartTime ?? seoulParkingPlace?.weekend_begin_time;
-      const et = targetPlace?.satEndTime ?? seoulParkingPlace?.weekend_end_time;
+      const { targetPlace } = get();
+      const st = targetPlace?.satStartTime;
+      const et = targetPlace?.satEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
     get sunTime() {
-      const { targetPlace, seoulParkingPlace } = get();
-      const st = targetPlace?.sunStartTime ?? seoulParkingPlace?.weekend_begin_time;
-      const et = targetPlace?.sunEndTime ?? seoulParkingPlace?.weekend_end_time;
+      const { targetPlace } = get();
+      const st = targetPlace?.sunStartTime;
+      const et = targetPlace?.sunEndTime;
       return st && et ? formatDayRangeValue(st, et) : undefined;
     },
   },
@@ -51,8 +48,6 @@ export const useCarParkDetail = create<{
       ...state,
       targetPlace: {
         freeTimeDiscount: '60',
-        defaultFeeTime: '',
-        additionFeeTime: '',
         ...targetPlace,
       },
     }));
@@ -62,22 +57,19 @@ export const useCarParkDetail = create<{
     set((state) => ({
       ...state,
       targetPlace: undefined,
-      seoulParkingPlace: undefined,
       isPassLinked: undefined,
     }));
   },
-  editCarPark: (carPark) =>
+  editTargetPlace: (carPark) =>
     set((v) => ({
       ...v,
       targetPlace: v.targetPlace ? { ...v.targetPlace, ...carPark } : undefined,
     })),
   editPassLinked: (isPassLinked) => set((v) => ({ ...v, isPassLinked })),
-  editSeoulParkingPlace: (seoulParkingPlace) => set((v) => ({ ...v, seoulParkingPlace })),
   relinkSeoulParkingPlace: () =>
     set((v) => ({
       ...v,
       isPassLinked: undefined,
-      seoulParkingPlace: undefined,
       targetPlace: v.targetPlace && {
         ...v.targetPlace,
         parkingCode: undefined,

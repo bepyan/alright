@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { useState } from 'react';
 
-import useSearch from '~/lib/useSearch';
+import useDebouncedSearch from '~/lib/useDebouncedSearch';
 import { KPlace, KPlaceSearchRes } from '~/types';
 import Input from '~/ui/Input';
 import Label from '~/ui/Label';
@@ -11,32 +10,24 @@ import StepNav from '~/ui/StepNav';
 import { useCreate } from './state';
 
 export default function Step1() {
-  const [placeList, setPlaceList] = useState<KPlace[]>();
-  const [loading, setLoading] = useState(false);
+  const { data, isFetching, searchHandler } = useDebouncedSearch<KPlace[]>(
+    'searchCompany',
+    async (query) => {
+      const res = await axios<KPlaceSearchRes>({
+        url: '/api/search/keyword',
+        method: 'GET',
+        params: { query },
+      });
+      return res.data.documents;
+    },
+  );
 
-  const { searchHandler } = useSearch((searchValue) => {
-    if (!searchValue) return;
+  const selectedCompany = useCreate((s) => s.company);
 
-    setLoading(true);
-    axios('/api/search/keyword', {
-      params: {
-        query: searchValue,
-      },
-    })
-      .then(({ data }: { data: KPlaceSearchRes }) => {
-        setLoading(false);
-        setPlaceList(data.documents);
-      })
-      .catch((e) => console.error(e));
+  const valueChangeHandler = useCreate((s) => (value: string) => {
+    const place = data?.find((v) => v.id === value);
+    s.selectCompany(place);
   });
-
-  const selectedValue = useCreate((s) => s.company?.id);
-  const selectCompany = useCreate((s) => s.selectCompany);
-
-  const valueChangeHandler = (value: string) => {
-    const place = placeList?.find((v) => v.id === value);
-    selectCompany(place);
-  };
 
   return (
     <>
@@ -46,24 +37,20 @@ export default function Step1() {
         <Input placeholder='업체 이름 검색' onChange={searchHandler} />
       </div>
       <div className='border-t border-al-border'>
-        <RadioGroup value={selectedValue} onValueChange={valueChangeHandler}>
-          {loading ? (
-            <div className='spinner mx-auto mt-8' />
-          ) : (
-            placeList &&
-            (placeList.length ? (
-              placeList.map((place, i) => <SearchItem key={i} place={place} />)
-            ) : (
-              <div className='pt-12 text-center text-al-disabled'>검색 결과가 없습니다.</div>
-            ))
+        <RadioGroup value={selectedCompany?.id} onValueChange={valueChangeHandler}>
+          {isFetching && <div className='spinner mx-auto mt-8' />}
+          {!!data && !data.length && (
+            <div className='pt-12 text-center text-al-disabled'>검색 결과가 없습니다.</div>
           )}
+          {!!data && !!data.length && data.map((place, i) => <RadioItem key={i} place={place} />)}
+          {!data && selectedCompany && <RadioItem place={selectedCompany} />}
         </RadioGroup>
       </div>
     </>
   );
 }
 
-function SearchItem({ place }: { place: KPlace }) {
+function RadioItem({ place }: { place: KPlace }) {
   return (
     <div className='mx-container flex items-center justify-between border-b border-al-border py-container'>
       <Label htmlFor={place.id} className='w-full'>

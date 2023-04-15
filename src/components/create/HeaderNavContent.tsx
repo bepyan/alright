@@ -12,7 +12,7 @@ export default function HeaderNavContent() {
   const step = useCreate((s) => s.step);
   const canMoveToNext = useCreate((s) => s.computed.canMoveToNext);
 
-  const resetState = useCreate((s) => s.resetState);
+  const moveStepToOne = useCreate((s) => s.moveStepToOne);
   const moveStep = useCreate((s) => s.moveStep);
 
   const prevStep = () => {
@@ -20,9 +20,9 @@ export default function HeaderNavContent() {
       router.back();
       return;
     } else if (step === 2) {
-      resetState();
-    } else {
-      moveStep(-1);
+      moveStepToOne();
+    } else if (step === 3) {
+      router.replace('/');
     }
   };
 

@@ -11,7 +11,7 @@ interface CreateProps {
     canMoveToNext: boolean;
   };
   moveStep: (ac: number) => void;
-  resetState: () => void;
+  moveStepToOne: () => void;
   selectCompany: (company?: KPlace) => void;
   selectCarPark: (place: ParkingLotInfo) => void;
   removeCarPark: (place: ParkingLotInfo) => void;
@@ -33,7 +33,7 @@ export const useCreate = create<CreateProps>((set, get) => ({
     },
   },
   moveStep: (ac) => set((state) => ({ ...state, step: state.step + ac })),
-  resetState: () => set(() => ({ step: 1, company: undefined, selectedCarParkList: [] })),
+  moveStepToOne: () => set(() => ({ step: 1, selectedCarParkList: [] })),
   selectCompany: (company) => set((state) => ({ ...state, company })),
   selectCarPark: (place) =>
     set((state) => ({

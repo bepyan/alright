@@ -59,75 +59,132 @@ export interface PublicPlaceSearchRes {
 }
 
 export interface SeoulParkingPlace {
-  add_rates: number;
-  tel: string;
-  parking_type: string;
-  bus_add_rates: number;
+  /**
+   * ADDR: '주소'
+   */
   addr: string;
-  holiday_pay_yn: string;
-  bus_rates: number;
-  weekday_begin_time: string;
-  time_rate: number;
-  capacity: number;
-  night_free_open_nm: string;
+  /**
+   * ADD_RATES: '추가 단위 요금'
+   */
+  add_rates: number;
+  /**
+   * ADD_TIME_RATE: '추가 단위 시간(분 단위)'
+   */
   add_time_rate: number;
-  sync_time: Date;
-  pay_yn: string;
-  parking_code: number;
-  rates: number;
-  weekend_begin_time: string;
-  weekday_end_time: string;
-  parking_type_nm: string;
-  saturday_pay_yn: string;
-  operation_rule: string;
+  bus_add_rates: number;
   bus_add_time_rate: number;
-  pay_nm: string;
-  parking_name: string;
-  weekend_end_time: string;
-  day_maximum: number;
-  saturday_pay_nm: string;
-  holiday_pay_nm: string;
-  holiday_end_time: string;
-  fulltime_monthly: string;
-  grp_parknm: string;
-  night_free_open: string;
-  operation_rule_nm: string;
+  bus_rates: number;
   bus_time_rate: number;
+  /**
+   * CAPACITY: '총 주자면'
+   */
+  capacity: number;
+  /**
+   * DAY_MAXIMUM: '일 최대 요금'
+   */
+  day_maximum: number;
+  /**
+   * FULLTIME_MONTHLY: '월 정기권 금액'
+   */
+  fulltime_monthly: string;
+  /**
+   * GRP_PARKNM: '노상 주차장 관리그룹번호'
+   */
+  grp_parknm: string;
+  /**
+   * HOLIDAY_BEGIN_TIME: '공휴일 운영 시작시각(HHMM)'
+   */
   holiday_begin_time: string;
+  /**
+   * HOLIDAY_END_TIME: '공휴일 운영 종료시각(HHMM)'
+   */
+  holiday_end_time: string;
+  /**
+   * HOLIDAY_PAY_NM: '공휴일 유,무료 구분명'
+   */
+  holiday_pay_nm: string;
+  /**
+   * HOLIDAY_PAY_YN: '공휴일 유,무료 구분'
+   */
+  holiday_pay_yn: string;
+  /**
+   * NIGHT_FREE_OPEN_NM: '야간무료개방여부명'
+   */
+  night_free_open_nm: string;
+  /**
+   * NIGHT_FREE_OPEN: '야간무료개방여부'
+   */
+  night_free_open: string;
+  /**
+   * OPERATION_RULE_NM: '운영구분명'
+   */
+  operation_rule_nm: string;
+  /**
+   * OPERATION_RULE: '운영구분'
+   */
+  operation_rule: string;
+  /**
+   * PARKING_CODE: '주차장코드' ✨
+   */
+  parking_code: number;
+  /**
+   * PARKING_NAME: '주차장명'
+   */
+  parking_name: string;
+  /**
+   * PARKING_TYPE_NM: '주차장 종류명'
+   */
+  parking_type_nm: string;
+  /**
+   * PARKING_TYPE: '주차장 종류'
+   */
+  parking_type: string;
+  /**
+   * PAY_NM: '유무료구분명'
+   */
+  pay_nm: string;
+  /**
+   * PAY_YN: '유무료구분'
+   */
+  pay_yn: string;
+  /**
+   * RATES: '기본 주차 요금'
+   */
+  rates: number;
+  /**
+   * SATURDAY_PAY_NM: '토요일 유,무료 구분명'
+   */
+  saturday_pay_nm: string;
+  /**
+   * SATURDAY_PAY_YN: '토요일 유,무료 구분'
+   */
+  saturday_pay_yn: string;
+  /**
+   * SYNC_TIME: '최종데이터 동기화 시간'
+   */
+  sync_time: Date;
+  /**
+   * TEL: '전화번호'
+   */
+  tel: string;
+  /**
+   * TIME_RATE: '기본 주차 시간(분 단위)'
+   */
+  time_rate: number;
+  /**
+   * WEEKDAY_BEGIN_TIME: '평일 운영 시작시각(HHMM)'
+   */
+  weekday_begin_time: string;
+  /**
+   * WEEKDAY_END_TIME: '평일 운영 종료시각(HHMM)'
+   */
+  weekday_end_time: string;
+  /**
+   * WEEKEND_BEGIN_TIME: '주말 운영 시작시각(HHMM)'
+   */
+  weekend_begin_time: string;
+  /**
+   * WEEKEND_END_TIME: '주말 운영 종료시각(HHMM)'
+   */
+  weekend_end_time: string;
 }
-
-// PARKING_TYPE: '주차장 종류';
-// OPERATION_RULE_NM: '운영구분명';
-// BUS_ADD_RATES: '버스 추가 단위 요금';
-// PARKING_TYPE_NM: '주차장 종류명';
-// CAPACITY: '총 주자면';
-// WEEKEND_END_TIME: '주말 운영 종료시각(HHMM)';
-// PAY_NM: '유무료구분명';
-// WEEKDAY_END_TIME: '평일 운영 종료시각(HHMM)';
-// ADD_RATES: '추가 단위 요금';
-// ADD_TIME_RATE: '추가 단위 시간(분 단위)';
-// TEL: '전화번호';
-// PARKING_CODE: '주차장코드';
-// PAY_YN: '유무료구분';
-// PARKING_NAME: '주차장명';
-// SATURDAY_PAY_YN: '토요일 유,무료 구분';
-// ADDR: '주소';
-// SATURDAY_PAY_NM: '토요일 유,무료 구분명';
-// DAY_MAXIMUM: '일 최대 요금';
-// HOLIDAY_END_TIME: '공휴일 운영 종료시각(HHMM)';
-// HOLIDAY_PAY_NM: '공휴일 유,무료 구분명';
-// WEEKEND_BEGIN_TIME: '주말 운영 시작시각(HHMM)';
-// FULLTIME_MONTHLY: '월 정기권 금액';
-// HOLIDAY_BEGIN_TIME: '공휴일 운영 시작시각(HHMM)';
-// OPERATION_RULE: '운영구분';
-// TIME_RATE: '기본 주차 시간(분 단위)';
-// WEEKDAY_BEGIN_TIME: '평일 운영 시작시각(HHMM)';
-// RATES: '기본 주차 요금';
-// NIGHT_FREE_OPEN_NM: '야간무료개방여부명';
-// BUS_RATES: '버스 기본 주차 요금';
-// NIGHT_FREE_OPEN: '야간무료개방여부';
-// HOLIDAY_PAY_YN: '공휴일 유,무료 구분';
-// BUS_TIME_RATE: '버스 기본 주차 시간(분 단위)';
-// GRP_PARKNM: '노상 주차장 관리그룹번호';
-// BUS_ADD_TIME_RATE: '버스 추가 단위 시간(분 단위)';
-// SYNC_TIME: '최종데이터 동기화 시간';

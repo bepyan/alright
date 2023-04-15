@@ -10,14 +10,12 @@ import CarParkDetailLinkage from './Step2.CarParkDetailLinkage';
 import { useCarParkDetail } from './Step2.state';
 
 export default function CarParkDetail() {
-  const carPark = useCarParkDetail((s) => s.targetPlace)!;
-  const carParkPosition = transferPosition(carPark);
-  const seoulParkingPlace = useCarParkDetail((s) => s.seoulParkingPlace);
-  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
-  const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
-
   const company = useCreate((s) => s.company)!;
   const companyPosition = transferPosition(company);
+  const targetPlace = useCarParkDetail((s) => s.targetPlace)!;
+  const targetPlacePosition = transferPosition(targetPlace);
+  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
+  const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
 
   return (
     <div className='container fixed inset-0 z-50 overflow-y-scroll bg-white pb-12'>
@@ -30,20 +28,20 @@ export default function CarParkDetail() {
         </div>
       </div>
 
-      <Map center={carParkPosition} className='h-48 w-full'>
-        <MapMarker type='parkMain' position={carParkPosition} text={carPark.place_name} />
+      <Map center={targetPlacePosition} className='h-48 w-full'>
+        <MapMarker type='parkMain' position={targetPlacePosition} text={targetPlace.place_name} />
         <MapMarker type='companySub' position={companyPosition} text={company.place_name} />
       </Map>
 
       <div className='p-container'>
-        <h2 className='text-xl font-bold'>{carPark.place_name}</h2>
-        <p className='mt-1 text-sm text-al-slate'>{carPark.address_name}</p>
+        <h2 className='text-xl font-bold'>{targetPlace.place_name}</h2>
+        <p className='mt-1 text-sm text-al-slate'>{targetPlace.address_name}</p>
       </div>
 
       <div className='h-2 bg-al-gray-100' />
 
       <CarParkDetailLinkage />
-      {(carPark.parkingCode || isPassLinked || seoulParkingPlace) && <CarParkDetailEdit />}
+      {(targetPlace.parkingCode || isPassLinked) && <CarParkDetailEdit />}
     </div>
   );
 }

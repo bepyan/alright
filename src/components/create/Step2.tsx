@@ -75,12 +75,16 @@ export default function Step2() {
         <MapMarker position={companyPosition} type='companyMain' text={company.place_name} />
       </Map>
 
-      {Boolean(selectedCarParkList.length) && (
+      {!!selectedCarParkList.length && (
         <div className='p-container'>
           <IconTitle icon='Check' text='추가한 주차장' className='text-al-blue' />
           <div className='mt-container rounded-xl border border-al-blue space:border-t'>
             {selectedCarParkList.map((item) => (
-              <CarParkItem key={`selected-place-${item.id}`} item={item} />
+              <CarParkItem
+                key={`selected-place-${item.id}`}
+                item={item}
+                onClick={() => showCarParkDetail(item)}
+              />
             ))}
           </div>
         </div>
@@ -92,7 +96,11 @@ export default function Step2() {
           {nearCarParkList
             .filter((item) => !selectedCarParkList.some((v) => v.id === item.id))
             .map((item) => (
-              <CarParkItem key={`place-${item.id}`} item={item} />
+              <CarParkItem
+                key={`place-${item.id}`}
+                item={item}
+                onClick={() => showCarParkDetail(item)}
+              />
             ))}
         </div>
       </div>
@@ -103,10 +111,7 @@ export default function Step2() {
   );
 }
 
-function CarParkItem({ item }: { item: KPlace }) {
-  const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
-  const onClick = () => showCarParkDetail(item);
-
+function CarParkItem({ item, onClick }: { item: KPlace; onClick: () => void }) {
   return (
     <div
       className='flex items-center justify-between border-al-border p-container pr-3'
