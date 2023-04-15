@@ -2,7 +2,7 @@ import type { Dayjs } from 'dayjs';
 import { create } from 'zustand';
 
 import { formatDayRangeValue } from '~/lib/format';
-import { ParkingLotDetailInfo, ParkingLotInfo } from '~/models/alright';
+import { ParkingLotInfo } from '~/models/alright';
 
 export const useCarParkDetail = create<{
   targetPlace?: ParkingLotInfo;
@@ -15,7 +15,7 @@ export const useCarParkDetail = create<{
   };
   showCarParkDetail: (targetPlace: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
-  editTargetPlace: (carPark: ParkingLotDetailInfo) => void;
+  editTargetPlace: (carPark: Partial<ParkingLotInfo>) => void;
   editPassLinked: (isPassLinked: boolean) => void;
   relinkSeoulParkingPlace: () => void;
 }>((set, get) => ({

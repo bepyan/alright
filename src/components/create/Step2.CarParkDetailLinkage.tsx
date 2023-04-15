@@ -107,7 +107,7 @@ function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: Seo
 
     s.editTargetPlace({
       parkingCode: selectedSeoulParkingPlace.parking_code,
-      tel: selectedSeoulParkingPlace.tel,
+      phone: selectedSeoulParkingPlace.tel,
       defaultFeeTime: String(selectedSeoulParkingPlace.time_rate),
       defaultFeeAmount: String(selectedSeoulParkingPlace.rates),
       additionFeeTime: String(selectedSeoulParkingPlace.add_time_rate),
