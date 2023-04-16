@@ -14,7 +14,7 @@ export default function CarParkDetail() {
   const companyPosition = transferPosition(company);
   const targetPlace = useCarParkDetail((s) => s.targetPlace)!;
   const targetPlacePosition = transferPosition(targetPlace);
-  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
+  const showLinked = useCarParkDetail((s) => s.showLinked);
   const hideCarParkDetail = useCarParkDetail((s) => s.hideCarParkDetail);
 
   return (
@@ -41,7 +41,7 @@ export default function CarParkDetail() {
       <div className='h-2 bg-al-gray-100' />
 
       <CarParkDetailLinkage />
-      {(targetPlace.parkingCode || isPassLinked) && <CarParkDetailEdit />}
+      {!showLinked && <CarParkDetailEdit />}
     </div>
   );
 }

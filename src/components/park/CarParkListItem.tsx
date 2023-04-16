@@ -12,7 +12,7 @@ export interface CarParkListItemProps {
 }
 
 export default function CarParkListItem({ item, focused, onClick }: CarParkListItemProps) {
-  const isSelectedPublishCarPark = !!item.parkingCode;
+  // const isSelectedPublishCarPark = !!item.parkingCode;
   const hasDiscount = !!item.freeTimeDiscount;
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
 
@@ -42,13 +42,13 @@ export default function CarParkListItem({ item, focused, onClick }: CarParkListI
         )}
         <div className='font-bold'>{item.place_name}</div>
         <div className='text-sm text-al-slate'>{item.address_name}</div>
-        {isSelectedPublishCarPark && (
+        {/* {isSelectedPublishCarPark && (
           <div className='flex items-center text-sm'>
             <span className='font-bold text-al-blue'>{26}대 여유</span>
             <span className='mx-1.5 mt-0.5 h-3 w-[1px] bg-[#C7CFD9]' />
             <span className='text-al-slate'>{100}대 전체</span>
           </div>
-        )}
+        )} */}
       </div>
       <button
         className='flex h-8 w-8 items-center justify-center rounded-full bg-al-blue text-white'

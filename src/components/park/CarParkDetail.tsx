@@ -1,9 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 
 import { useCurrentGeolocation } from '~/lib/useGeolocation';
-import { PlaceRealtimeInfo } from '~/types';
 import BackButton from '~/ui/BackButton';
 import Button from '~/ui/Button';
 import HeaderNav from '~/ui/HeaderNav';
@@ -48,7 +45,6 @@ function ParkDetail() {
 function HeaderInfo() {
   const currentPosition = useCurrentGeolocation();
   const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
-  const isSelectedPublishCarPark = useCarParkDetail((s) => s.computed.isSelectedPublishCarPark);
 
   const navToPark = () => {
     if (isMobile) {
@@ -65,43 +61,45 @@ function HeaderInfo() {
   return (
     <div className='flex flex-col bg-al-gray-100 p-container'>
       <h1 className='mt-5 self-center text-2xl font-bold'>{selectedCarPark.place_name}</h1>
-      {isSelectedPublishCarPark ? <RealtimeParkInfo /> : <div className='h-10' />}
-      <Button onClick={navToPark}>길찾기</Button>
+      {/* {isSelectedPublishCarPark ? <RealtimeParkInfo /> : <div className='h-10' />} */}
+      <Button className='mt-10' onClick={navToPark}>
+        길찾기
+      </Button>
     </div>
   );
 }
 
-function RealtimeParkInfo() {
-  const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
+// function RealtimeParkInfo() {
+//   const selectedCarPark = useCarParkDetail((s) => s.selectedCarPark)!;
 
-  const { data, error } = useQuery({
-    queryKey: ['carParkDetail', selectedCarPark.id],
-    queryFn: () =>
-      axios<PlaceRealtimeInfo[]>({
-        url: `/api/parking-lot/realtime`,
-        params: {
-          codeList: selectedCarPark.parkingCode,
-        },
-      }).then((res) => res.data[0]),
-  });
+//   const { data, error } = useQuery({
+//     queryKey: ['carParkDetail', selectedCarPark.id],
+//     queryFn: () =>
+//       axios<PlaceRealtimeInfo[]>({
+//         url: `/api/parking-lot/realtime`,
+//         params: {
+//           codeList: selectedCarPark.parkingCode,
+//         },
+//       }).then((res) => res.data[0]),
+//   });
 
-  console.log(error);
-  console.log(data);
+//   console.log(error);
+//   console.log(data);
 
-  return (
-    <div className='mt-5 mb-3 flex h-[100px] items-center rounded-lg bg-white'>
-      <div className='flex-1 text-center font-bold text-al-blue'>
-        <div className='text-2xl'>{data?.isEnabled ? data?.currentCount - data.totalCount : 0}</div>
-        <div className='text-sm'>주차 여유</div>
-      </div>
-      <Separator height={40} />
-      <div className='flex-1 text-center font-bold text-al-slate'>
-        <div className='text-2xl'>{data?.totalCount}</div>
-        <div className='text-sm'>전체</div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className='mt-5 mb-3 flex h-[100px] items-center rounded-lg bg-white'>
+//       <div className='flex-1 text-center font-bold text-al-blue'>
+//         <div className='text-2xl'>{data?.isEnabled ? data?.currentCount - data.totalCount : 0}</div>
+//         <div className='text-sm'>주차 여유</div>
+//       </div>
+//       <Separator height={40} />
+//       <div className='flex-1 text-center font-bold text-al-slate'>
+//         <div className='text-2xl'>{data?.totalCount}</div>
+//         <div className='text-sm'>전체</div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function DefaultInfo() {
   const company = useCarParkDetail((s) => s.company);

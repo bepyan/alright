@@ -81,9 +81,24 @@ export default function Page({ alright }: { alright: Alright }) {
   };
 
   useEffect(() => {
-    console.log(alright);
     loadCarParkDetail(alright);
   }, []);
+
+  // const { data } = useQuery({
+  //   queryKey: ['alright', alright.hashCode],
+  //   queryFn: () =>
+  //     axios<PlaceRealtimeInfo[]>({
+  //       url: `/api/parking-lot/realtime`,
+  //       params: {
+  //         codeList: alright.parkingLots
+  //           .filter((item) => !!item.parkingCode)
+  //           .map((item) => item.parkingCode)
+  //           .join(','),
+  //       },
+  //     }).then((res) => res.data),
+  // });
+
+  // console.log(data);
 
   return (
     <div className='container fixed inset-0 overflow-hidden'>
@@ -107,12 +122,12 @@ export default function Page({ alright }: { alright: Alright }) {
               />
             ))}
           </Map>
-          <FloatButton className='mb-24' onClick={mapMoveToCurrentPosition}>
+          <FloatButton className='mb-12' onClick={mapMoveToCurrentPosition}>
             <Icons.Locate className='h-6 w-6' />
           </FloatButton>
-          <FloatButton className='mb-12'>
+          {/* <FloatButton className='mb-12'>
             <Icons.Refresh className='h-6 w-6' />
-          </FloatButton>
+          </FloatButton> */}
           <FloatButton className='h-10 px-3 text-xs font-bold' onClick={mapMoveToCompany}>
             업체 위치 바로가기
           </FloatButton>

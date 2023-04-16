@@ -23,7 +23,7 @@ export default function Step2() {
   const showSearch = useCarParkSearch((s) => s.show);
   const showCarParkDetail = useCarParkDetail((s) => s.showCarParkDetail);
   const showCarParkSearch = useCarParkSearch((s) => s.showCarParkSearch);
-  const editPassLinked = useCarParkDetail((s) => s.editPassLinked);
+  const editPassLinked = useCarParkDetail((s) => s.setShowLinked);
 
   const [map, setMap] = useState<kakao.maps.Map>();
   const [nearCarParkList, setNearCarParkList] = useState<KPlace[]>([]);

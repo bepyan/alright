@@ -6,7 +6,7 @@ import { ParkingLotInfo } from '~/models/alright';
 
 export const useCarParkDetail = create<{
   targetPlace?: ParkingLotInfo;
-  isPassLinked?: boolean;
+  showLinked: boolean;
   computed: {
     show: boolean;
     weekdaysTime?: [Dayjs, Dayjs];
@@ -16,9 +16,10 @@ export const useCarParkDetail = create<{
   showCarParkDetail: (targetPlace: ParkingLotInfo) => void;
   hideCarParkDetail: () => void;
   editTargetPlace: (carPark: Partial<ParkingLotInfo>) => void;
-  editPassLinked: (isPassLinked: boolean) => void;
+  setShowLinked: (isPassLinked: boolean) => void;
   relinkSeoulParkingPlace: () => void;
 }>((set, get) => ({
+  showLinked: false,
   computed: {
     get show() {
       return Boolean(get().targetPlace);
@@ -57,7 +58,7 @@ export const useCarParkDetail = create<{
     set((state) => ({
       ...state,
       targetPlace: undefined,
-      isPassLinked: undefined,
+      showLinked: false,
     }));
   },
   editTargetPlace: (carPark) =>
@@ -65,11 +66,11 @@ export const useCarParkDetail = create<{
       ...v,
       targetPlace: v.targetPlace ? { ...v.targetPlace, ...carPark } : undefined,
     })),
-  editPassLinked: (isPassLinked) => set((v) => ({ ...v, isPassLinked })),
+  setShowLinked: (showLinked) => set((v) => ({ ...v, showLinked })),
   relinkSeoulParkingPlace: () =>
     set((v) => ({
       ...v,
-      isPassLinked: undefined,
+      showLinked: true,
       targetPlace: v.targetPlace && {
         ...v.targetPlace,
         parkingCode: undefined,

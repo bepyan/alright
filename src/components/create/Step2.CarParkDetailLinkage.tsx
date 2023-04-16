@@ -13,7 +13,6 @@ import { useCarParkDetail } from './Step2.state';
 
 export default function CarParkDetailLinkage() {
   const targetPlace = useCarParkDetail((s) => s.targetPlace)!;
-  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
 
   const { isLoading, data } = useQuery(['carParkDetail', targetPlace.id], () =>
     axios<SeoulParkingPlace[]>('/api/search/public-parking-lot', {
@@ -37,11 +36,11 @@ export default function CarParkDetailLinkage() {
 
       {isLoading && <div className='spinner mx-auto mt-8' />}
 
-      {!isPassLinked && !isLoading && data && !data.length && (
+      {!isLoading && data && !data.length && (
         <div className='mt-1 text-xs text-al-slate'>* 검색된 주차장이 없습니다.</div>
       )}
 
-      {!isPassLinked && !isLoading && data && !!data.length && (
+      {!isLoading && data && !!data.length && (
         <SelectContent
           parkingLotList={data}
           value={String(targetPlace.parkingCode ?? selectedSeoulParkingPlace?.parking_code)}
@@ -64,7 +63,7 @@ function SelectContent({
   valueChangeHandler: (value: string) => void;
 }) {
   const targetPlace = useCarParkDetail((s) => s.targetPlace)!;
-  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
+  const showLinked = useCarParkDetail((s) => s.showLinked);
 
   return (
     <RadioGroup value={value} onValueChange={valueChangeHandler}>
@@ -74,11 +73,7 @@ function SelectContent({
             return targetPlace.parkingCode === item.parking_code;
           }
 
-          if (isPassLinked !== undefined) {
-            return isPassLinked;
-          }
-
-          return true;
+          return showLinked;
         })
         .map((item, i) => (
           <div
@@ -97,15 +92,15 @@ function SelectContent({
 }
 
 function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: SeoulParkingPlace }) {
-  const targetPlace = useCarParkDetail((s) => s.targetPlace)!;
-  const isPassLinked = useCarParkDetail((s) => s.isPassLinked);
+  const showLinked = useCarParkDetail((s) => s.showLinked);
 
-  const handlePassLinked = useCarParkDetail((s) => () => s.editPassLinked(true));
+  const handleCancel = useCarParkDetail((s) => () => s.setShowLinked(false));
   const handleLinkSeoulParkingPlace = useCarParkDetail((s) => () => {
     if (!selectedSeoulParkingPlace) {
       return;
     }
 
+    s.setShowLinked(false);
     s.editTargetPlace({
       parkingCode: selectedSeoulParkingPlace.parking_code,
       phone: selectedSeoulParkingPlace.tel,
@@ -123,11 +118,11 @@ function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: Seo
   });
   const relinkSeoulParkingPlace = useCarParkDetail((s) => s.relinkSeoulParkingPlace);
 
-  if (!targetPlace.parkingCode && !isPassLinked) {
+  if (showLinked) {
     return (
       <div className='mt-10 grid grid-cols-3 gap-1'>
-        <Button className='col-span-1' variant='outline' onClick={handlePassLinked}>
-          넘김
+        <Button className='col-span-1' variant='outline' onClick={handleCancel}>
+          취소
         </Button>
         <Button
           disabled={!selectedSeoulParkingPlace}
@@ -144,7 +139,7 @@ function Footer({ selectedSeoulParkingPlace }: { selectedSeoulParkingPlace?: Seo
   return (
     <div className='mt-2 flex'>
       <Button className='flex-1' size='sm' variant='outline' onClick={relinkSeoulParkingPlace}>
-        {isPassLinked ? '연동하기' : '재연동'}
+        {!showLinked ? '연동하기' : '재연동'}
       </Button>
     </div>
   );
