@@ -48,7 +48,7 @@ function HeaderInfo() {
 
   const navToPark = () => {
     if (isMobile) {
-      if (currentPosition) {
+      if (currentPosition?.lat && currentPosition?.lng) {
         location.href = `kakaomap://route?sp=${currentPosition.lat},${currentPosition.lng}&ep=${selectedCarPark.y},${selectedCarPark.x}&by=CAR`;
       } else {
         location.href = `kakaomap://place?id=${selectedCarPark.id}`;
