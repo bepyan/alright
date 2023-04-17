@@ -30,9 +30,9 @@ export default function CarParkDetailLinkage() {
   return (
     <div className='p-container pb-0'>
       <IconTitle icon='CarPark' text='공영주차장 데이터 연동' />
-      <span className='mt-1 text-xs text-al-slate'>
+      {/* <span className='mt-1 text-xs text-al-slate'>
         * 잘못 지정하게 될 경우 고객에게 혼란을 줄 수 있습니다.
-      </span>
+      </span> */}
 
       {isLoading && <div className='spinner mx-auto mt-8' />}
 
